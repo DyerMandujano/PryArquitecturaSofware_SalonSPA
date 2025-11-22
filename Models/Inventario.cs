@@ -13,7 +13,7 @@ public partial class Inventario
 
     public string TipoMovimiento { get; set; } = null!;
 
-    public DateOnly FechaRegistro { get; set; }
+    public DateTime FechaRegistro { get; set; }
 
     public virtual DetalleCompra? IdDetalleCompraNavigation { get; set; }
 
