@@ -1,0 +1,48 @@
+﻿@{
+    string busquedaActual = ViewBag.Busqueda;
+    int? estadoActual = ViewBag.Estado;
+    int pageSize = ViewBag.PageSize ?? 10;
+}
+
+<link href="~/css/VTipoServicio/_FilterTipoServicio.css" rel="stylesheet" />
+
+<div class="busqueda-filtros-container">
+    <div class="contenedor-buscador">
+        <p>Buscar tipo de servicio:</p>
+        <form method="get" asp-action="Index" class="form-buscador-derecha" id="searchForm">
+            <button type="submit" class="btn-search-separated" title="Buscar">
+                <i class="bi bi-search"></i>
+            </button>
+            <input type="text"
+                   name="busqueda"
+                   value="@busquedaActual"
+                   class="input-buscador"
+                   placeholder="Ingrese descripción del tipo de servicio" />
+            <input type="hidden" name="estado" value="@estadoActual" />
+            <input type="hidden" name="pageSize" value="@pageSize" />
+            <input type="hidden" name="pageNumber" value="1" />
+        </form>
+    </div>
+
+    <div class="filtros-derecha">
+        <form method="get" asp-action="Index" style="display: flex; gap: 0.9rem; align-items: center;">
+            <input type="hidden" name="busqueda" value="@busquedaActual" />
+            <input type="hidden" name="pageSize" value="@pageSize" />
+            <input type="hidden" name="pageNumber" value="1" />
+
+            <select name="estado"
+                    class="filtro-select"
+                    data-active="@(estadoActual.HasValue)"
+                    onchange="this.form.submit()">
+                <option value="">Estado: Todos</option>
+                <option value="1" selected="@(estadoActual == 1)">Activo</option>
+                <option value="0" selected="@(estadoActual == 0)">Inactivo</option>
+            </select>
+        </form>
+
+        <a asp-action="Index" class="limpiar-btn">
+            <i class="bi bi-x-circle"></i>
+            <span>Limpiar</span>
+        </a>
+    </div>
+</div>

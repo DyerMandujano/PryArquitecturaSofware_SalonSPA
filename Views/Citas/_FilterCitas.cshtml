@@ -1,0 +1,82 @@
+﻿@{
+    string dniActual = Context.Request.Query["dni"];
+    string fechaInicio = Context.Request.Query["fechaInicio"];
+    string fechaFin = Context.Request.Query["fechaFin"];
+    string estadoCita = Context.Request.Query["estadoCita"];
+    string estadoServicio = Context.Request.Query["estadoServicio"];
+}
+
+<link href="~/css/VCitas/_FilterCitas.css" rel="stylesheet" />
+
+<div class="busqueda-filtros-container">
+
+    <div class="contenedor-buscador">
+        <p>Buscar citas:</p>
+
+        <form method="get" asp-action="Index" class="form-buscador-derecha" id="searchForm">
+
+            <button type="submit" class="btn-search-separated" title="Buscar">
+                <i class="bi bi-search"></i>
+            </button>
+
+            <input type="text"
+                   name="dni"
+                   value="@dniActual"
+                   class="input-buscador"
+                   placeholder="Ingrese DNI del cliente" />
+
+
+            <div class="form-compact-dates">
+                <input type="date"
+                       name="fechaInicio"
+                       value="@fechaInicio"
+                       class="input-date"
+                       title="Fecha de inicio" />
+
+                <input type="date"
+                       name="fechaFin"
+                       value="@fechaFin"
+                       class="input-date"
+                       title="Fecha de fin" />
+            </div>
+
+            <input type="hidden" name="estadoCita" value="@estadoCita" />
+            <input type="hidden" name="estadoServicio" value="@estadoServicio" />
+            <input type="hidden" name="pageSize" value="@Context.Request.Query["pageSize"]" />
+        </form>
+    </div>
+
+    <div class="filtros-derecha">
+        <form method="get" asp-action="Index" style="display: flex; gap: 0.9rem; align-items: center;">
+            <input type="hidden" name="dni" value="@dniActual" />
+            <input type="hidden" name="fechaInicio" value="@fechaInicio" />
+            <input type="hidden" name="fechaFin" value="@fechaFin" />
+            <input type="hidden" name="pageSize" value="@Context.Request.Query["pageSize"]" />
+
+            <select name="estadoCita"
+                    class="filtro-select"
+                    data-active="@(!string.IsNullOrEmpty(estadoCita))"
+                    onchange="this.form.submit()">
+                <option value="">Estado Cita: Todos</option>
+                <option value="1" selected="@(estadoCita == "1")">Pendiente</option>
+                <option value="2" selected="@(estadoCita == "2")">Completado</option>
+                <option value="3" selected="@(estadoCita == "3")">Reprogramado</option>
+                <option value="4" selected="@(estadoCita == "4")">Cancelado</option>
+            </select>
+
+            <select name="estadoServicio"
+                    class="filtro-select"
+                    data-active="@(!string.IsNullOrEmpty(estadoServicio))"
+                    onchange="this.form.submit()">
+                <option value="">Estado Servicio: Todos</option>
+                <option value="1" selected="@(estadoServicio == "1")">Activo</option>
+                <option value="2" selected="@(estadoServicio == "2")">Inactivo</option>
+            </select>
+        </form>
+
+        <a asp-action="Index" class="limpiar-btn">
+            <i class="bi bi-x-circle"></i>
+            <span>Limpiar</span>
+        </a>
+    </div>
+</div>

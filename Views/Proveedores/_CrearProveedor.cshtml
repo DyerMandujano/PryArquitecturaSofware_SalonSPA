@@ -1,0 +1,84 @@
+﻿@model Pry_Solu_SalonSPA.Models.Proveedor
+
+@{
+    Layout = "~/Views/Main.cshtml";
+    ViewData["Title"] = "Crear Proveedor";
+}
+
+<link href="~/css/VProveedor/_ProveedorForm.css" rel="stylesheet" />
+
+<div class="crear-proveedor-wrapper">
+    <div class="crear-proveedor-box">
+
+        <a asp-action="Index" class="btn-back">
+            <i class="bi bi-arrow-left"></i> Volver a la lista
+        </a>
+
+        <div class="header-crear">
+            <h2>Nuevo Proveedor</h2>
+            <p>Complete los datos del proveedor</p>
+        </div>
+
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert alert-danger">@ViewBag.Error</div>
+        }
+
+        <form asp-action="Crear" method="post" class="form-crear">
+            @Html.AntiForgeryToken()
+
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label asp-for="NomProve" class="form-label">Nombre del Proveedor <span class="text-danger">*</span></label>
+                    <input asp-for="NomProve" class="editable-field" placeholder="Ingrese el nombre" />
+                    <span asp-validation-for="NomProve" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Ruc" class="form-label">RUC <span class="text-danger">*</span></label>
+                    <input asp-for="Ruc" class="editable-field" maxlength="11" placeholder="00000000000" />
+                    <span asp-validation-for="Ruc" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label asp-for="Telefono" class="form-label">Teléfono</label>
+                    <input asp-for="Telefono" class="editable-field" maxlength="9" placeholder="000000000" />
+                    <span asp-validation-for="Telefono" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Correo" class="form-label">Correo Electrónico</label>
+                    <input asp-for="Correo" type="email" class="editable-field" placeholder="ejemplo@correo.com" />
+                    <span asp-validation-for="Correo" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label asp-for="TipoProveedor" class="form-label">Tipo de Proveedor</label>
+                    <input asp-for="TipoProveedor" class="editable-field" placeholder="Ej: Productos, Servicios, Ambos" />
+                    <span asp-validation-for="TipoProveedor" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Estado" class="form-label">Estado <span class="text-danger">*</span></label>
+                    <select asp-for="Estado" class="editable-field">
+                        <option value="1" selected>Activo</option>
+                        <option value="0">Inactivo</option>
+                    </select>
+                    <span asp-validation-for="Estado" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-buttons">
+                <a asp-action="Index" class="btn-cancelar">
+                    <i class="bi bi-x-circle"></i> Cancelar
+                </a>
+                <button type="submit" class="btn-crear">
+                    <i class="bi bi-check-circle"></i> Guardar Proveedor
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,80 @@
+﻿@{
+    string orden = ViewBag.Orden ?? "ASC";
+    string nomProd = ViewBag.NomProd;
+    string fechaInicio = ViewBag.FechaInicio;
+    string fechaFin = ViewBag.FechaFin;
+    string tipoMovimiento = ViewBag.TipoMovimiento;
+    int pageSize = ViewBag.PageSize ?? 10;
+}
+
+<link href="~/css/VInventario/_FilterInventario.css" rel="stylesheet" />
+
+<div class="busqueda-filtros-container">
+
+    <div class="contenedor-buscador">
+        <p>Buscar en inventario:</p>
+
+        <form method="get" asp-action="Index" class="form-buscador-derecha" id="searchForm">
+            <button type="submit" class="btn-search-separated" title="Buscar">
+                <i class="bi bi-search"></i>
+            </button>
+
+            <input type="text"
+                   name="nomProd"
+                   value="@nomProd"
+                   class="input-buscador"
+                   placeholder="Ingrese nombre del producto" />
+
+            <div class="form-compact-dates">
+                <input type="date"
+                       name="fechaInicio"
+                       value="@fechaInicio"
+                       class="input-date"
+                       title="Fecha de inicio" />
+
+                <input type="date"
+                       name="fechaFin"
+                       value="@fechaFin"
+                       class="input-date"
+                       title="Fecha de fin" />
+            </div>
+
+            <input type="hidden" name="orden" value="@orden" />
+            <input type="hidden" name="tipoMovimiento" value="@tipoMovimiento" />
+            <input type="hidden" name="pageSize" value="@pageSize" />
+            <input type="hidden" name="pageNumber" value="1" />
+        </form>
+    </div>
+
+    <div class="filtros-derecha">
+        <form method="get" asp-action="Index" style="display: flex; gap: 0.9rem; align-items: center;">
+            <input type="hidden" name="nomProd" value="@nomProd" />
+            <input type="hidden" name="fechaInicio" value="@fechaInicio" />
+            <input type="hidden" name="fechaFin" value="@fechaFin" />
+            <input type="hidden" name="pageSize" value="@pageSize" />
+            <input type="hidden" name="pageNumber" value="1" />
+
+            <select name="tipoMovimiento"
+                    class="filtro-select"
+                    data-active="@(!string.IsNullOrEmpty(tipoMovimiento))"
+                    onchange="this.form.submit()">
+                <option value="">Tipo: Todos</option>
+                <option value="ENTRADA" selected="@(tipoMovimiento == "ENTRADA")">Entrada</option>
+                <option value="SALIDA" selected="@(tipoMovimiento == "SALIDA")">Salida</option>
+            </select>
+
+            <select name="orden"
+                    class="filtro-select"
+                    data-active="@(orden != "ASC")"
+                    onchange="this.form.submit()">
+                <option value="ASC" selected="@(orden == "ASC")">Más antiguos</option>
+                <option value="DESC" selected="@(orden == "DESC")">Más recientes</option>
+            </select>
+        </form>
+
+        <a asp-action="Index" class="limpiar-btn">
+            <i class="bi bi-x-circle"></i>
+            <span>Limpiar</span>
+        </a>
+    </div>
+</div>
