@@ -9,6 +9,8 @@ public partial class Cliente
 
     public int IdPersona { get; set; }
 
+
+    /*waos*/
     public virtual ICollection<Cita> Cita { get; set; } = new List<Cita>();
 
     public virtual Persona IdPersonaNavigation { get; set; } = null!;
