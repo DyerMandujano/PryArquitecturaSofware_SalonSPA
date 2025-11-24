@@ -1,9 +1,18 @@
-﻿@model Pry_Solu_SalonSPA.Models.Marca
+﻿@model IEnumerable<Pry_Solu_SalonSPA.Models.Marca>
 
 @{
     Layout = "~/Views/Main.cshtml";
     ViewData["Title"] = "Marcas";
 }
 
-<h1>Marcas</h1>
-<p>Gestión de Marcas registrados en el sistema.</p>
+<link rel="stylesheet" href="~/css/VProveedor/index.css" />
+
+@await Html.PartialAsync("_HeaderMarca")
+
+<div class="proveedor-lista-container">
+
+    @await Html.PartialAsync("_ListaMarca", Model)
+
+    @await Html.PartialAsync("_PaginaMarca")
+
+</div>
