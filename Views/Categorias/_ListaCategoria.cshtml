@@ -1,0 +1,58 @@
+﻿@model IEnumerable<Pry_Solu_SalonSPA.Models.Categoria>
+
+
+<link rel="stylesheet" href="~/css/VTipoServicio/_ListaTipoServicio.css" />
+<div class="contenedor-tiposervicio">
+
+    <div class="fila-tiposervicio encabezado">
+
+        <div>Nombre Categoria</div>
+        <div>Estado</div>
+        <div>Acciones</div>
+    </div>
+
+    @if (Model != null && Model.Any())
+    {
+        @foreach (var categoria in Model)
+        {
+            <div class="fila-tiposervicio">
+
+                <div class="celda" data-label="NomMarca:">@categoria.NomCate</div>
+
+                <div class="celda" data-label="Estado:">
+                    <span class="@(categoria.Estado == 1 ? "estado-activo" : "estado-inactivo")">
+                        @(categoria.Estado == 1 ? "Activo" : "Inactivo")
+                    </span>
+                </div>
+
+                <div class="celda acciones-tiposervicio" data-label="Acciones:">
+                    <!-- EDITAR -->
+                    <a asp-action="Editar"
+                       asp-route-id="@categoria.IdCategoria"
+                       class="btn-icon"
+                       title="Editar">
+                        <i class="fas fa-pen-to-square"></i>
+                    </a>
+
+                    <!-- CAMBIAR ESTADO -->
+                    <form asp-action="CambiarEstado" method="post" style="display:inline">
+                        <input type="hidden" name="id" value="@categoria.IdCategoria" />
+
+                        <button type="submit"
+                                class="btn-icon"
+                                title="@(categoria.Estado == 1 ? "Inactivar" : "Activar")">
+                            <i class="fas fa-@(categoria.Estado == 1 ? "toggle-on" : "toggle-off")"></i>
+                        </button>
+                    </form>
+
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="sin-resultados">
+            <p>No se encontraron marcas con los filtros aplicados.</p>
+        </div>
+    }
+</div>

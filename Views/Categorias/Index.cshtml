@@ -1,9 +1,18 @@
-﻿@model Pry_Solu_SalonSPA.Models.Categoria
+﻿@model IEnumerable<Pry_Solu_SalonSPA.Models.Categoria>
 
 @{
     Layout = "~/Views/Main.cshtml";
-    ViewData["Title"] = "Categorias";
+    ViewData["Title"] = "Categoria";
 }
 
-<h1>Categoria</h1>
-<p>Gestión de Categoria registrados en el sistema.</p>
+<link rel="stylesheet" href="~/css/VProveedor/index.css" />
+
+@await Html.PartialAsync("_HeaderCategoria")
+
+<div class="proveedor-lista-container">
+
+    @await Html.PartialAsync("_ListaCategoria", Model)
+
+    @await Html.PartialAsync("_PaginaCategoria")
+
+</div>

@@ -1,0 +1,53 @@
+﻿@model Pry_Solu_SalonSPA.Models.Categoria
+
+@{
+    Layout = "~/Views/Main.cshtml";
+    ViewData["Title"] = "Editar Categoria";
+
+    int IdCategoria = ViewBag.IdCategoria ?? 0;
+}
+
+<link href="~/css/VTipoServicio/_TipoServicioForm.css" rel="stylesheet" />
+
+<div class="crear-tipoServicio-wrapper">
+    <div class="crear-tipoServicio-box">
+
+        <a asp-action="Index"
+           class="btn-back">← Volver</a>
+
+        <div class="header-crear">
+            <h2>Editar Categoria</h2>
+        </div>
+
+        <form asp-action="Editar" asp-route-id="@IdCategoria" method="post" class="form-crear">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="IdCategoria" />
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label asp-for="NomCate">Categoria <span class="text-danger">*</span></label>
+                    <input asp-for="NomCate" class="editable-field" required />
+                    <span asp-validation-for="NomCate" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label asp-for="Estado">Estado <span class="text-danger">*</span></label>
+                    <select asp-for="Estado" class="editable-field" required>
+                        <option value="1">Activo</option>
+                        <option value="0">Inactivo</option>
+                    </select>
+                    <span asp-validation-for="Estado" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-buttons">
+                <a asp-action="Index"
+                   class="btn-cancelar">Cancelar</a>
+
+                <button type="submit" class="btn-crear">Guardar Cambios</button>
+            </div>
+        </form>
+    </div>
+</div>

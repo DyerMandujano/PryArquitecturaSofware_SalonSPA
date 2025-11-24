@@ -14,6 +14,8 @@ namespace Pry_Solu_SalonSPA.Controllers
         {
             _context = context;
         }
+
+        //LISTAR MARCAS
         public async Task<IActionResult> Index()
         {
             var marcas = await _context.Marcas
@@ -23,11 +25,14 @@ namespace Pry_Solu_SalonSPA.Controllers
             return View(marcas);
         }
 
+
+        //INSERT MARCA
         public IActionResult Crear()
         {
             return View("_CrearMarca", new Marca());
         }
 
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Crear(Marca marca)
@@ -47,6 +52,8 @@ namespace Pry_Solu_SalonSPA.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+
+        //UPDATE MARCA
         public async Task<IActionResult> Editar(int id)
         {
             var marca = await _context.Marcas
@@ -83,6 +90,7 @@ namespace Pry_Solu_SalonSPA.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        //DELETE MARCA (CAMBIAR ESTADO)
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CambiarEstado(int id)
