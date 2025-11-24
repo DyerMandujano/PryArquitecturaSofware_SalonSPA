@@ -1,9 +1,18 @@
-﻿@model Pry_Solu_SalonSPA.Models.Producto
+﻿@model IEnumerable<Pry_Solu_SalonSPA.Models.Producto>
 
 @{
     Layout = "~/Views/Main.cshtml";
-    ViewData["Title"] = "Productos";
+    ViewData["Title"] = "Producto";
 }
 
-<h1>Productos</h1>
-<p>Gestión de Productos registrados en el sistema.</p>
+<link rel="stylesheet" href="~/css/VProveedor/index.css" />
+
+@await Html.PartialAsync("_HeaderProducto")
+
+<div class="proveedor-lista-container">
+
+    @await Html.PartialAsync("_ListaProducto", Model)
+
+    @await Html.PartialAsync("_PaginaProducto")
+
+</div>

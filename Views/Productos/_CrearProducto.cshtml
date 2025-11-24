@@ -1,0 +1,98 @@
+﻿@model Pry_Solu_SalonSPA.Models.Producto
+@{
+    Layout = "~/Views/Main.cshtml";
+    ViewData["Title"] = "Crear Producto";
+}
+<link href="~/css/VClientes/_ClienteForm.css" rel="stylesheet" />
+<div class="crear-cliente-wrapper">
+    <div class="crear-cliente-box">
+        <a asp-action="Index" class="btn-back">← Volver</a>
+        <div class="header-crear">
+            <h2>Crear Producto</h2>
+        </div>
+        <form asp-action="Crear" method="post" class="form-crear">
+            <!-- CATEGORIA Y MARCA-->
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Categoría</label>
+                    <select asp-for="IdCategoria"
+                            class="editable-field"
+                            asp-items="@(new SelectList(ViewBag.Categorias, "IdCategoria", "NomCate"))">
+                        <option value="">Seleccione</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Marca</label>
+                    <select asp-for="IdMarca"
+                            class="editable-field"
+                            asp-items="@(new SelectList(ViewBag.Marcas, "IdMarca", "NomMarca"))">
+                        <option value="">Seleccione</option>
+                    </select>
+                </div>
+            </div>
+            <!-- NOMBRE -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label asp-for="NomProd">Nombre del Producto</label>
+                    <input asp-for="NomProd" class="editable-field" required placeholder="Ej: Shampoo Premium" />
+                </div>
+            </div>
+
+            <!-- DESCRIPCION -->
+            <div class="form-row">
+                <div class="form-group" style="width:100%;">
+                    <label asp-for="Descripcion">Descripción</label>
+                    <textarea asp-for="Descripcion" class="editable-field" rows="3" placeholder="Describe el producto..."></textarea>
+                </div>
+            </div>
+
+            <!-- STOCK Y PRECIO -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label asp-for="Stock">Stock</label>
+                    <input asp-for="Stock" class="editable-field" type="number" min="0" required placeholder="0" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Precio">Precio</label>
+                    <input asp-for="Precio" class="editable-field" type="number" min="0" step="0.01" required placeholder="0.00" />
+                </div>
+            </div>
+
+            <!-- ESTADO (oculto, siempre será 1) -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Estado</label>
+                    <input type="text" value="Activo" readonly class="readonly-field" />
+                </div>
+
+                <!-- FECHA REGISTRO -->
+                <div class="form-group">
+                    <label>Fecha de Registro</label>
+                    <input type="text" value="@DateTime.Now.ToString("yyyy-MM-dd")" readonly class="readonly-field" />
+                </div>
+            </div>
+
+            <!-- MOSTRAR ERRORES DE VALIDACIÓN -->
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div style="color: red; margin-top: 10px;">
+                    <strong>Errores:</strong>
+                    <ul>
+                        @foreach (var modelState in ViewData.ModelState.Values)
+                        {
+                            @foreach (var error in modelState.Errors)
+                            {
+                                <li>@error.ErrorMessage</li>
+                            }
+                        }
+                    </ul>
+                </div>
+            }
+
+            <div class="form-buttons">
+                <a asp-action="Index" class="btn-cancelar">Cancelar</a>
+                <button type="submit" class="btn-crear">Crear Producto</button>
+            </div>
+        </form>
+    </div>
+</div>

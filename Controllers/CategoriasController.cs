@@ -20,7 +20,7 @@ namespace Pry_Solu_SalonSPA.Controllers
         // =============================================================
         public async Task<IActionResult> Index()
         {
-            var categorias = await _context.Categoria
+            var categorias = await _context.Categorias
                 .FromSqlRaw("EXEC SP_ListarCategorias")
                 .ToListAsync();
 
@@ -62,7 +62,7 @@ namespace Pry_Solu_SalonSPA.Controllers
         // =============================================================
         public async Task<IActionResult> Editar(int id)
         {
-            var categoria = await _context.Categoria
+            var categoria = await _context.Categorias
                 .FromSqlRaw("SELECT * FROM Categoria WHERE Id_Categoria = {0}", id)
                 .FirstOrDefaultAsync();
 
@@ -106,7 +106,7 @@ namespace Pry_Solu_SalonSPA.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CambiarEstado(int id)
         {
-            var categoria = await _context.Categoria
+            var categoria = await _context.Categorias
                 .FromSqlRaw("SELECT * FROM Categoria WHERE Id_Categoria = {0}", id)
                 .FirstOrDefaultAsync();
 

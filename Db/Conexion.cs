@@ -22,7 +22,7 @@ public partial class Conexion : DbContext
     
     //ENTITADES
 
-    public virtual DbSet<Categoria> Categoria { get; set; }
+    public virtual DbSet<Categoria> Categorias { get; set; }
 
     public virtual DbSet<CitaServicio> CitaServicios { get; set; }
 
