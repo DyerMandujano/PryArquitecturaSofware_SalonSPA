@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Pry_Solu_SalonSPA.Models.Producto>
+
+<link rel="stylesheet" href="~/css/VClientes/_ListaClientes.css" />
+
+<div class="contenedor-clientes">
+
+    <div class="fila-clientes encabezado">
+        <div>Nombre Producto</div>
+        <div>Stock</div>
+        <div>Precio</div>
+        <div>Fecha Registro</div>
+        <div>Estado</div>
+        <div>Acciones</div>
+    </div>
+
+    @if (Model != null && Model.Any())
+    {
+        @foreach (var producto in Model)
+        {
+            <div class="fila-clientes">
+
+                <div class="celda" data-label="Nombre Producto:">@producto.NomProd</div>
+
+                <div class="celda" data-label="Stock:">@producto.Stock</div>
+
+                <div class="celda" data-label="Precio:">S/. @producto.Precio</div>
+
+                <div class="celda" data-label="Fecha Registro:">@producto.FechaRegistro</div>
+
+                <div class="celda" data-label="Estado:">
+                    <span class="@(producto.Estado == 1 ? "estado-activo" : "estado-inactivo")">
+                        @(producto.Estado == 1 ? "Activo" : "Inactivo")
+                    </span>
+                </div>
+
+                <div class="celda acciones-clientes" data-label="Acciones:">
+
+                    <!-- EDITAR -->
+                    <a asp-action="Editar"
+                       asp-route-id="@producto.IdProducto"
+                       class="btn-icon"
+                       title="Editar">
+                        <i class="fas fa-pen-to-square"></i>
+                    </a>
+
+                    <!-- CAMBIAR ESTADO -->
+                    <form asp-action="CambiarEstado" method="post" style="display:inline">
+                        <input type="hidden" name="id" value="@producto.IdProducto" />
+
+                        <button type="submit"
+                                class="btn-icon"
+                                title="@(producto.Estado == 1 ? "Inactivar" : "Activar")">
+                            <i class="fas fa-@(producto.Estado == 1 ? "toggle-on" : "toggle-off")"></i>
+                        </button>
+                    </form>
+
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="sin-resultados">
+            <p>No se encontraron productos.</p>
+        </div>
+    }
+</div>

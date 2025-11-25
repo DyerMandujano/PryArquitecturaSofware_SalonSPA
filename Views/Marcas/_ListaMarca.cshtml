@@ -1,0 +1,58 @@
+﻿@model IEnumerable<Pry_Solu_SalonSPA.Models.Marca>
+
+
+<link rel="stylesheet" href="~/css/VTipoServicio/_ListaTipoServicio.css" />
+<div class="contenedor-tiposervicio">
+
+    <div class="fila-tiposervicio encabezado">
+
+        <div>Nombre Marca</div>
+        <div>Estado</div>
+        <div>Acciones</div>
+    </div>
+
+    @if (Model != null && Model.Any())
+    {
+        @foreach (var marca in Model)
+        {
+            <div class="fila-tiposervicio">
+
+                <div class="celda" data-label="NomMarca:">@marca.NomMarca</div>
+
+                <div class="celda" data-label="Estado:">
+                    <span class="@(marca.Estado == 1 ? "estado-activo" : "estado-inactivo")">
+                        @(marca.Estado == 1 ? "Activo" : "Inactivo")
+                    </span>
+                </div>
+
+                <div class="celda acciones-tiposervicio" data-label="Acciones:">
+                    <!-- EDITAR -->
+                    <a asp-action="Editar"
+                       asp-route-id="@marca.IdMarca"
+                       class="btn-icon"
+                       title="Editar">
+                        <i class="fas fa-pen-to-square"></i>
+                    </a>
+
+                    <!-- CAMBIAR ESTADO -->
+                    <form asp-action="CambiarEstado" method="post" style="display:inline">
+                        <input type="hidden" name="id" value="@marca.IdMarca" />
+
+                        <button type="submit"
+                                class="btn-icon"
+                                title="@(marca.Estado == 1 ? "Inactivar" : "Activar")">
+                            <i class="fas fa-@(marca.Estado == 1 ? "toggle-on" : "toggle-off")"></i>
+                        </button>
+                    </form>
+
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="sin-resultados">
+            <p>No se encontraron marcas con los filtros aplicados.</p>
+        </div>
+    }
+</div>
