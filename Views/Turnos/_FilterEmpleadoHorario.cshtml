@@ -5,32 +5,63 @@
     int pageSize = ViewBag.PageSize ?? 10;
 }
 
-<link href="~/css/VEmpleados/_FilterEmpleados.css" rel="stylesheet" />
+<link href="~/css/VTurnos/_FilterEmpleadoHorario.css" rel="stylesheet" />
 
 <div class="busqueda-filtros-container">
-    <form method="get" asp-action="Index" class="form-buscador-derecha" id="searchForm">
-        <input type="text" name="busqueda" value="@busqueda" class="input-buscador" placeholder="Nombre o apellido..." />
-        <select name="idPerfil" class="filtro-select" onchange="this.form.submit()">
-            <option value="">Perfil: Todos</option>
-            @if (ViewData["Perfiles"] != null)
-            {
-                foreach (var perfil in (SelectList)ViewData["Perfiles"])
+    <div class="contenedor-buscador">
+        <p>Buscar empleados:</p>
+
+        <form method="get" asp-action="Index" class="form-buscador-derecha" id="searchForm">
+            <button type="submit" class="btn-search-separated" title="Buscar">
+                <i class="bi bi-search"></i>
+            </button>
+
+            <input type="text"
+                   name="busqueda"
+                   value="@busqueda"
+                   class="input-buscador"
+                   placeholder="Ingrese nombre o apellido del empleado" />
+
+            <input type="hidden" name="idPerfil" value="@idPerfil" />
+            <input type="hidden" name="estado" value="@estado" />
+            <input type="hidden" name="pageSize" value="@pageSize" />
+            <input type="hidden" name="pageNumber" value="1" />
+        </form>
+    </div>
+
+    <div class="filtros-derecha">
+        <form method="get" asp-action="Index" style="display: flex; gap: 0.65rem; align-items: center;">
+            <input type="hidden" name="busqueda" value="@busqueda" />
+            <input type="hidden" name="pageSize" value="@pageSize" />
+            <input type="hidden" name="pageNumber" value="1" />
+
+            <select name="idPerfil"
+                    class="filtro-select"
+                    data-active="@(idPerfil.HasValue)"
+                    onchange="this.form.submit()">
+                <option value="">Perfil: Todos</option>
+                @if (ViewData["Perfiles"] != null)
                 {
-                    <option value="@perfil.Value" selected="@(idPerfil.ToString() == perfil.Value)">@perfil.Text</option>
+                    foreach (var perfil in (SelectList)ViewData["Perfiles"])
+                    {
+                        <option value="@perfil.Value" selected="@(idPerfil.ToString() == perfil.Value)">@perfil.Text</option>
+                    }
                 }
-            }
-        </select>
-        <select name="estado" class="filtro-select" onchange="this.form.submit()">
-            <option value="">Estado: Todos</option>
-            <option value="1" selected="@(estado == 1)">Activo</option>
-            <option value="0" selected="@(estado == 0)">Inactivo</option>
-        </select>
-        <select name="pageSize" class="filtro-select" onchange="this.form.submit()">
-            <option value="10" selected="@(pageSize == 10)">10</option>
-            <option value="20" selected="@(pageSize == 20)">20</option>
-            <option value="50" selected="@(pageSize == 50)">50</option>
-            <option value="100" selected="@(pageSize == 100)">100</option>
-        </select>
-        <button type="submit" class="btn-search-separated"><i class="bi bi-search"></i></button>
-    </form>
+            </select>
+
+            <select name="estado"
+                    class="filtro-select"
+                    data-active="@(estado.HasValue)"
+                    onchange="this.form.submit()">
+                <option value="">Estado: Todos</option>
+                <option value="1" selected="@(estado == 1)">Activo</option>
+                <option value="0" selected="@(estado == 0)">Inactivo</option>
+            </select>
+        </form>
+
+        <a asp-action="Index" class="limpiar-btn">
+            <i class="bi bi-x-circle"></i>
+            <span>Limpiar</span>
+        </a>
+    </div>
 </div>

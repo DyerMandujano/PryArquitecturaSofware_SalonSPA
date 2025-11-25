@@ -1,0 +1,48 @@
+﻿<link rel="stylesheet" href="~/css/VDashboard/_StatsDashboard.css" />
+
+<div class="stats-container">
+
+    <div class="stats-card">
+
+        <div class="icono-wrap">
+
+            <i class="bi bi-calendar-check-fill icono"></i>
+        </div>
+
+        <span>Citas de Hoy</span>
+        <div class="stats-number">@ViewBag.CitasHoy</div>
+
+    </div>
+
+    <div class="stats-card">
+
+        <div class="icono-wrap">
+            <i class="bi bi-cash-stack icono"></i>
+        </div>
+
+        <span>Ventas del Día</span>
+        <div class="stats-number">S/. @(ViewBag.VentasDia != null ? ViewBag.VentasDia.ToString("N2") : "0.00")</div>
+
+    </div>
+
+    <div class="stats-card">
+
+        <div class="icono-wrap">
+            <i class="bi bi-people-fill icono"></i>
+        </div>
+
+        <span>Clientes Activos</span>
+        <div class="stats-number">@ViewBag.ClientesActivos</div>
+
+    </div>
+
+    <div class="stats-card">
+
+        <div class="icono-wrap">
+            <i class="bi bi-exclamation-triangle-fill icono"></i>
+        </div>
+
+        <span>Alertas de Inventario</span>
+        <div class="stats-number">@ViewBag.AlertasInventario</div>
+    </div>
+</div>

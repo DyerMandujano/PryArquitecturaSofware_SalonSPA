@@ -1,5 +1,5 @@
 ﻿.contenedor-empleados {
-    width: 1100px;
+    width: 1150px;
     margin: 0.5rem auto;
     font-family: 'Arial', sans-serif;
     font-size: 0.8rem;
@@ -95,7 +95,6 @@
         box-shadow: 0 3px 6px rgba(127, 42, 143, 0.15);
     }
 
-/* Acciones */
 .acciones {
     display: flex;
     gap: 0.4rem;

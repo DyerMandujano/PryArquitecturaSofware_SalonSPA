@@ -426,7 +426,11 @@ namespace Pry_Solu_SalonSPA.Controllers
         private void CargarListasDesplegables(int? idCliente = null, int? idEmpleadoHorario = null, int? idServicio = null)
         {
             ViewData["Clientes"] = new SelectList(
-                _context.Clientes.Include(c => c.IdPersonaNavigation).AsNoTracking().ToList(),
+                _context.Clientes
+                    .Include(c => c.IdPersonaNavigation)
+                    .Where(c => c.IdPersonaNavigation.Estado == 1)
+                    .AsNoTracking()
+                    .ToList(),
                 "IdCliente",
                 "IdPersonaNavigation.Nombres",
                 idCliente
@@ -434,7 +438,8 @@ namespace Pry_Solu_SalonSPA.Controllers
 
             ViewData["Empleados"] = _context.EmpleadoHorarios
                 .Include(eh => eh.IdEmpleadoNavigation)
-                .ThenInclude(e => e.IdPersonaNavigation)
+                    .ThenInclude(e => e.IdPersonaNavigation)
+                .Where(eh => eh.IdEmpleadoNavigation.IdPersonaNavigation.Estado == 1)
                 .AsNoTracking()
                 .Select(eh => new SelectListItem
                 {
@@ -451,5 +456,7 @@ namespace Pry_Solu_SalonSPA.Controllers
                 idServicio
             );
         }
+
+
     }
 }

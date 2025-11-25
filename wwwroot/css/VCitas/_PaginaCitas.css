@@ -2,7 +2,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 30px 0;
+    margin: 30px auto; /* ⭐ Agregado 'auto' para centrar */
     padding: 20px;
     background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
     border-radius: 12px;
@@ -10,8 +10,9 @@
     flex-wrap: wrap;
     gap: 20px;
     border: 1px solid #EBC5E5;
+    width: 90%;
+    max-width: 1200px; /* ⭐ Agregado para limitar el ancho máximo */
 }
-
 
 .registros-selector {
     display: flex;

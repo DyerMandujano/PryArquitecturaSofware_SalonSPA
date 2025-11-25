@@ -1,0 +1,152 @@
+﻿.stats-container {
+    max-width: 1150px;
+    margin: 2rem auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    font-family: 'Arial', sans-serif;
+}
+
+.stats-card {
+    position: relative;
+    flex: 1 1 200px;
+    background-color: #fff;
+    border: 2px solid #EBC5E5;
+    border-radius: 14px;
+    padding: 1rem 1.5rem;
+    min-width: 200px;
+    max-width: 280px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    gap: 1.2rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    transition: all 0.3s ease;
+}
+
+    .stats-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+        border-color: #d99ac1;
+    }
+
+    .stats-card span {
+        color: #2B2766;
+        font-size: 0.95rem;
+        font-weight: 600;
+        margin: 0;
+    }
+
+.stats-number {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin: 0;
+    color: #5A2D82;
+}
+
+.icono-wrap {
+    position: absolute;
+    top: 12px;
+    right: 18px;
+    display: flex;
+    align-items: center;
+    pointer-events: none;
+}
+
+.stats-card .icono {
+    font-size: 1.5rem;
+    color: #A138C2;
+    background: #fff;
+    border-radius: 50%;
+    padding: 4px;
+    box-shadow: none;
+}
+
+.stats-card:nth-child(1):hover {
+    border-color: #9b59b6;
+}
+
+.stats-card:nth-child(2):hover {
+    border-color: #EB2885;
+}
+
+.stats-card:nth-child(3):hover {
+    border-color: #7F4AA8;
+}
+
+.stats-card:nth-child(4):hover {
+    border-color: #e74c3c;
+}
+
+.stats-card:nth-child(1) .icono {
+    color: #9b59b6;
+}
+
+.stats-card:nth-child(2) .icono {
+    color: #EB2885;
+}
+
+.stats-card:nth-child(3) .icono {
+    color: #7F4AA8;
+}
+
+.stats-card:nth-child(4) .icono {
+    color: #e74c3c;
+}
+
+@media (max-width: 900px) {
+    .stats-card {
+        min-width: 180px;
+        max-width: 99vw;
+    }
+}
+
+@media (max-width: 768px) {
+    .stats-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        margin: 1.5rem auto;
+    }
+
+    .stats-card {
+        width: 80vw;
+        min-width: 170px;
+        max-width: 98vw;
+    }
+
+    .icono-wrap {
+        right: 15px;
+        top: 10px;
+    }
+
+    .stats-number {
+        font-size: 1.6rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .stats-card {
+        width: 90vw;
+        padding: 0.9rem 1.2rem;
+    }
+
+        .stats-card span {
+            font-size: 0.88rem;
+        }
+
+    .stats-number {
+        font-size: 1.5rem;
+    }
+
+    .icono-wrap {
+        right: 12px;
+    }
+
+    .stats-card .icono {
+        font-size: 1.3rem;
+    }
+}

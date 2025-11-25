@@ -1,0 +1,171 @@
+﻿<script>
+    var ventasMensuales = [
+        @if (ViewBag.VentasMensuales != null)
+        {
+                @foreach (var venta in ViewBag.VentasMensuales)
+                {
+                        @:{mes: '@venta.NombreMes', total: @venta.TotalVentas, cantidad: @venta.CantidadVentas},
+                }
+        }
+    ];
+
+    ventasMensuales = ventasMensuales.filter(v => v.total > 0);
+
+    if (ventasMensuales.length === 0) {
+        document.getElementById('ventasMensualesChart').parentElement.innerHTML =
+            '<p style="text-align: center; color: #A138C2; padding: 40px; font-weight: 500;">No hay ventas en este año</p>';
+    } else {
+        var meses = ventasMensuales.map(v => v.mes);
+        var totales = ventasMensuales.map(v => v.total);
+
+        var ctx = document.getElementById('ventasMensualesChart');
+        if (ctx) {
+            new Chart(ctx.getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: meses,
+                    datasets: [{
+                        label: 'Ventas (S/.)',
+                        data: totales,
+                        backgroundColor: 'rgba(235, 40, 133, 0.8)',
+                        borderColor: '#EB2885',
+                        borderWidth: 2,
+                        borderRadius: 8,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top',
+                            labels: {
+                                font: { size: 14, weight: 'bold' },
+                                color: '#2B2766'
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: '#2B2766',
+                            titleColor: '#fff',
+                            bodyColor: '#fff',
+                            padding: 12,
+                            borderColor: '#EB2885',
+                            borderWidth: 2,
+                            callbacks: {
+                                label: function(context) {
+                                    return 'S/. ' + context.parsed.y.toFixed(2);
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return 'S/. ' + value.toFixed(0);
+                                },
+                                font: { size: 12 },
+                                color: '#2B2766'
+                            },
+                            grid: { color: 'rgba(235, 197, 229, 0.3)' }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: {
+                                font: { size: 12, weight: 'bold' },
+                                color: '#2B2766'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    var serviciosData = [
+        @if (ViewBag.ServiciosMasSolicitados != null)
+        {
+                @foreach (var servicio in ViewBag.ServiciosMasSolicitados)
+                {
+                        @:{nombre: '@servicio.TipoServicio', cantidad: @servicio.Cantidad, ingreso: @servicio.Ingreso},
+                }
+        }
+    ];
+
+    var ctxServicios = document.getElementById('serviciosChart');
+    if (ctxServicios && serviciosData.length > 0) {
+        var serviciosNombres = serviciosData.map(s => s.nombre);
+        var serviciosCantidades = serviciosData.map(s => s.cantidad);
+
+        var colores = [
+            '#EB2885',
+            '#9b59b6',
+            '#3498db',
+            '#e74c3c',
+            '#f39c12',
+            '#27ae60',
+            '#8e44ad',
+            '#16a085',
+            '#c0392b',
+            '#d35400'
+        ];
+
+        new Chart(ctxServicios.getContext('2d'), {
+            type: 'doughnut',
+            data: {
+                labels: serviciosNombres,
+                datasets: [{
+                    data: serviciosCantidades,
+                    backgroundColor: colores.slice(0, serviciosData.length),
+                    borderColor: '#fff',
+                    borderWidth: 3,
+                    hoverOffset: 10
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'bottom',
+                        labels: {
+                            font: { size: 13, weight: '600' },
+                            color: '#2B2766',
+                            padding: 15,
+                            usePointStyle: true,
+                            pointStyle: 'circle'
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: '#2B2766',
+                        titleColor: '#fff',
+                        bodyColor: '#fff',
+                        padding: 12,
+                        callbacks: {
+                            label: function(context) {
+                                var label = context.label || '';
+                                var value = context.parsed || 0;
+                                var total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                var percentage = ((value / total) * 100).toFixed(1);
+
+                                var ingreso = serviciosData[context.dataIndex].ingreso;
+                                return [
+                                    label + ': ' + value + ' solicitudes',
+                                    'Porcentaje: ' + percentage + '%',
+                                    'Ingreso: S/. ' + ingreso.toFixed(2)
+                                ];
+                            }
+                        }
+                    }
+                },
+                cutout: '60%'
+            }
+        });
+    } else if (ctxServicios) {
+        ctxServicios.parentElement.innerHTML =
+            '<p style="text-align: center; color: #A138C2; padding: 40px; font-weight: 500;">No hay servicios registrados</p>';
+    }
+</script>

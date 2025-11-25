@@ -1,8 +1,25 @@
 ﻿@{
     Layout = "~/Views/Main.cshtml";
-
-    ViewData["Title"] = "Dashboard";
+    ViewData["Title"] = "Dashboard - ROMIS Salon Spa";
 }
 
-<h1>📊 Dashboard</h1>
-<p>Bienvenido al panel principal.</p>
+<link rel="stylesheet" href="~/css/VDashboard/index.css" />
+
+<div class="dashboard-main">
+
+    @await Html.PartialAsync("_StatsDashboard")
+
+    @await Html.PartialAsync("_VentasDashboard")
+
+    <div class="data-grid-double">
+
+        @await Html.PartialAsync("_ServiciosDashboard")
+
+        @await Html.PartialAsync("_ProductosDashboard")
+    </div>
+</div>
+
+@section Scripts 
+{
+    @await Html.PartialAsync("_ChartScript")
+}

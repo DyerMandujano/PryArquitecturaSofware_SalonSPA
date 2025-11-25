@@ -1,0 +1,60 @@
+﻿<link rel="stylesheet" href="~/css/VDashboard/_ProductosDashboard.css" />
+
+<div class="productos-section">
+
+    <div class="productos-header">
+        <h3><i class="bi bi-box-seam"></i> Productos con Stock Bajo</h3>
+    </div>
+
+    <div class="productos-body">
+
+        <div class="productos-table-container">
+
+            <table class="productos-table">
+
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Stock</th>
+                        <th>Nivel</th>
+                        <th>Precio</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @if (ViewBag.ProductosBajoStock != null && ViewBag.ProductosBajoStock.Count > 0)
+                    {
+                        @foreach (var producto in ViewBag.ProductosBajoStock)
+                        {
+                            <tr>
+                                <td class="font-medium">@producto.Producto</td>
+                                <td class="text-center"><strong>@producto.Stock</strong></td>
+                                <td class="text-center">
+                                    @if (producto.Nivel == "Crítico")
+                                    {
+                                        <span class="badge-critico">Crítico</span>
+                                    }
+                                    else if (producto.Nivel == "Bajo")
+                                    {
+                                        <span class="badge-bajo">Bajo</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge-normal">Normal</span>
+                                    }
+                                </td>
+                                <td>S/. @producto.Precio.ToString("N2")</td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="4" class="text-center text-muted">Todos los productos tienen stock suficiente</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

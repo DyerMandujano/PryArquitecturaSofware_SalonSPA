@@ -1,0 +1,41 @@
+﻿<link rel="stylesheet" href="~/css/VDashboard/_VentasDashboard.css" />
+
+<div class="ventas-section full-width">
+
+    <div class="ventas-header">
+
+        <div class="ventas-header-content">
+            <h3><i class="bi bi-bar-chart-fill"></i> Ventas Mensuales</h3>
+        </div>
+
+        <div class="ventas-year-selector">
+
+            <label>Año:</label>
+            <select class="ventas-select" onchange="location.href='/Dashboard/Index?anio=' + this.value">
+
+                @if (ViewBag.AniosDisponibles != null)
+                {
+                    @foreach (var year in ViewBag.AniosDisponibles)
+                    {
+                        @if (year == ViewBag.AnioActual)
+                        {
+                            <option value="@year" selected>@year</option>
+                        }
+                        else
+                        {
+                            <option value="@year">@year</option>
+                        }
+                    }
+                }
+            </select>
+        </div>
+
+    </div>
+
+    <div class="ventas-body">
+        <div class="ventas-chart-wrapper">
+            <canvas id="ventasMensualesChart"></canvas>
+        </div>
+    </div>
+
+</div>

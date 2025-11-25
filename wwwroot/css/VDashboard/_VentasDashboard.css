@@ -1,0 +1,247 @@
+﻿:root {
+    --ventas-color-1: #D8BFD8;
+    --ventas-color-2: #DDA0DD;
+    --ventas-color-3: #E6C9E8;
+    --ventas-border-color: #EBC5E5;
+    --ventas-shadow-color: rgba(228, 213, 242, 0.15);
+    --ventas-shadow-hover: rgba(228, 213, 242, 0.22);
+    --ventas-text-color: #2B2766;
+    --ventas-arrow-color: %232B2766;
+    --ventas-loading-color: #A138C2;
+}
+
+.ventas-section {
+    background: white;
+    border-radius: 14px;
+    border: 2px solid #EBC5E5;
+    box-shadow: 0 4px 12px rgba(228, 213, 242, 0.12);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    max-width: 1150px;
+    margin: 0 auto;
+}
+
+    .ventas-section:hover {
+        box-shadow: 0 6px 20px rgba(228, 213, 242, 0.18);
+        transform: translateY(-2px);
+    }
+
+    .ventas-section.full-width {
+        grid-column: 1 / -1;
+    }
+
+.ventas-header {
+    background: #FBEDFC;
+    padding: 16px 24px;
+    border-bottom: 2px solid #EBC5E5;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 18px;
+    position: relative;
+}
+
+.ventas-header-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+    .ventas-header-content h3 {
+        margin: 0;
+        color: #2B2766;
+        font-size: 15px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+        .ventas-header-content h3 i {
+            font-size: 18px;
+            color: #5A2D82;
+            background: white;
+            padding: 6px;
+            border-radius: 7px;
+            box-shadow: 0 2px 6px rgba(90, 45, 130, 0.12);
+        }
+
+.ventas-year-selector {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: white;
+    padding: 5px 12px;
+    border-radius: 8px;
+    border: 2px solid #EBC5E5;
+}
+
+    .ventas-year-selector label {
+        color: #2B2766;
+        font-weight: 700;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+    }
+
+.ventas-select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding: 0.35rem 1.8rem 0.35rem 0.75rem;
+    border: 2px solid #EBC5E5;
+    border-radius: 7px;
+    background-color: white;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 11 11'%3E%3Cpath fill='%232B2766' d='M5.5 8L1 3.5h9z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.55rem center;
+    color: #2B2766;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 90px;
+}
+
+    .ventas-select:hover {
+        border-color: #7F4AA8;
+        box-shadow: 0 2px 8px rgba(127, 74, 168, 0.15);
+    }
+
+    .ventas-select:focus {
+        outline: none;
+        border-color: #d63384;
+        box-shadow: 0 0 0 3px rgba(214, 51, 132, 0.1);
+    }
+
+.ventas-body {
+    padding: 24px;
+    background: white;
+}
+
+.ventas-chart-wrapper {
+    position: relative;
+    height: 340px;
+    padding: 16px;
+    background: #fafafa;
+    border-radius: 10px;
+    border: 1px solid #EBC5E5;
+}
+
+    .ventas-chart-wrapper::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 36px;
+        height: 36px;
+        border: 3px solid #FBEDFC;
+        border-top: 3px solid var(--ventas-loading-color);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        opacity: 0;
+    }
+
+@keyframes spin {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+.ventas-chart-wrapper.loading::before {
+    opacity: 1;
+}
+
+@media (max-width: 768px) {
+    .ventas-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+        padding: 14px 18px;
+    }
+
+    .ventas-header-content {
+        justify-content: center;
+    }
+
+        .ventas-header-content h3 {
+            font-size: 14px;
+        }
+
+            .ventas-header-content h3 i {
+                font-size: 16px;
+                padding: 5px;
+            }
+
+    .ventas-year-selector {
+        justify-content: center;
+        width: 100%;
+        padding: 4px 10px;
+    }
+
+        .ventas-year-selector label {
+            font-size: 11px;
+        }
+
+    .ventas-select {
+        flex: 1;
+        max-width: 130px;
+        font-size: 0.82rem;
+    }
+
+    .ventas-body {
+        padding: 18px;
+    }
+
+    .ventas-chart-wrapper {
+        height: 280px;
+        padding: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .ventas-section {
+        border-radius: 12px;
+    }
+
+    .ventas-header {
+        padding: 12px 15px;
+    }
+
+    .ventas-header-content h3 {
+        font-size: 13px;
+        gap: 7px;
+    }
+
+        .ventas-header-content h3 i {
+            font-size: 15px;
+            padding: 5px;
+        }
+
+    .ventas-year-selector {
+        padding: 4px 10px;
+    }
+
+        .ventas-year-selector label {
+            font-size: 11px;
+        }
+
+    .ventas-select {
+        font-size: 0.8rem;
+        padding: 0.32rem 1.6rem 0.32rem 0.7rem;
+    }
+
+    .ventas-body {
+        padding: 14px;
+    }
+
+    .ventas-chart-wrapper {
+        height: 240px;
+        padding: 12px;
+    }
+}

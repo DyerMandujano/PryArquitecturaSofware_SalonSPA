@@ -4,18 +4,19 @@
     ViewData["Title"] = "Turnos de Empleados";
 }
 
-<link href="~/css/VEmpleados/index.css" rel="stylesheet" />
+<link href="~/css/VTurnos/index.css" rel="stylesheet" />
 
-<div class="empleados-container">
+<div class="empleadoHorario-container">
 
     @await Html.PartialAsync("_HeaderEmpleadoHorario")
 
-    <div class="empleados-lista-container">
+    <div class="empleadoHorario-lista-container">
 
         @await Html.PartialAsync("_FilterEmpleadoHorario")
 
         @await Html.PartialAsync("_ListaEmpleadoHorario", Model)
 
         @await Html.PartialAsync("_PaginaEmpleadoHorario")
+
     </div>
 </div>

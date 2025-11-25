@@ -49,6 +49,12 @@ namespace Pry_Solu_SalonSPA.Controllers
 
                 while (await reader.ReadAsync())
                 {
+                    if (totalRegistros == 0 && reader["TotalRegistros"] != DBNull.Value)
+                    {
+                        totalRegistros = Convert.ToInt32(reader["TotalRegistros"]);
+                        totalPaginas = Convert.ToInt32(reader["TotalPaginas"]);
+                    }
+
                     var empleado = new Empleado
                     {
                         IdEmpleado = reader.GetInt32(reader.GetOrdinal("Id_Empleado")),
@@ -80,13 +86,6 @@ namespace Pry_Solu_SalonSPA.Controllers
                     empleado.EmpleadoHorarios.Add(empHorario);
                     listaEmpleados.Add(empleado);
                 }
-
-                // Si el SP retorna TotalRegistros y TotalPaginas en un segundo result set
-                if (await reader.NextResultAsync() && await reader.ReadAsync())
-                {
-                    totalRegistros = reader["TotalRegistros"] != DBNull.Value ? Convert.ToInt32(reader["TotalRegistros"]) : 0;
-                    totalPaginas = reader["TotalPaginas"] != DBNull.Value ? Convert.ToInt32(reader["TotalPaginas"]) : 0;
-                }
             }
             catch (Exception ex)
             {
@@ -106,6 +105,7 @@ namespace Pry_Solu_SalonSPA.Controllers
 
             return View(listaEmpleados);
         }
+
 
         [HttpGet]
         public IActionResult Crear()
@@ -339,12 +339,20 @@ namespace Pry_Solu_SalonSPA.Controllers
                     var nuevoEstado = reader.GetInt32(reader.GetOrdinal("NuevoEstado"));
                     var mensaje = reader["Mensaje"]?.ToString();
 
-                    TempData["Mensaje"] = $"{mensaje} Estado: {(nuevoEstado == 1 ? "Activo" : "Inactivo")}.";
+                    TempData["Mensaje"] = $"{mensaje}";
                 }
+                else
+                {
+                    TempData["Mensaje"] = "Estado cambiado correctamente.";
+                }
+            }
+            catch (SqlException ex)
+            {
+                TempData["Mensaje"] = $"Error al cambiar estado: {ex.Message}";
             }
             catch (Exception ex)
             {
-                TempData["Mensaje"] = $"Error al cambiar estado: {ex.Message}";
+                TempData["Mensaje"] = $"Error inesperado: {ex.Message}";
             }
 
             return RedirectToAction(nameof(Index), new
@@ -356,6 +364,7 @@ namespace Pry_Solu_SalonSPA.Controllers
                 pageSize
             });
         }
+
 
 
         private void CargarCombos(int? idPerfilSeleccionado = null)

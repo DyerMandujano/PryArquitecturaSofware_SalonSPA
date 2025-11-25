@@ -24,6 +24,12 @@
             var horario = empHorario?.IdHorarioNavigation;
             var tieneHorario = horario != null && horario.IdHorario > 0;
 
+            // Validar si tiene datos de horario definidos
+            var tieneDatosHorario = tieneHorario &&
+            horario.HoraInicio.HasValue &&
+            horario.HoraFin.HasValue &&
+            !string.IsNullOrEmpty(horario.DiasSemana);
+
             <div class="fila-empleados">
                 <div class="celda" data-label="Nombres">
                     @(persona?.Nombres ?? "")
@@ -35,27 +41,27 @@
                     @(perfil?.NombrePerfil ?? "")
                 </div>
                 <div class="celda" data-label="Hora Inicio">
-                    @if (tieneHorario && horario.HoraInicio.HasValue)
+                    @if (tieneDatosHorario)
                     {
                         @horario.HoraInicio.Value.ToString(@"hh\:mm")
                     }
                     else
                     {
-                        <span style="color:#aaa;">-</span>
+                        <span style="color:#aaa;">Sin definir</span>
                     }
                 </div>
                 <div class="celda" data-label="Hora Fin">
-                    @if (tieneHorario && horario.HoraFin.HasValue)
+                    @if (tieneDatosHorario)
                     {
                         @horario.HoraFin.Value.ToString(@"hh\:mm")
                     }
                     else
                     {
-                        <span style="color:#aaa;">-</span>
+                        <span style="color:#aaa;">Sin definir</span>
                     }
                 </div>
                 <div class="celda" data-label="Días">
-                    @if (tieneHorario && !string.IsNullOrEmpty(horario.DiasSemana))
+                    @if (tieneDatosHorario)
                     {
                         var dias = new[] { "L", "M", "Mi", "J", "V", "S", "D" };
                         var seleccionados = horario.DiasSemana.Trim('[', ']').Split(',', StringSplitOptions.RemoveEmptyEntries);
@@ -75,8 +81,8 @@
                 <div class="celda" data-label="Estado">
                     @if (tieneHorario)
                     {
-                        <span class="@(horario.Estado == 1 ? "estado-activo" : "estado-retirado")">
-                            @(horario.Estado == 1 ? "ACTIVO" : "INACTIVO")
+                        <span class="@(horario.Estado == 1 && tieneDatosHorario ? "estado-activo" : "estado-retirado")">
+                            @(horario.Estado == 1 && tieneDatosHorario ? "ACTIVO" : "INACTIVO")
                         </span>
                     }
                     else
@@ -85,7 +91,7 @@
                     }
                 </div>
                 <div class="celda acciones" data-label="Acciones">
-                    <!-- Botón Asignar/Modificar - SIEMPRE VISIBLE PARA TODOS -->
+                    <!-- Botón Asignar/Modificar - SIEMPRE VISIBLE -->
                     <a asp-action="Asignar"
                        asp-route-idEmpleado="@emp.IdEmpleado"
                        asp-route-busqueda="@ViewBag.Busqueda"
@@ -94,11 +100,11 @@
                        asp-route-pageNumber="@ViewBag.PageNumber"
                        asp-route-pageSize="@ViewBag.PageSize"
                        class="btn-accion editar"
-                       title="@(tieneHorario ? "Modificar horario" : "Asignar horario")">
+                       title="@(tieneDatosHorario ? "Modificar horario" : "Asignar horario")">
                         <i class="bi bi-pencil"></i>
                     </a>
 
-                    <!-- Botón Cambiar Estado - SOLO SI TIENE HORARIO -->
+                    <!-- Botón Cambiar Estado - VISIBLE SI TIENE REGISTRO DE HORARIO -->
                     @if (tieneHorario)
                     {
                         <form asp-action="CambiarEstado" method="post" style="display:inline">
@@ -110,10 +116,10 @@
                             <input type="hidden" name="pageNumber" value="@ViewBag.PageNumber" />
                             <input type="hidden" name="pageSize" value="@ViewBag.PageSize" />
                             <button type="submit"
-                                    class="btn-icon @(horario.Estado == 1 ? "eliminar" : "activar")"
-                                    title="@(horario.Estado == 1 ? "Desactivar horario" : "Activar horario")"
-                                    onclick="return confirm('@(horario.Estado == 1 ? "¿Desactivar este horario? Los datos se limpiarán." : "¿Activar este horario?")');">
-                                <i class="bi bi-@(horario.Estado == 1 ? "x-circle" : "check-circle")"></i>
+                                    class="btn-icon @(horario.Estado == 1 && tieneDatosHorario ? "eliminar" : "activar")"
+                                    title="@(horario.Estado == 1 && tieneDatosHorario ? "Desactivar horario" : "Activar horario")"
+                                    onclick="return confirm('@(horario.Estado == 1 && tieneDatosHorario ? "¿Desactivar este horario? Los datos se eliminarán." : "¿Activar este horario? Debe asignar horarios desde Modificar.")');">
+                                <i class="bi bi-@(horario.Estado == 1 && tieneDatosHorario ? "x-circle" : "check-circle")"></i>
                             </button>
                         </form>
                     }

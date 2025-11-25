@@ -1,0 +1,226 @@
+﻿.productos-section {
+    background: white;
+    border-radius: 14px;
+    border: 2px solid #EBC5E5;
+    box-shadow: 0 4px 12px rgba(228, 213, 242, 0.12);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    min-width: 510px;
+}
+
+    .productos-section:hover {
+        box-shadow: 0 6px 20px rgba(228, 213, 242, 0.18);
+        transform: translateY(-2px);
+    }
+
+.productos-header {
+    background: #FBEDFC;
+    padding: 14px 20px;
+    border-bottom: 2px solid #EBC5E5;
+}
+
+    .productos-header h3 {
+        margin: 0;
+        color: #2B2766;
+        font-size: 14px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 7px;
+    }
+
+        .productos-header h3 i {
+            font-size: 16px;
+            color: #5A2D82;
+            background: white;
+            padding: 5px;
+            border-radius: 6px;
+            box-shadow: 0 2px 6px rgba(90, 45, 130, 0.12);
+        }
+
+.productos-body {
+    padding: 20px;
+    background: white;
+}
+
+.productos-table-container {
+    overflow-x: auto;
+}
+
+.productos-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 8px;
+}
+
+    .productos-table thead th {
+        background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+        color: white;
+        padding: 12px 14px;
+        text-align: left;
+        font-weight: 600;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        border: none;
+    }
+
+        .productos-table thead th:first-child {
+            border-radius: 8px 0 0 8px;
+        }
+
+        .productos-table thead th:last-child {
+            border-radius: 0 8px 8px 0;
+        }
+
+    .productos-table tbody tr {
+        background: #fafafa;
+        transition: all 0.3s ease;
+    }
+
+        .productos-table tbody tr:hover {
+            background: #f0e6f6;
+            transform: scale(1.02);
+            box-shadow: 0 4px 8px rgba(155, 89, 182, 0.15);
+        }
+
+    .productos-table tbody td {
+        padding: 12px 14px;
+        color: #2B2766;
+        font-size: 13px;
+        border: none;
+    }
+
+    .productos-table tbody tr td:first-child {
+        border-radius: 8px 0 0 8px;
+    }
+
+    .productos-table tbody tr td:last-child {
+        border-radius: 0 8px 8px 0;
+    }
+
+.font-medium {
+    font-weight: 600;
+    color: #2B2766;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-muted {
+    color: #A138C2;
+    font-style: italic;
+}
+
+.badge-critico {
+    display: inline-block;
+    padding: 5px 12px;
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    color: white;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 6px rgba(231, 76, 60, 0.3);
+}
+
+.badge-bajo {
+    display: inline-block;
+    padding: 5px 12px;
+    background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+    color: white;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 6px rgba(243, 156, 18, 0.3);
+}
+
+.badge-normal {
+    display: inline-block;
+    padding: 5px 12px;
+    background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+    color: white;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 6px rgba(39, 174, 96, 0.3);
+}
+
+.productos-table tbody td strong {
+    color: #5A2D82;
+    font-size: 14px;
+}
+
+.productos-table tbody tr td:last-child {
+    color: #27ae60;
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .productos-section {
+        width: 100%;
+        max-width: 500px;
+    }
+
+    .productos-body {
+        padding: 16px;
+    }
+
+    .productos-header {
+        padding: 12px 18px;
+    }
+
+        .productos-header h3 {
+            font-size: 13px;
+        }
+
+            .productos-header h3 i {
+                font-size: 15px;
+            }
+
+    .productos-table {
+        font-size: 12px;
+    }
+
+        .productos-table thead th,
+        .productos-table tbody td {
+            padding: 10px 12px;
+        }
+
+    .badge-critico,
+    .badge-bajo,
+    .badge-normal {
+        font-size: 10px;
+        padding: 4px 10px;
+    }
+}
+
+@media (max-width: 520px) {
+    .productos-section {
+        width: 100%;
+        border-radius: 12px;
+    }
+
+    .productos-header {
+        padding: 12px 15px;
+    }
+
+    .productos-body {
+        padding: 14px;
+    }
+
+    .productos-table {
+        font-size: 11px;
+    }
+
+        .productos-table thead th,
+        .productos-table tbody td {
+            padding: 8px 10px;
+        }
+}

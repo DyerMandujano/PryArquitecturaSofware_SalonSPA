@@ -1,5 +1,4 @@
-﻿/* ==================== CONTENEDOR PRINCIPAL ==================== */
-.crear-empleado-wrapper {
+﻿.crear-empleado-wrapper {
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -18,7 +17,6 @@
     position: relative;
 }
 
-/* ==================== BOTÓN VOLVER ==================== */
 .btn-back {
     display: inline-flex;
     align-items: center;
@@ -39,7 +37,6 @@
         transform: translateX(-3px);
     }
 
-/* ==================== ENCABEZADO ==================== */
 .header-crear {
     margin-bottom: 2rem;
     border-bottom: 2px solid #EBC5E5;
@@ -59,7 +56,6 @@
         font-size: 0.9rem;
     }
 
-/* ==================== ALERTAS ==================== */
 .alert {
     padding: 1rem;
     border-radius: 8px;
@@ -79,7 +75,6 @@
     color: #18794a;
 }
 
-/* ==================== CAJA DE INFO DEL EMPLEADO ==================== */
 .empleado-info-box {
     background-color: #f0f8ff;
     border: 2px solid #b3d9ff;
@@ -95,7 +90,6 @@
         font-weight: 600;
     }
 
-/* ==================== FORMULARIO ==================== */
 .form-crear {
     display: flex;
     flex-direction: column;
@@ -125,7 +119,6 @@
     font-weight: 700;
 }
 
-/* ==================== CAMPOS DE ENTRADA ==================== */
 .editable-field,
 .readonly-field {
     padding: 0.75rem;
@@ -151,7 +144,6 @@
     border-color: #b95aa1;
 }
 
-/* ==================== DÍAS DE LA SEMANA ==================== */
 .dias-semana-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
@@ -205,7 +197,6 @@
             font-weight: 600;
         }
 
-/* ==================== BOTONES ==================== */
 .form-buttons {
     display: flex;
     justify-content: flex-end;
@@ -258,7 +249,6 @@
         transform: translateY(0);
     }
 
-/* ==================== RESPONSIVE ==================== */
 @media (max-width: 768px) {
     .crear-empleado-wrapper {
         padding: 1rem;

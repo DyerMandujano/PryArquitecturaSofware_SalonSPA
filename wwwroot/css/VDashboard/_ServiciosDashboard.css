@@ -1,0 +1,111 @@
+﻿.servicios-section {
+    background: white;
+    border-radius: 14px;
+    border: 2px solid #EBC5E5;
+    box-shadow: 0 4px 12px rgba(228, 213, 242, 0.12);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    min-width: 500px;
+}
+
+    .servicios-section:hover {
+        box-shadow: 0 6px 20px rgba(228, 213, 242, 0.18);
+        transform: translateY(-2px);
+    }
+
+.servicios-header {
+    background: #FBEDFC;
+    padding: 14px 20px;
+    border-bottom: 2px solid #EBC5E5;
+}
+
+    .servicios-header h3 {
+        margin: 0;
+        color: #2B2766;
+        font-size: 14px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 7px;
+    }
+
+        .servicios-header h3 i {
+            font-size: 16px;
+            color: #5A2D82;
+            background: white;
+            padding: 5px;
+            border-radius: 6px;
+            box-shadow: 0 2px 6px rgba(90, 45, 130, 0.12);
+        }
+
+.servicios-body {
+    padding: 30px 20px;
+    background: white;
+}
+
+.servicios-chart-container {
+    position: relative;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.font-medium {
+    font-weight: 600;
+    color: #2B2766;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-success {
+    color: #27ae60;
+    font-weight: 600;
+}
+
+.text-muted {
+    color: #A138C2;
+    font-style: italic;
+}
+
+@media (max-width: 768px) {
+    .servicios-body {
+        padding: 24px 16px;
+    }
+
+    .servicios-chart-container {
+        height: 340px;
+    }
+
+    .servicios-header h3 {
+        font-size: 13px;
+    }
+
+        .servicios-header h3 i {
+            font-size: 15px;
+        }
+}
+
+@media (max-width: 520px) {
+    .servicios-section {
+        border-radius: 12px;
+    }
+
+    .servicios-header {
+        padding: 12px 15px;
+    }
+
+        .servicios-header h3 {
+            font-size: 13px;
+        }
+
+    .servicios-body {
+        padding: 20px 14px;
+    }
+
+    .servicios-chart-container {
+        height: 280px;
+    }
+}
