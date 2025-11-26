@@ -1,9 +1,33 @@
-﻿@model Pry_Solu_SalonSPA.Models.Venta
+﻿@model List<Pry_Solu_SalonSPA.ViewModels.VentaListaVM>
 
 @{
     Layout = "~/Views/Main.cshtml";
     ViewData["Title"] = "Ventas";
 }
 
-<h1>Ventas</h1>
-<p>Gestión de Ventas registrados en el sistema.</p>
+<link href="~/css/VVentas/index.css" rel="stylesheet" />
+
+<!-- Mensajes -->
+@if (TempData["Mensaje"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="bi bi-check-circle"></i> @TempData["Mensaje"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="bi bi-exclamation-triangle"></i> @TempData["Error"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="ventas-container">
+    @await Html.PartialAsync("_HeaderVentas")
+
+    <div class="ventas-lista-container">
+        @await Html.PartialAsync("_BuscarVentas")
+        @await Html.PartialAsync("_ListaVentas", Model)
+    </div>
+</div>

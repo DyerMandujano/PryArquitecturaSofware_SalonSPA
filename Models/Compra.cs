@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System;
 using System.Collections.Generic;
 
 namespace Pry_Solu_SalonSPA.Models;
@@ -14,6 +15,6 @@ public partial class Compra
     public DateTime FechaCompra { get; set; }
 
     public virtual ICollection<DetalleCompra> DetalleCompras { get; set; } = new List<DetalleCompra>();
-
+    [ValidateNever]
     public virtual Proveedor IdProveedorNavigation { get; set; } = null!;
 }

@@ -1,7 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Pry_Solu_SalonSPA.Models;
+using Pry_Solu_SalonSPA.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.Data;
 
 namespace Pry_Solu_SalonSPA.Db;
 
@@ -69,7 +72,7 @@ public partial class Conexion : DbContext
     {/*
         if (!optionsBuilder.IsConfigured)
         {
-            optionsBuilder.UseSqlServer("Server=localhost;Database=DB_ROMIS;Trusted_Connection=True;TrustServerCertificate=True;");
+            optionsBuilder.UseSqlServer("Server=localhost;Database=BD_ROMIS_SALON;Trusted_Connection=True;TrustServerCertificate=True;");
         }*/
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -451,6 +454,9 @@ public partial class Conexion : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.Precio).HasColumnType("decimal(10, 2)");
 
+            entity.Property(e => e.Duracion).HasColumnName("Duracion");
+            entity.Property(e => e.Estado).HasColumnName("Estado");
+
             entity.HasOne(d => d.IdTipoServicioNavigation).WithMany(p => p.Servicios)
                 .HasForeignKey(d => d.IdTipoServicio)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -557,4 +563,37 @@ public partial class Conexion : DbContext
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+    public List<CompraListaVM> BuscarCompras(string tipoBusqueda, string valorBusqueda)
+    {
+        var lista = new List<CompraListaVM>();
+
+        using var conn = Database.GetDbConnection();
+        if (conn.State != ConnectionState.Open) conn.Open();
+
+        using var cmd = conn.CreateCommand();
+        cmd.CommandText = "SP_BuscarCompras";
+        cmd.CommandType = CommandType.StoredProcedure;
+
+        cmd.Parameters.Add(new SqlParameter("@TipoBusqueda", tipoBusqueda ?? "TODOS"));
+        cmd.Parameters.Add(new SqlParameter("@ValorBusqueda",
+            string.IsNullOrEmpty(valorBusqueda) ? (object)DBNull.Value : valorBusqueda));
+
+        using var reader = cmd.ExecuteReader();
+
+        while (reader.Read())
+        {
+            lista.Add(new CompraListaVM
+            {
+                Id_Compra = reader.GetInt32(reader.GetOrdinal("Id_Compra")),
+                Fecha_compra = reader.GetDateTime(reader.GetOrdinal("Fecha_compra")),
+                Nom_Prove = reader.GetString(reader.GetOrdinal("Nom_Prove")),
+                Tipo_Doc = reader.GetString(reader.GetOrdinal("Tipo_Doc")),
+                Total_Productos = reader.GetInt32(reader.GetOrdinal("Total_Productos")),
+                Monto_Total = reader.GetDecimal(reader.GetOrdinal("Monto_Total"))
+            });
+        }
+
+        return lista;
+    }
 }

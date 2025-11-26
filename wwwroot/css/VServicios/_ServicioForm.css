@@ -1,0 +1,162 @@
+﻿body {
+}
+.crear-servicio-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 80vh;
+    padding: 2rem;
+    background-color: #f8f9fa;
+}
+
+.crear-servicio-box {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    padding: 2rem;
+    width: 100%;
+    max-width: 800px;
+}
+
+.btn-back {
+    display: inline-flex;
+    align-items: center;
+    color: #2B2766;
+    text-decoration: none;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    transition: color 0.3s;
+}
+
+    .btn-back:hover {
+        color: #EB2885;
+    }
+
+.header-crear {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+    .header-crear h2 {
+        color: #2B2766;
+        margin: 0;
+        font-size: 1.8rem;
+    }
+
+.form-crear {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-row {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.form-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+    .form-group.full-width {
+        flex: 2;
+    }
+
+    .form-group label {
+        color: #2B2766;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+    }
+
+.editable-field {
+    padding: 0.75rem;
+    border: 2px solid #EBC5E5;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    transition: border-color 0.3s;
+    background-color: #fff;
+}
+
+    .editable-field:focus {
+        outline: none;
+        border-color: #EB2885;
+        box-shadow: 0 0 0 3px rgba(235, 40, 133, 0.1);
+    }
+
+.readonly-field {
+    padding: 0.75rem;
+    border: 2px solid #EBC5E5;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    background-color: #f8f9fa;
+    color: #6c757d;
+}
+
+.text-danger {
+    color: #dc3545;
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+}
+
+.form-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 2px solid #EBC5E5;
+}
+
+.btn-cancelar {
+    padding: 0.75rem 1.5rem;
+    border: 2px solid #EBC5E5;
+    border-radius: 8px;
+    background: white;
+    color: #2B2766;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+    .btn-cancelar:hover {
+        background-color: #ffe6f0;
+        border-color: #EB2885;
+    }
+
+.btn-crear {
+    padding: 0.75rem 2rem;
+    border: none;
+    border-radius: 8px;
+    background-color: #EB2885;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+    .btn-crear:hover {
+        background-color: #EB3B8F;
+    }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .crear-servicio-wrapper {
+        padding: 1rem;
+    }
+
+    .crear-servicio-box {
+        padding: 1.5rem;
+    }
+
+    .form-row {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .form-buttons {
+        flex-direction: column;
+    }
+}

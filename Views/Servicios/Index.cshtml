@@ -1,9 +1,33 @@
-﻿@model Pry_Solu_SalonSPA.Models.Servicio
+﻿@model List<Pry_Solu_SalonSPA.Models.Servicio>
 
 @{
     Layout = "~/Views/Main.cshtml";
     ViewData["Title"] = "Servicios";
 }
 
-<h1>Servicios</h1>
-<p>Gestión de Servicios registrados en el sistema.</p>
+<link rel="stylesheet" href="~/css/VServicios/index.css" />
+<!-- Mensajes de éxito o error -->
+@if (TempData["Mensaje"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="bi bi-check-circle"></i> @TempData["Mensaje"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="bi bi-exclamation-triangle"></i> @TempData["Error"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+
+<div class="servicios-container">
+    @await Html.PartialAsync("_HeaderServicios")
+    <div class="servicios-lista-container">
+        @await Html.PartialAsync("_BuscarServicios")
+        @await Html.PartialAsync("_ListaServicios", Model)
+
+    </div>
+</div>

@@ -1,0 +1,65 @@
+﻿@model List<Pry_Solu_SalonSPA.Models.Servicio>
+
+@{
+    ViewData["Title"] = "Lista Servicios";
+}
+
+<link rel="stylesheet" href="~/css/VServicios/_ListaServicios.css" />
+
+<div class="contenedor-servicios">
+
+    <div class="fila-servicios encabezado">
+        <div>ID</div>
+        <div>Nombre</div>
+        <div>Descripción</div>
+        <div>Precio</div>
+        <div>Duración</div>
+        <div>Tipo Servicio</div>
+        <div>Estado</div>
+        <div>Acciones</div>
+    </div>
+
+    @if (Model != null && Model.Any())
+    {
+        @foreach (var servicio in Model)
+        {
+            <div class="fila-servicios">
+                <div class="celda" data-label="ID:">@servicio.IdServicio</div>
+                <div class="celda" data-label="Nombre:">@servicio.Nombre</div>
+                <div class="celda" data-label="Descripción:">@servicio.Descripcion</div>
+                <div class="celda" data-label="Precio:">S/. @servicio.Precio.ToString("0.00")</div>
+                <div class="celda" data-label="Duración:">@servicio.Duracion min</div>
+                <div class="celda" data-label="Tipo Servicio:">@servicio.IdTipoServicioNavigation?.Descripcion</div>
+
+                <div class="celda" data-label="Estado:">
+                    <span class="@(servicio.Estado == 1 ? "estado-activo" : "estado-inactivo")">
+                        @(servicio.Estado == 1 ? "Activo" : "Inactivo")
+                    </span>
+                </div>
+
+
+
+
+
+                <div class="celda acciones-servicios" data-label="Acciones:">
+                    <a asp-action="Editar" asp-route-id="@servicio.IdServicio" class="btn-icon">
+                        <i class="fas fa-pen-to-square"></i>
+                    </a>
+
+                    <form asp-action="Eliminar" method="post" style="display:inline">
+                        <input type="hidden" name="id" value="@servicio.IdServicio" />
+                        <button type="submit" class="btn-icon">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="fila-servicios">
+            <div class="celda no-data" colspan="8">No hay servicios registrados</div>
+        </div>
+    }
+</div>

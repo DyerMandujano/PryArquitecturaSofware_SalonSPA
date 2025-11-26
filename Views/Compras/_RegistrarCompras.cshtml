@@ -1,0 +1,431 @@
+﻿@model Pry_Solu_SalonSPA.ViewModels.VentaRegistrarVM
+
+@{
+    ViewData["Title"] = "Registrar Venta";
+}
+
+<div class="container-fluid mt-4">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0"><i class="fas fa-cash-register"></i> Registrar Nueva Venta</h3>
+        </div>
+        <div class="card-body">
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="fas fa-exclamation-circle"></i> @TempData["Error"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            }
+
+            <form asp-action="Registrar" method="post" id="formVenta">
+                @Html.AntiForgeryToken()
+
+                <!-- Sección: Búsqueda de Cita -->
+                <div class="card mb-3">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="mb-0"><i class="fas fa-search"></i> Buscar Cita por ID (Opcional)</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="txtBuscarCita" placeholder="Ingrese ID de Cita">
+                                    <button type="button" class="btn btn-info" id="btnBuscarCita">
+                                        <i class="fas fa-search"></i> Buscar
+                                    </button>
+                                </div>
+                                <small class="text-muted">Si la venta incluye servicios, busque primero la cita</small>
+                            </div>
+                            <div class="col-md-6">
+                                <div id="infoCita" class="alert alert-success d-none">
+                                    <strong>Cita encontrada:</strong>
+                                    <div id="datosCita"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sección: Datos de la Venta -->
+                <div class="card mb-3">
+                    <div class="card-header bg-secondary text-white">
+                        <h5 class="mb-0"><i class="fas fa-file-invoice"></i> Datos de la Venta</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <!-- Fecha -->
+                            <div class="col-md-3 mb-3">
+                                <label asp-for="FechaVenta" class="form-label">Fecha de Venta</label>
+                                <input asp-for="FechaVenta" type="datetime-local" class="form-control" readonly />
+                                <span asp-validation-for="FechaVenta" class="text-danger"></span>
+                            </div>
+
+                            <!-- Cliente -->
+                            <div class="col-md-3 mb-3">
+                                <label asp-for="IdCliente" class="form-label">Cliente <span class="text-danger">*</span></label>
+                                <select asp-for="IdCliente" class="form-select" id="selectCliente">
+                                    <option value="">-- Seleccione Cliente --</option>
+                                    @foreach (var cliente in Model.Clientes)
+                                    {
+                                        <option value="@cliente.IdCliente"
+                                                data-nombre="@cliente.IdPersonaNavigation.Nombres @cliente.IdPersonaNavigation.Apellidos"
+                                                data-telefono="@cliente.IdPersonaNavigation.Telefono"
+                                                data-dni="@cliente.IdPersonaNavigation.Dni">
+                                            @cliente.IdPersonaNavigation.Nombres @cliente.IdPersonaNavigation.Apellidos
+                                        </option>
+                                    }
+                                </select>
+                                <span asp-validation-for="IdCliente" class="text-danger"></span>
+                            </div>
+
+                            <!-- Empleado -->
+                            <div class="col-md-3 mb-3">
+                                <label asp-for="IdEmpleado" class="form-label">Empleado <span class="text-danger">*</span></label>
+                                <select asp-for="IdEmpleado" class="form-select" required>
+                                    <option value="">-- Seleccione Empleado --</option>
+                                    @foreach (var empleado in Model.Empleados)
+                                    {
+                                        <option value="@empleado.IdEmpleado">
+                                            @empleado.IdPersonaNavigation.Nombres @empleado.IdPersonaNavigation.Apellidos
+                                        </option>
+                                    }
+                                </select>
+                                <span asp-validation-for="IdEmpleado" class="text-danger"></span>
+                            </div>
+
+                            <!-- Método de Pago -->
+                            <div class="col-md-3 mb-3">
+                                <label asp-for="IdTipoPago" class="form-label">Método de Pago <span class="text-danger">*</span></label>
+                                <select asp-for="IdTipoPago" class="form-select" required>
+                                    <option value="">-- Seleccione --</option>
+                                    @foreach (var tipoPago in Model.TiposPago)
+                                    {
+                                        <option value="@tipoPago.IdTipoPago">@tipoPago.Descripcion</option>
+                                    }
+                                </select>
+                                <span asp-validation-for="IdTipoPago" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <!-- Tipo de Comprobante -->
+                            <div class="col-md-3 mb-3">
+                                <label asp-for="IdTipoComprobante" class="form-label">Tipo Comprobante <span class="text-danger">*</span></label>
+                                <select asp-for="IdTipoComprobante" class="form-select" required>
+                                    <option value="">-- Seleccione --</option>
+                                    @foreach (var tipoComp in Model.TiposComprobante)
+                                    {
+                                        <option value="@tipoComp.IdTipoCompro">@tipoComp.Descripcion</option>
+                                    }
+                                </select>
+                                <span asp-validation-for="IdTipoComprobante" class="text-danger"></span>
+                            </div>
+
+                            <!-- Info Cliente -->
+                            <div class="col-md-9 mb-3">
+                                <div class="card bg-light">
+                                    <div class="card-body py-2">
+                                        <small><strong>Cliente seleccionado:</strong></small>
+                                        <div id="infoClienteSeleccionado">
+                                            <small class="text-muted">Seleccione un cliente para ver sus datos</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sección: Agregar Productos -->
+                <div class="card mb-3">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="mb-0"><i class="fas fa-box"></i> Agregar Productos</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Seleccionar Producto</label>
+                                <select class="form-select" id="selectProducto">
+                                    <option value="">-- Seleccione Producto --</option>
+                                    @foreach (var producto in Model.Productos)
+                                    {
+                                        <option value="@producto.IdProducto"
+                                                data-nombre="@producto.NomProd"
+                                                data-precio="@producto.Precio"
+                                                data-stock="@producto.Stock">
+                                            @producto.NomProd - S/ @producto.Precio (Stock: @producto.Stock)
+                                        </option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label">Cantidad</label>
+                                <input type="number" class="form-control" id="txtCantidad" min="1" value="1">
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label">&nbsp;</label>
+                                <button type="button" class="btn btn-success w-100" id="btnAgregarProducto">
+                                    <i class="fas fa-plus"></i> Agregar Producto
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sección: Detalle de la Venta -->
+                <div class="card mb-3">
+                    <div class="card-header bg-warning">
+                        <h5 class="mb-0"><i class="fas fa-list"></i> Detalle de la Venta</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-bordered" id="tablaDetalles">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Tipo</th>
+                                        <th>Descripción</th>
+                                        <th>Cantidad</th>
+                                        <th>Precio Unit.</th>
+                                        <th>Subtotal</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="bodyDetalles">
+                                    <tr id="rowSinDatos">
+                                        <td colspan="6" class="text-center text-muted">
+                                            No hay items agregados
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr class="table-info">
+                                        <td colspan="4" class="text-end"><strong>TOTAL:</strong></td>
+                                        <td colspan="2"><strong id="totalVenta">S/ 0.00</strong></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Campos ocultos para los detalles -->
+                <div id="contenedorDetalles"></div>
+
+                <!-- Botones de acción -->
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary btn-lg">
+                        <i class="fas fa-save"></i> Registrar Venta
+                    </button>
+                    <a asp-action="Index" class="btn btn-secondary btn-lg">
+                        <i class="fas fa-times"></i> Cancelar
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        let detallesVenta = [];
+        let contadorDetalles = 0;
+
+        $(document).ready(function () {
+            // Formatear fecha actual
+            const now = new Date();
+            const formattedDate = now.toISOString().slice(0, 16);
+            $('#FechaVenta').val(formattedDate);
+
+            // Evento: Mostrar info del cliente seleccionado
+            $('#selectCliente').on('change', function () {
+                const option = $(this).find('option:selected');
+                const nombre = option.data('nombre');
+                const telefono = option.data('telefono');
+                const dni = option.data('dni');
+
+                if (nombre) {
+                    $('#infoClienteSeleccionado').html(`
+                        <small><strong>Nombre:</strong> ${nombre}</small><br>
+                        <small><strong>DNI:</strong> ${dni}</small> |
+                        <small><strong>Teléfono:</strong> ${telefono}</small>
+                    `);
+                } else {
+                    $('#infoClienteSeleccionado').html('<small class="text-muted">Seleccione un cliente</small>');
+                }
+            });
+
+            // Evento: Buscar cita
+            $('#btnBuscarCita').on('click', function () {
+                const idCita = $('#txtBuscarCita').val();
+
+                if (!idCita) {
+                    alert('Ingrese un ID de cita');
+                    return;
+                }
+
+                $.ajax({
+                    url: '@Url.Action("BuscarCitaServicio", "Ventas")',
+                    type: 'GET',
+                    data: { idCitaServicio: idCita },
+                    success: function (response) {
+                        if (response.success) {
+                            const data = response.data;
+
+                            // Autocompletar cliente
+                            $('#selectCliente').val(data.id_Cliente).trigger('change');
+
+                            // Mostrar info de la cita
+                            $('#datosCita').html(`
+                                <strong>${data.nombre_Cliente}</strong><br>
+                                DNI: ${data.dni} | Tel: ${data.telefono}<br>
+                                <strong>Servicio:</strong> ${data.nombre_Servicio} - S/ ${data.precio_Servicio.toFixed(2)}
+                            `);
+                            $('#infoCita').removeClass('d-none');
+
+                            // Agregar servicio automáticamente
+                            agregarDetalle({
+                                tipoItem: 'Servicio',
+                                idCitaServicio: data.id_CitaServicio,
+                                idProducto: null,
+                                nombreItem: data.nombre_Servicio + ' - ' + data.descripcion_Servicio,
+                                cantidad: 1,
+                                precioUnitario: data.precio_Servicio,
+                                stockDisponible: null
+                            });
+
+                            alert('Cita encontrada y servicio agregado');
+                        } else {
+                            alert(response.message);
+                        }
+                    },
+                    error: function () {
+                        alert('Error al buscar la cita');
+                    }
+                });
+            });
+
+            // Evento: Agregar producto
+            $('#btnAgregarProducto').on('click', function () {
+                const selectProducto = $('#selectProducto');
+                const idProducto = selectProducto.val();
+                const cantidad = parseInt($('#txtCantidad').val());
+
+                if (!idProducto) {
+                    alert('Seleccione un producto');
+                    return;
+                }
+
+                if (!cantidad || cantidad <= 0) {
+                    alert('Ingrese una cantidad válida');
+                    return;
+                }
+
+                const option = selectProducto.find('option:selected');
+                const nombre = option.data('nombre');
+                const precio = parseFloat(option.data('precio'));
+                const stock = parseInt(option.data('stock'));
+
+                if (cantidad > stock) {
+                    alert(`Stock insuficiente. Disponible: ${stock}`);
+                    return;
+                }
+
+                agregarDetalle({
+                    tipoItem: 'Producto',
+                    idCitaServicio: null,
+                    idProducto: idProducto,
+                    nombreItem: nombre,
+                    cantidad: cantidad,
+                    precioUnitario: precio,
+                    stockDisponible: stock
+                });
+
+                // Limpiar campos
+                selectProducto.val('');
+                $('#txtCantidad').val(1);
+            });
+
+            // Función: Agregar detalle
+            function agregarDetalle(detalle) {
+                const index = contadorDetalles++;
+                detallesVenta.push({ index, ...detalle });
+
+                const subtotal = detalle.cantidad * detalle.precioUnitario;
+
+                // Agregar fila a la tabla
+                const nuevaFila = `
+                    <tr data-index="${index}">
+                        <td><span class="badge bg-${detalle.tipoItem === 'Servicio' ? 'info' : 'success'}">${detalle.tipoItem}</span></td>
+                        <td>${detalle.nombreItem}</td>
+                        <td>${detalle.cantidad}</td>
+                        <td>S/ ${detalle.precioUnitario.toFixed(2)}</td>
+                        <td>S/ ${subtotal.toFixed(2)}</td>
+                        <td class="text-center">
+                            <button type="button" class="btn btn-danger btn-sm btnEliminar" data-index="${index}">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+
+                $('#rowSinDatos').hide();
+                $('#bodyDetalles').append(nuevaFila);
+
+                // Agregar campos ocultos
+                const camposOcultos = `
+                    <input type="hidden" name="Detalles[${index}].TipoItem" value="${detalle.tipoItem}" />
+                    <input type="hidden" name="Detalles[${index}].IdCitaServicio" value="${detalle.idCitaServicio || ''}" />
+                    <input type="hidden" name="Detalles[${index}].IdProducto" value="${detalle.idProducto || ''}" />
+                    <input type="hidden" name="Detalles[${index}].NombreItem" value="${detalle.nombreItem}" />
+                    <input type="hidden" name="Detalles[${index}].Cantidad" value="${detalle.cantidad}" />
+                    <input type="hidden" name="Detalles[${index}].PrecioUnitario" value="${detalle.precioUnitario}" />
+                    <input type="hidden" name="Detalles[${index}].StockDisponible" value="${detalle.stockDisponible || ''}" />
+                `;
+                $('#contenedorDetalles').append(camposOcultos);
+
+                calcularTotal();
+            }
+
+            // Evento: Eliminar detalle
+            $(document).on('click', '.btnEliminar', function () {
+                const index = $(this).data('index');
+
+                // Eliminar de array
+                detallesVenta = detallesVenta.filter(d => d.index !== index);
+
+                // Eliminar fila
+                $(`tr[data-index="${index}"]`).remove();
+
+                // Eliminar campos ocultos
+                $(`input[name^="Detalles[${index}]"]`).remove();
+
+                if (detallesVenta.length === 0) {
+                    $('#rowSinDatos').show();
+                }
+
+                calcularTotal();
+            });
+
+            // Función: Calcular total
+            function calcularTotal() {
+                let total = 0;
+                detallesVenta.forEach(d => {
+                    total += d.cantidad * d.precioUnitario;
+                });
+                $('#totalVenta').text('S/ ' + total.toFixed(2));
+            }
+
+            // Validación antes de enviar
+            $('#formVenta').on('submit', function (e) {
+                if (detallesVenta.length === 0) {
+                    e.preventDefault();
+                    alert('Debe agregar al menos un producto o servicio');
+                    return false;
+                }
+            });
+        });
+    </script>
+}

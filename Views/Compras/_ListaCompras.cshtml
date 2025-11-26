@@ -1,0 +1,41 @@
+﻿@model List<Pry_Solu_SalonSPA.ViewModels.CompraListaVM>
+<link href="~/css/VCompras/_ListaCompras.css" rel="stylesheet" />
+
+<div class="contenedor-compras">
+    <!-- ENCABEZADO -->
+    <div class="fila-compras encabezado">
+        <div class="celda">ID</div>
+        <div class="celda">Fecha</div>
+        <div class="celda">Proveedor</div>
+        <div class="celda">Documento</div>
+        <div class="celda">Productos</div>
+        <div class="celda">Total</div>
+        <div class="celda">Acciones</div>
+    </div>
+
+    @if (Model != null && Model.Any())
+    {
+        foreach (var compra in Model)
+        {
+            <div class="fila-compras">
+                <div class="celda" data-label="ID">@compra.Id_Compra</div>
+                <div class="celda" data-label="Fecha">@compra.Fecha_compra.ToString("dd/MM/yyyy")</div>
+                <div class="celda" data-label="Proveedor">@compra.Nom_Prove</div>
+                <div class="celda" data-label="Documento">@compra.Tipo_Doc</div>
+                <div class="celda" data-label="Productos">@compra.Total_Productos</div>
+                <div class="celda" data-label="Total">S/. @compra.Monto_Total.ToString("0.00")</div>
+                <div class="celda acciones-compras">
+                    <a asp-action="DetallePorCompra" asp-route-id="@compra.Id_Compra" class="btn-icon" title="Ver detalle">
+                        <i class="fas fa-eye"></i>
+                    </a>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="fila-compras">
+            <div class="celda no-data">No hay compras registradas</div>
+        </div>
+    }
+</div>
