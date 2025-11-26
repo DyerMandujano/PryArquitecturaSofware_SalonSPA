@@ -1,0 +1,48 @@
+﻿@model Pry_Solu_SalonSPA.ViewModels.CompraDetallePorCompraVM
+<link href="~/css/VCompras/_DetalleCompras.css" rel="stylesheet" />
+
+<div class="detalle-compra-wrapper">
+
+    <div class="detalle-compra-box">
+
+        <a asp-action="Index" class="btn-back">← Volver</a>
+
+        <div class="header-detalle">
+            <h2>Detalle de Compra</h2>
+        </div>
+
+        <div class="compra-info">
+            <p><strong>ID:</strong> @Model.IdCompra</p>
+            <p><strong>Proveedor:</strong> @Model.Proveedor</p>
+            <p><strong>Documento:</strong> @Model.TipoDoc</p>
+            <p><strong>Fecha:</strong> @Model.FechaCompra.ToString("dd/MM/yyyy")</p>
+            <p><strong>Total:</strong> S/. @Model.MontoTotal.ToString("0.00")</p>
+        </div>
+
+        <hr />
+
+        <h4>Detalles</h4>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Precio</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var d in Model.DetallesItem)
+                {
+                    <tr>
+                        <td>@d.Producto</td>
+                        <td>@d.Cantidad</td>
+                        <td>S/. @d.PrecioCompra.ToString("0.00")</td>
+                        <td>S/. @d.SubTotal.ToString("0.00")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>

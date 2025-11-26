@@ -1,0 +1,75 @@
+﻿@model Pry_Solu_SalonSPA.Models.Servicio
+
+@{
+    Layout = "~/Views/Main.cshtml";
+    ViewData["Title"] = "Crear Servicio";
+}
+
+<link href="~/css/VServicios/_ServicioForm.css" rel="stylesheet" />
+
+<div class="crear-servicio-wrapper">
+    <div class="crear-servicio-box">
+        <a asp-action="Index" class="btn-back">← Volver</a>
+
+        <div class="header-crear">
+            <h2>Crear Servicio</h2>
+        </div>
+
+        <form asp-action="Crear" method="post" class="form-crear">
+            @Html.AntiForgeryToken()
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label asp-for="Nombre">Nombre del Servicio *</label>
+                    <input asp-for="Nombre" class="editable-field" placeholder="Ej: Corte Clásico" />
+                    <span asp-validation-for="Nombre" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IdTipoServicio">Tipo de Servicio *</label>
+                    <select asp-for="IdTipoServicio" asp-items="ViewBag.TiposServicio" class="editable-field">
+                        <option value="0">Seleccione un tipo</option>
+                    </select>
+                    <span asp-validation-for="IdTipoServicio" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group full-width">
+                    <label asp-for="Descripcion">Descripción</label>
+                    <textarea asp-for="Descripcion" class="editable-field" rows="3" placeholder="Describe el servicio..."></textarea>
+                    <span asp-validation-for="Descripcion" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label asp-for="Precio">Precio (S/.) *</label>
+                    <input asp-for="Precio" type="number" step="0.01" class="editable-field" placeholder="0.00" />
+                    <span asp-validation-for="Precio" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Duracion">Duración (minutos) *</label>
+                    <input asp-for="Duracion" type="number" class="editable-field" placeholder="0" />
+                    <span asp-validation-for="Duracion" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Estado</label>
+                    <input type="text" value="Activo" readonly class="readonly-field" />
+                    <input type="hidden" asp-for="Estado" value="1" />
+                </div>
+            </div>
+
+            <div class="form-buttons">
+                <a asp-action="Index" class="btn-cancelar">Cancelar</a>
+                <button type="submit" class="btn-crear">
+                    <i class="bi bi-check-circle"></i> Crear Servicio
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

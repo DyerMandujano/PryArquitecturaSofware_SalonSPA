@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System;
 using System.Collections.Generic;
 
 namespace Pry_Solu_SalonSPA.Models;
@@ -17,8 +18,10 @@ public partial class Servicio
 
     public int Duracion { get; set; }
 
-    public virtual ICollection<CitaServicio> CitaServicios { get; set; } = new List<CitaServicio>();
+    public int Estado { get; set; }
 
+    public virtual ICollection<CitaServicio> CitaServicios { get; set; } = new List<CitaServicio>();
+    [ValidateNever]
     public virtual TipoServicio IdTipoServicioNavigation { get; set; } = null!;
 
 }

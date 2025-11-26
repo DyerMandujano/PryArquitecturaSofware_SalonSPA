@@ -1,0 +1,21 @@
+﻿<link rel="stylesheet" href="~/css/VCompras/_BuscarCompras.css" />
+
+<div class="buscar-compras">
+    <form asp-action="Index" method="get" class="busqueda-form">
+        <select name="tipoBusqueda" class="select-busqueda">
+            <option value="TODOS">Todos</option>
+            <option value="ID_COMPRA">ID Compra</option>
+            <option value="PROVEEDOR">Proveedor</option>
+        </select>
+
+        <input type="text" name="valorBusqueda" placeholder="Buscar..." class="input-busqueda" />
+
+        <button type="submit" class="btn-buscar">
+            <i class="fas fa-search"></i> Buscar
+        </button>
+
+        <a asp-action="Index" class="btn-limpiar">
+            <i class="fas fa-eraser"></i> Limpiar
+        </a>
+    </form>
+</div>

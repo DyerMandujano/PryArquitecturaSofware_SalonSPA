@@ -1,9 +1,33 @@
-﻿@model Pry_Solu_SalonSPA.Models.Compra
+﻿@model List<Pry_Solu_SalonSPA.ViewModels.CompraListaVM>
 
 @{
     Layout = "~/Views/Main.cshtml";
     ViewData["Title"] = "Compras";
 }
 
-<h1>Compras</h1>
-<p>Gestión de Compras registrados en el sistema.</p>
+<link href="~/css/VCompras/index.css" rel="stylesheet" />
+
+<!-- Mensajes -->
+@if (TempData["Mensaje"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="bi bi-check-circle"></i> @TempData["Mensaje"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="bi bi-exclamation-triangle"></i> @TempData["Error"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="compras-container">
+    @await Html.PartialAsync("_HeaderCompras")
+
+    <div class="compras-lista-container">
+        @await Html.PartialAsync("_BuscarCompras")
+        @await Html.PartialAsync("_ListaCompras", Model)
+    </div>
+</div>

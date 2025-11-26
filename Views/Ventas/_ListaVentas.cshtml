@@ -1,0 +1,43 @@
+﻿@model List<Pry_Solu_SalonSPA.ViewModels.VentaListaVM>
+<link href="~/css/VVentas/_ListaVentas.css" rel="stylesheet" />
+
+<div class="contenedor-ventas">
+    <!-- ENCABEZADO -->
+    <div class="fila-ventas encabezado">
+        <div class="celda">ID</div>
+        <div class="celda">Fecha</div>
+        <div class="celda">Cliente</div>
+        <div class="celda">Empleado</div>
+        <div class="celda">Productos</div>
+        <div class="celda">Servicios</div>
+        <div class="celda">Total</div>
+        <div class="celda">Acciones</div>
+    </div>
+
+    @if (Model != null && Model.Any())
+    {
+        foreach (var venta in Model)
+        {
+            <div class="fila-ventas">
+                <div class="celda" data-label="ID">@venta.Id_Venta</div>
+                <div class="celda" data-label="Fecha">@venta.Fecha_Venta.ToString("dd/MM/yyyy")</div>
+                <div class="celda" data-label="Cliente">@venta.Nombre_Cliente</div>
+                <div class="celda" data-label="Empleado">@venta.Nombre_Empleado</div>
+                <div class="celda" data-label="Productos">@venta.Total_Productos</div>
+                <div class="celda" data-label="Servicios">@venta.Total_Servicios</div>
+                <div class="celda" data-label="Total">S/. @venta.Monto_Total.ToString("0.00")</div>
+                <div class="celda acciones-ventas">
+                    <a asp-action="Detalle" asp-route-id="@venta.Id_Venta" class="btn-icon" title="Ver detalle">
+                        <i class="fas fa-eye"></i>
+                    </a>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="fila-ventas">
+            <div class="celda no-data">No hay ventas registradas</div>
+        </div>
+    }
+</div>

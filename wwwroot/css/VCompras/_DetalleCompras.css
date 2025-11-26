@@ -1,0 +1,92 @@
+﻿/* Contenedor principal */
+.detalle-compra-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 80vh;
+    padding: 2rem;
+    background-color: #f8f9fa;
+}
+
+/* Caja de la card */
+.detalle-compra-box {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    padding: 2rem;
+    width: 100%;
+    max-width: 800px;
+}
+
+/* Botón volver */
+.btn-back {
+    display: inline-flex;
+    align-items: center;
+    color: #2B2766;
+    text-decoration: none;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    transition: color 0.3s;
+}
+
+    .btn-back:hover {
+        color: #EB2885;
+    }
+
+/* Encabezado */
+.header-detalle h2 {
+    text-align: center;
+    color: #2B2766;
+    margin-bottom: 2rem;
+}
+
+/* Info de la compra */
+.compra-info p {
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+}
+
+    /* Totales destacados */
+    .compra-info p strong {
+        font-weight: 600;
+    }
+
+/* Tabla de detalles */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+    .table th, .table td {
+        text-align: center;
+        vertical-align: middle;
+        padding: 0.75rem;
+        border: 1px solid #EBC5E5;
+        font-size: 0.9rem;
+    }
+
+    .table th {
+        background-color: #2B2766;
+        color: #fff;
+    }
+
+    .table tbody tr:nth-child(even) td {
+        background-color: #f8f9fa;
+    }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .detalle-compra-wrapper {
+        padding: 1rem;
+    }
+
+    .detalle-compra-box {
+        padding: 1.5rem;
+    }
+
+    .table th, .table td {
+        font-size: 0.85rem;
+        padding: 0.5rem;
+    }
+}

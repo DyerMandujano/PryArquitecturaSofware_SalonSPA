@@ -1,0 +1,48 @@
+﻿<link href="~/css/VServicios/_BuscarServicios.css" rel="stylesheet" />
+
+<div class="busqueda-filtros-container">
+
+    <div class="contenedor-buscador">
+        <p>Lista de Servicios</p>
+
+        <form asp-action="Index" method="get" class="form-buscador-derecha">
+            <input type="text" name="filtro" placeholder="Buscar por ID..." class="input-buscador" />
+
+            <button type="submit" class="btn-search-separated">
+                <i class="bi bi-search"></i> Buscar
+            </button>
+        </form>
+    </div>
+
+    <div class="filtros-derecha">
+        <select class="filtro-select" onchange="filtrarPorEstado(this.value)">
+            <option value="">Todos los estados</option>
+            <option value="1">Activos</option>
+            <option value="0">Inactivos</option>
+        </select>
+
+        <a href="@Url.Action("Index")" class="limpiar-btn">
+            <i class="bi bi-arrow-clockwise"></i> Limpiar
+        </a>
+    </div>
+
+</div>
+
+<script>
+    function filtrarPorEstado(estado) {
+        if (estado) {
+            window.location.href = '@Url.Action("FiltrarPorEstado")' + '?estado=' + estado;
+        } else {
+            window.location.href = '@Url.Action("Index")';
+        }
+    }
+
+    // Mantener el valor del filtro en el input
+    document.addEventListener('DOMContentLoaded', function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const filtro = urlParams.get('filtro');
+        if (filtro) {
+            document.querySelector('.input-buscador').value = filtro;
+        }
+    });
+</script>

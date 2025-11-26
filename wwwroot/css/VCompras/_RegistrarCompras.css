@@ -1,0 +1,150 @@
+﻿/* Contenedor principal */
+.registrar-compra-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 80vh;
+    padding: 2rem;
+    background-color: #f8f9fa;
+}
+
+/* Caja del formulario */
+.registrar-compra-box {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    padding: 2rem;
+    width: 100%;
+    max-width: 1000px;
+}
+
+/* Botón volver */
+.btn-back {
+    display: inline-flex;
+    align-items: center;
+    color: #2B2766;
+    text-decoration: none;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    transition: color 0.3s;
+}
+
+    .btn-back:hover {
+        color: #EB2885;
+    }
+
+/* Encabezado */
+h2 {
+    text-align: center;
+    color: #2B2766;
+    margin-bottom: 2rem;
+}
+
+/* Labels y formularios */
+.form-label {
+    color: #2B2766;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.form-control {
+    border: 2px solid #EBC5E5;
+    border-radius: 8px;
+    padding: 0.75rem;
+    font-size: 0.9rem;
+    transition: border-color 0.3s;
+    background-color: #fff;
+}
+
+    .form-control:focus {
+        outline: none;
+        border-color: #EB2885;
+        box-shadow: 0 0 0 3px rgba(235, 40, 133, 0.1);
+    }
+
+/* Tabla de detalles */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+    .table th, .table td {
+        text-align: center;
+        vertical-align: middle;
+        padding: 0.75rem;
+        border: 1px solid #EBC5E5;
+        font-size: 0.9rem;
+    }
+
+    .table th {
+        background-color: #2B2766;
+        color: #fff;
+    }
+
+    .table tbody tr:nth-child(even) td {
+        background-color: #f8f9fa;
+    }
+
+/* Botones */
+.btn-primary {
+    background-color: #EB2885;
+    border: none;
+    color: white;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+    .btn-primary:hover {
+        background-color: #EB3B8F;
+    }
+
+.btn-success {
+    background-color: #2B2766;
+    border: none;
+    color: white;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+    .btn-success:hover {
+        background-color: #3B337F;
+    }
+
+/* Botón eliminar fila */
+.btn-danger {
+    background-color: #EB2885;
+    border: none;
+    color: white;
+    font-weight: 600;
+    padding: 0.25rem 0.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+    .btn-danger:hover {
+        background-color: #EB3B8F;
+    }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .registrar-compra-wrapper {
+        padding: 1rem;
+    }
+
+    .registrar-compra-box {
+        padding: 1.5rem;
+    }
+
+    .table th, .table td {
+        font-size: 0.85rem;
+        padding: 0.5rem;
+    }
+}

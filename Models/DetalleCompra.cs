@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System;
 using System.Collections.Generic;
 
 namespace Pry_Solu_SalonSPA.Models;
@@ -15,8 +16,10 @@ public partial class DetalleCompra
 
     public decimal PrecioCompra { get; set; }
 
+    [ValidateNever]
     public virtual Compra IdCompraNavigation { get; set; } = null!;
 
+    [ValidateNever]
     public virtual Producto IdProductoNavigation { get; set; } = null!;
 
     public virtual ICollection<Inventario> Inventarios { get; set; } = new HashSet<Inventario>();
