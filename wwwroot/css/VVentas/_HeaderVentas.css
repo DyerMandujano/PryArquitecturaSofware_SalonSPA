@@ -1,0 +1,38 @@
+﻿.header-ventas-container {
+    width: 1100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.0rem 0.4rem;
+    margin: 1.0rem 0.4rem;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.header-ventas-titulo-container h2 {
+    margin: 0;
+    color: #2B2766;
+    font-weight: 600;
+}
+
+.header-ventas-titulo-container p {
+    color: #A138C2;
+    font-size: 0.95rem;
+}
+
+.btn-nueva-venta {
+    background-color: #EB2885;
+    color: white;
+    padding: 0.7rem 1.4rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background 0.3s ease;
+}
+
+    .btn-nueva-venta:hover {
+        background-color: #EB3B8F;
+    }
+
+    .btn-nueva-venta i {
+        margin-right: 6px;
+    }
