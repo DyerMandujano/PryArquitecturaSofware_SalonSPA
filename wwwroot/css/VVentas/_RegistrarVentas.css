@@ -2,27 +2,45 @@
    ESTILOS PARA MÓDULO DE VENTAS
    ======================================== */
 
+/* --- VARIABLES DE COLOR ROSA-MORADO --- */
+:root {
+    --rosa-claro: #f8bbd9;
+    --rosa: #e91e63;
+    --rosa-oscuro: #c2185b;
+    --morado-claro: #d1c4e9;
+    --morado: #9c27b0;
+    --morado-oscuro: #7b1fa2;
+    --morado-profundo: #6a1b9a;
+    --gradiente-rosa-morado: linear-gradient(135deg, #e91e63 0%, #9c27b0 100%);
+    --gradiente-suave: linear-gradient(135deg, #f8bbd9 0%, #d1c4e9 100%);
+}
+
 /* --- CONTENEDOR PRINCIPAL --- */
 .container-fluid {
     padding: 20px;
+    background: linear-gradient(135deg, #faf5ff 0%, #fce4ec 100%);
 }
 
 /* --- CARDS --- */
 .card {
     border-radius: 10px;
     margin-bottom: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px rgba(156, 39, 176, 0.1);
     transition: all 0.3s ease;
+    border: 1px solid var(--morado-claro);
 }
 
     .card:hover {
-        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 8px 12px rgba(156, 39, 176, 0.15);
+        transform: translateY(-2px);
     }
 
 .card-header {
     border-radius: 10px 10px 0 0 !important;
     padding: 15px 20px;
     font-weight: 600;
+    background: var(--gradiente-rosa-morado) !important;
+    color: white;
 }
 
     .card-header h3,
@@ -35,32 +53,33 @@
 
 .card-body {
     padding: 25px;
+    background-color: #fff;
 }
 
 /* --- FORMULARIOS --- */
 .form-label {
     font-weight: 600;
-    color: #495057;
+    color: var(--morado-oscuro);
     margin-bottom: 8px;
 }
 
 .form-control,
 .form-select {
     border-radius: 6px;
-    border: 1px solid #ced4da;
+    border: 1px solid var(--morado-claro);
     padding: 10px 15px;
     transition: all 0.3s ease;
 }
 
     .form-control:focus,
     .form-select:focus {
-        border-color: #0d6efd;
-        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
+        border-color: var(--morado);
+        box-shadow: 0 0 0 0.25rem rgba(156, 39, 176, 0.15);
     }
 
     .form-control:disabled,
     .form-control[readonly] {
-        background-color: #e9ecef;
+        background-color: var(--rosa-claro);
         cursor: not-allowed;
     }
 
@@ -73,12 +92,39 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
+    border: none;
 }
 
-    .btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
+.btn-primary {
+    background: var(--gradiente-rosa-morado);
+    color: white;
+}
+
+.btn-success {
+    background: linear-gradient(135deg, var(--morado) 0%, var(--rosa-oscuro) 100%);
+    color: white;
+}
+
+.btn-info {
+    background: linear-gradient(135deg, var(--rosa-claro) 0%, var(--morado-claro) 100%);
+    color: var(--morado-oscuro);
+}
+
+.btn-warning {
+    background: linear-gradient(135deg, #ff80ab 0%, #ea80fc 100%);
+    color: white;
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, var(--rosa) 0%, #ad1457 100%);
+    color: white;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(156, 39, 176, 0.3);
+    filter: brightness(1.1);
+}
 
 .btn-lg {
     padding: 12px 30px;
@@ -93,6 +139,7 @@
 .table-responsive {
     border-radius: 8px;
     overflow: hidden;
+    border: 1px solid var(--morado-claro);
 }
 
 #tablaDetalles {
@@ -100,7 +147,7 @@
 }
 
     #tablaDetalles thead {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: var(--gradiente-rosa-morado);
     }
 
         #tablaDetalles thead th {
@@ -116,28 +163,31 @@
     }
 
         #tablaDetalles tbody tr:hover {
-            background-color: #f8f9fa;
+            background-color: #fce4ec;
             transform: scale(1.01);
         }
 
     #tablaDetalles tbody td {
         vertical-align: middle;
         padding: 12px 10px;
+        border-color: var(--rosa-claro);
     }
 
     #tablaDetalles tfoot {
-        background-color: #e7f3ff;
+        background: linear-gradient(135deg, #fce4ec 0%, #f3e5f5 100%);
         font-size: 1.1rem;
     }
 
         #tablaDetalles tfoot td {
             padding: 15px 10px;
-            border-top: 3px solid #0d6efd;
+            border-top: 3px solid var(--morado);
+            color: var(--morado-oscuro);
         }
 
 #totalVenta {
-    color: #0d6efd;
+    color: var(--morado-oscuro);
     font-size: 1.3rem;
+    font-weight: bold;
 }
 
 /* --- BADGES --- */
@@ -148,20 +198,56 @@
     border-radius: 20px;
 }
 
+    .badge.bg-primary {
+        background: var(--gradiente-rosa-morado) !important;
+    }
+
+    .badge.bg-success {
+        background: linear-gradient(135deg, var(--morado) 0%, var(--rosa-oscuro) 100%) !important;
+    }
+
+    .badge.bg-info {
+        background: linear-gradient(135deg, var(--rosa-claro) 0%, var(--morado-claro) 100%) !important;
+        color: var(--morado-oscuro);
+    }
+
 /* --- ALERTAS --- */
 .alert {
     border-radius: 8px;
     padding: 15px 20px;
     margin-bottom: 20px;
+    border: none;
 }
 
-    .alert i {
-        margin-right: 8px;
-    }
+.alert-info {
+    background: linear-gradient(135deg, #fce4ec 0%, #f3e5f5 100%);
+    color: var(--morado-oscuro);
+    border-left: 4px solid var(--morado);
+}
+
+.alert-success {
+    background: linear-gradient(135deg, #e8f5e8 0%, #f3e5f5 100%);
+    color: var(--morado-oscuro);
+    border-left: 4px solid var(--rosa);
+}
+
+.alert-warning {
+    background: linear-gradient(135deg, #fff3e0 0%, #fce4ec 100%);
+    color: var(--morado-oscuro);
+    border-left: 4px solid #ff80ab;
+}
+
+.alert i {
+    margin-right: 8px;
+}
 
 /* --- INFO CITA --- */
 #infoCita {
     animation: slideIn 0.5s ease;
+    background: linear-gradient(135deg, #faf5ff 0%, #fce4ec 100%);
+    border-radius: 8px;
+    padding: 15px;
+    border-left: 4px solid var(--morado);
 }
 
 @keyframes slideIn {
@@ -179,12 +265,14 @@
 #datosCita {
     margin-top: 10px;
     line-height: 1.8;
+    color: var(--morado-oscuro);
 }
 
 /* --- INFO CLIENTE SELECCIONADO --- */
 .card.bg-light {
-    background-color: #f8f9fa !important;
-    border: 1px solid #dee2e6;
+    background: linear-gradient(135deg, #fce4ec 0%, #f3e5f5 100%) !important;
+    border: 1px solid var(--morado-claro);
+    color: var(--morado-oscuro);
 }
 
 #infoClienteSeleccionado {
@@ -199,11 +287,14 @@
 
     .input-group .form-control {
         border-right: none;
+        border-color: var(--morado-claro);
     }
 
     .input-group .btn {
         border-left: none;
         border-radius: 0 6px 6px 0 !important;
+        background: var(--gradiente-rosa-morado);
+        color: white;
     }
 
 /* --- VALIDACIONES --- */
@@ -211,6 +302,7 @@
     font-size: 0.875rem;
     margin-top: 5px;
     display: block;
+    color: var(--rosa) !important;
 }
 
 span.text-danger {
@@ -219,44 +311,53 @@ span.text-danger {
 
 /* --- FILA SIN DATOS --- */
 #rowSinDatos {
-    background-color: #fff3cd;
+    background: linear-gradient(135deg, #fce4ec 0%, #f3e5f5 100%);
 }
 
     #rowSinDatos td {
         padding: 30px;
         font-size: 1.1rem;
+        color: var(--morado-oscuro);
+        text-align: center;
     }
 
 /* --- BOTÓN ELIMINAR --- */
 .btnEliminar {
     padding: 5px 10px;
     font-size: 0.875rem;
+    background: linear-gradient(135deg, var(--rosa) 0%, #ad1457 100%);
+    color: white;
 }
 
     .btnEliminar:hover {
         transform: scale(1.1);
+        background: linear-gradient(135deg, #ad1457 0%, #880e4f 100%);
     }
 
 /* --- SECCIÓN DE BÚSQUEDA --- */
 .card-header.bg-info {
-    background: linear-gradient(135deg, #17a2b8 0%, #138496 100%) !important;
+    background: linear-gradient(135deg, var(--rosa-claro) 0%, var(--morado-claro) 100%) !important;
+    color: var(--morado-oscuro) !important;
 }
 
 .card-header.bg-primary {
-    background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%) !important;
+    background: var(--gradiente-rosa-morado) !important;
+    color: white !important;
 }
 
 .card-header.bg-secondary {
-    background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%) !important;
+    background: linear-gradient(135deg, #ba68c8 0%, #8e24aa 100%) !important;
+    color: white !important;
 }
 
 .card-header.bg-success {
-    background: linear-gradient(135deg, #198754 0%, #157347 100%) !important;
+    background: linear-gradient(135deg, var(--morado) 0%, var(--rosa-oscuro) 100%) !important;
+    color: white !important;
 }
 
 .card-header.bg-warning {
-    background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%) !important;
-    color: #000 !important;
+    background: linear-gradient(135deg, #ff80ab 0%, #ea80fc 100%) !important;
+    color: white !important;
 }
 
 /* --- RESPONSIVE --- */
@@ -329,17 +430,17 @@ span.text-danger {
 }
 
 .table-responsive::-webkit-scrollbar-thumb {
-    background: #888;
+    background: var(--morado);
     border-radius: 10px;
 }
 
     .table-responsive::-webkit-scrollbar-thumb:hover {
-        background: #555;
+        background: var(--morado-oscuro);
     }
 
 /* --- ESTADO DISABLED EN SELECT --- */
 select.form-select:disabled {
-    background-color: #e9ecef;
+    background-color: var(--rosa-claro);
     cursor: not-allowed;
 }
 
@@ -350,15 +451,6 @@ select.form-select:disabled {
 
 .mt-4 {
     margin-top: 1.5rem !important;
-}
-
-/* --- COLORES DE BADGES PERSONALIZADOS --- */
-.badge.bg-info {
-    background: linear-gradient(135deg, #17a2b8 0%, #138496 100%) !important;
-}
-
-.badge.bg-success {
-    background: linear-gradient(135deg, #198754 0%, #157347 100%) !important;
 }
 
 /* --- EFECTOS HOVER EN FILAS --- */
@@ -372,24 +464,318 @@ tbody tr {
 
 /* --- TEXTO REQUERIDO --- */
 .text-danger.required {
-    color: #dc3545;
+    color: var(--rosa) !important;
     font-weight: bold;
 }
 
 /* --- BOTONES DE ACCIÓN CENTRADOS --- */
 .text-center button,
 .text-center a {
-    margin: 0 10px;
+    margin: 0 10px; /* ========================================
+   ESTILOS PARA MÓDULO DE VENTAS - ROSA/MORADO
+   ======================================== */
+    /* --- VARIABLES DE COLOR ROSA-MORADO --- */
+    : root
+
+{
+    --rosa-claro: #f8bbd9;
+    --rosa: #e91e63;
+    --rosa-oscuro: #c2185b;
+    --morado-claro: #d1c4e9;
+    --morado: #9c27b0;
+    --morado-oscuro: #7b1fa2;
+    --morado-profundo: #6a1b9a;
+    --gradiente-rosa-morado: linear-gradient(135deg, #e91e63 0%, #9c27b0 100%);
+    --gradiente-suave: linear-gradient(135deg, #f8bbd9 0%, #d1c4e9 100%);
+}
+
+/* --- CONTENEDOR PRINCIPAL --- */
+.container-fluid {
+    padding: 20px;
+    background: linear-gradient(135deg, #faf5ff 0%, #fce4ec 100%) !important;
+}
+
+/* --- CARDS --- */
+.card {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(156, 39, 176, 0.1) !important;
+    transition: all 0.3s ease;
+    border: 1px solid var(--morado-claro) !important;
+}
+
+    .card:hover {
+        box-shadow: 0 8px 12px rgba(156, 39, 176, 0.15) !important;
+        transform: translateY(-2px);
+    }
+
+/* --- CARD HEADERS ESPECÍFICOS --- */
+.card-header.bg-primary {
+    background: var(--gradiente-rosa-morado) !important;
+    color: white !important;
+    border-bottom: 1px solid var(--morado-oscuro) !important;
+}
+
+.card-header.bg-info {
+    background: linear-gradient(135deg, var(--rosa-claro) 0%, var(--morado-claro) 100%) !important;
+    color: var(--morado-oscuro) !important;
+    border-bottom: 1px solid var(--morado-claro) !important;
+}
+
+.card-header.bg-secondary {
+    background: linear-gradient(135deg, #ba68c8 0%, #8e24aa 100%) !important;
+    color: white !important;
+    border-bottom: 1px solid var(--morado-oscuro) !important;
+}
+
+.card-header.bg-success {
+    background: linear-gradient(135deg, var(--morado) 0%, var(--rosa-oscuro) 100%) !important;
+    color: white !important;
+    border-bottom: 1px solid var(--rosa-oscuro) !important;
+}
+
+.card-header.bg-warning {
+    background: linear-gradient(135deg, #ff80ab 0%, #ea80fc 100%) !important;
+    color: white !important;
+    border-bottom: 1px solid #ec407a !important;
+}
+
+.card-body {
+    padding: 25px;
+    background-color: #fff !important;
+}
+
+/* --- FORMULARIOS --- */
+.form-label {
+    font-weight: 600;
+    color: var(--morado-oscuro) !important;
+    margin-bottom: 8px;
+}
+
+.form-control,
+.form-select {
+    border-radius: 6px;
+    border: 1px solid var(--morado-claro) !important;
+    padding: 10px 15px;
+    transition: all 0.3s ease;
+}
+
+    .form-control:focus,
+    .form-select:focus {
+        border-color: var(--morado) !important;
+        box-shadow: 0 0 0 0.25rem rgba(156, 39, 176, 0.15) !important;
+    }
+
+    .form-control:disabled,
+    .form-control[readonly] {
+        background-color: var(--rosa-claro) !important;
+        cursor: not-allowed;
+    }
+
+/* --- BOTONES PERSONALIZADOS --- */
+.btn-primary {
+    background: var(--gradiente-rosa-morado) !important;
+    border: none !important;
+    color: white !important;
+}
+
+.btn-success {
+    background: linear-gradient(135deg, var(--morado) 0%, var(--rosa-oscuro) 100%) !important;
+    border: none !important;
+    color: white !important;
+}
+
+.btn-info {
+    background: linear-gradient(135deg, var(--rosa-claro) 0%, var(--morado-claro) 100%) !important;
+    border: none !important;
+    color: var(--morado-oscuro) !important;
+}
+
+.btn-warning {
+    background: linear-gradient(135deg, #ff80ab 0%, #ea80fc 100%) !important;
+    border: none !important;
+    color: white !important;
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, var(--rosa) 0%, #ad1457 100%) !important;
+    border: none !important;
+    color: white !important;
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, #ba68c8 0%, #8e24aa 100%) !important;
+    border: none !important;
+    color: white !important;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(156, 39, 176, 0.3) !important;
+    filter: brightness(1.1);
+}
+
+/* --- TABLA DE DETALLES --- */
+.table-responsive {
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--morado-claro) !important;
+}
+
+#tablaDetalles thead.table-dark {
+    background: var(--gradiente-rosa-morado) !important;
+}
+
+    #tablaDetalles thead.table-dark th {
+        color: white !important;
+        font-weight: 600;
+        text-align: center;
+        padding: 15px 10px;
+        border: none !important;
+    }
+
+#tablaDetalles tbody tr {
+    transition: all 0.2s ease;
+}
+
+    #tablaDetalles tbody tr:hover {
+        background-color: #fce4ec !important;
+        transform: scale(1.01);
+    }
+
+#tablaDetalles tbody td {
+    vertical-align: middle;
+    padding: 12px 10px;
+    border-color: var(--rosa-claro) !important;
+}
+
+#tablaDetalles tfoot tr.table-info {
+    background: linear-gradient(135deg, #fce4ec 0%, #f3e5f5 100%) !important;
+}
+
+    #tablaDetalles tfoot tr.table-info td {
+        padding: 15px 10px;
+        border-top: 3px solid var(--morado) !important;
+        color: var(--morado-oscuro) !important;
+    }
+
+#totalVenta {
+    color: var(--morado-oscuro) !important;
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+/* --- BADGES --- */
+.badge.bg-info {
+    background: linear-gradient(135deg, var(--rosa-claro) 0%, var(--morado-claro) 100%) !important;
+    color: var(--morado-oscuro) !important;
+}
+
+.badge.bg-success {
+    background: linear-gradient(135deg, var(--morado) 0%, var(--rosa-oscuro) 100%) !important;
+    color: white !important;
+}
+
+/* --- ALERTAS --- */
+.alert.alert-success {
+    background: linear-gradient(135deg, #e8f5e8 0%, #f3e5f5 100%) !important;
+    color: var(--morado-oscuro) !important;
+    border-left: 4px solid var(--rosa) !important;
+    border: none !important;
+}
+
+.alert.alert-danger {
+    background: linear-gradient(135deg, #ffebee 0%, #fce4ec 100%) !important;
+    color: var(--rosa) !important;
+    border-left: 4px solid var(--rosa) !important;
+    border: none !important;
+}
+
+.alert.alert-info {
+    background: linear-gradient(135deg, #fce4ec 0%, #f3e5f5 100%) !important;
+    color: var(--morado-oscuro) !important;
+    border-left: 4px solid var(--morado) !important;
+    border: none !important;
+}
+
+/* --- INFO CLIENTE --- */
+.card.bg-light {
+    background: linear-gradient(135deg, #fce4ec 0%, #f3e5f5 100%) !important;
+    border: 1px solid var(--morado-claro) !important;
+    color: var(--morado-oscuro) !important;
+}
+
+/* --- INPUT GROUP --- */
+.input-group {
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+    .input-group .form-control {
+        border-right: none !important;
+        border-color: var(--morado-claro) !important;
+    }
+
+    .input-group .btn {
+        border-left: none !important;
+        border-radius: 0 6px 6px 0 !important;
+    }
+
+/* --- BOTÓN ELIMINAR --- */
+.btnEliminar {
+    padding: 5px 10px;
+    font-size: 0.875rem;
+    background: linear-gradient(135deg, var(--rosa) 0%, #ad1457 100%) !important;
+    color: white !important;
+    border: none !important;
+}
+
+    .btnEliminar:hover {
+        transform: scale(1.1);
+        background: linear-gradient(135deg, #ad1457 0%, #880e4f 100%) !important;
+    }
+
+/* --- FILA SIN DATOS --- */
+#rowSinDatos {
+    background: linear-gradient(135deg, #fce4ec 0%, #f3e5f5 100%) !important;
+}
+
+    #rowSinDatos td {
+        padding: 30px;
+        font-size: 1.1rem;
+        color: var(--morado-oscuro) !important;
+        text-align: center;
+    }
+
+/* --- SCROLLBAR PERSONALIZADO --- */
+.table-responsive::-webkit-scrollbar {
+    height: 8px;
+}
+
+.table-responsive::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb {
+    background: var(--morado) !important;
+    border-radius: 10px;
+}
+
+    .table-responsive::-webkit-scrollbar-thumb:hover {
+        background: var(--morado-oscuro) !important;
+    }
+
 }
 
 /* --- SOMBRA PARA INPUTS FOCUS --- */
 .form-control:focus,
 .form-select:focus {
-    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+    box-shadow: 0 0 0 0.25rem rgba(156, 39, 176, 0.25);
 }
 
 /* --- FOOTER DE TABLA DESTACADO --- */
 tfoot tr {
     font-weight: bold;
-    background: linear-gradient(135deg, #e7f3ff 0%, #cfe2ff 100%);
+    background: linear-gradient(135deg, #fce4ec 0%, #f3e5f5 100%);
 }

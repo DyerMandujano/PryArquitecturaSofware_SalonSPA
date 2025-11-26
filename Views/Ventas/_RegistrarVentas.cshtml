@@ -3,7 +3,10 @@
 @{
     ViewData["Title"] = "Registrar Venta";
 }
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="~/css/VVentas/_RegistrarVentas.css" rel="stylesheet" />
+
 
 <div class="container-fluid mt-4">
     <div class="card shadow">
@@ -227,206 +230,250 @@
     </div>
 </div>
 
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+<!-- ============================================ -->
+<!--          JAVASCRIPT SIN JQUERY             -->
+<!-- ============================================ -->
+<script>
+    let detallesVenta = [];
+    let contadorDetalles = 0;
 
-    <script>
-        let detallesVenta = [];
-        let contadorDetalles = 0;
+    document.addEventListener('DOMContentLoaded', function () {
+        console.log('JavaScript cargado correctamente');
 
-        $(document).ready(function () {
-            // Formatear fecha actual
-            const now = new Date();
-            const formattedDate = now.toISOString().slice(0, 16);
-            $('#FechaVenta').val(formattedDate);
+        // Formatear fecha actual
+        const now = new Date();
+        const formattedDate = now.toISOString().slice(0, 16);
+        document.getElementById('FechaVenta').value = formattedDate;
 
-            // Evento: Mostrar info del cliente seleccionado
-            $('#selectCliente').on('change', function () {
-                const option = $(this).find('option:selected');
-                const nombre = option.data('nombre');
-                const telefono = option.data('telefono');
-                const dni = option.data('dni');
+        console.log('Fecha configurada:', formattedDate);
 
-                if (nombre) {
-                    $('#infoClienteSeleccionado').html(`
-                        <small><strong>Nombre:</strong> ${nombre}</small><br>
-                        <small><strong>DNI:</strong> ${dni}</small> |
-                        <small><strong>Teléfono:</strong> ${telefono}</small>
-                    `);
-                } else {
-                    $('#infoClienteSeleccionado').html('<small class="text-muted">Seleccione un cliente</small>');
-                }
-            });
+        // Evento: Mostrar info del cliente seleccionado
+        const selectCliente = document.getElementById('selectCliente');
+        selectCliente.addEventListener('change', function () {
+            console.log('Cliente seleccionado');
+            const option = this.options[this.selectedIndex];
+            const nombre = option.getAttribute('data-nombre');
+            const telefono = option.getAttribute('data-telefono');
+            const dni = option.getAttribute('data-dni');
 
-            // Evento: Buscar cita
-            $('#btnBuscarCita').on('click', function () {
-                const idCita = $('#txtBuscarCita').val();
+            console.log('Datos cliente:', { nombre, telefono, dni });
 
-                if (!idCita) {
-                    alert('Ingrese un ID de cita');
-                    return;
-                }
-
-                $.ajax({
-                    url: '@Url.Action("BuscarCitaServicio", "Ventas")',
-                    type: 'GET',
-                    data: { idCitaServicio: idCita },
-                    success: function (response) {
-                        if (response.success) {
-                            const data = response.data;
-
-                            // Autocompletar cliente
-                            $('#selectCliente').val(data.id_Cliente).trigger('change');
-
-                            // Mostrar info de la cita
-                            $('#datosCita').html(`
-                                <strong>${data.nombre_Cliente}</strong><br>
-                                DNI: ${data.dni} | Tel: ${data.telefono}<br>
-                                <strong>Servicio:</strong> ${data.nombre_Servicio} - S/ ${data.precio_Servicio.toFixed(2)}
-                            `);
-                            $('#infoCita').removeClass('d-none');
-
-                            // Agregar servicio automáticamente
-                            agregarDetalle({
-                                tipoItem: 'Servicio',
-                                idCitaServicio: data.id_CitaServicio,
-                                idProducto: null,
-                                nombreItem: data.nombre_Servicio + ' - ' + data.descripcion_Servicio,
-                                cantidad: 1,
-                                precioUnitario: data.precio_Servicio,
-                                stockDisponible: null
-                            });
-
-                            alert('Cita encontrada y servicio agregado');
-                        } else {
-                            alert(response.message);
-                        }
-                    },
-                    error: function () {
-                        alert('Error al buscar la cita');
-                    }
-                });
-            });
-
-            // Evento: Agregar producto
-            $('#btnAgregarProducto').on('click', function () {
-                const selectProducto = $('#selectProducto');
-                const idProducto = selectProducto.val();
-                const cantidad = parseInt($('#txtCantidad').val());
-
-                if (!idProducto) {
-                    alert('Seleccione un producto');
-                    return;
-                }
-
-                if (!cantidad || cantidad <= 0) {
-                    alert('Ingrese una cantidad válida');
-                    return;
-                }
-
-                const option = selectProducto.find('option:selected');
-                const nombre = option.data('nombre');
-                const precio = parseFloat(option.data('precio'));
-                const stock = parseInt(option.data('stock'));
-
-                if (cantidad > stock) {
-                    alert(`Stock insuficiente. Disponible: ${stock}`);
-                    return;
-                }
-
-                agregarDetalle({
-                    tipoItem: 'Producto',
-                    idCitaServicio: null,
-                    idProducto: idProducto,
-                    nombreItem: nombre,
-                    cantidad: cantidad,
-                    precioUnitario: precio,
-                    stockDisponible: stock
-                });
-
-                // Limpiar campos
-                selectProducto.val('');
-                $('#txtCantidad').val(1);
-            });
-
-            // Función: Agregar detalle
-            function agregarDetalle(detalle) {
-                const index = contadorDetalles++;
-                detallesVenta.push({ index, ...detalle });
-
-                const subtotal = detalle.cantidad * detalle.precioUnitario;
-
-                // Agregar fila a la tabla
-                const nuevaFila = `
-                    <tr data-index="${index}">
-                        <td><span class="badge bg-${detalle.tipoItem === 'Servicio' ? 'info' : 'success'}">${detalle.tipoItem}</span></td>
-                        <td>${detalle.nombreItem}</td>
-                        <td>${detalle.cantidad}</td>
-                        <td>S/ ${detalle.precioUnitario.toFixed(2)}</td>
-                        <td>S/ ${subtotal.toFixed(2)}</td>
-                        <td class="text-center">
-                            <button type="button" class="btn btn-danger btn-sm btnEliminar" data-index="${index}">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
+            const infoDiv = document.getElementById('infoClienteSeleccionado');
+            if (nombre) {
+                infoDiv.innerHTML = `
+                    <small><strong>Nombre:</strong> ${nombre}</small><br>
+                    <small><strong>DNI:</strong> ${dni}</small> |
+                    <small><strong>Teléfono:</strong> ${telefono}</small>
                 `;
+            } else {
+                infoDiv.innerHTML = '<small class="text-muted">Seleccione un cliente</small>';
+            }
+        });
 
-                $('#rowSinDatos').hide();
-                $('#bodyDetalles').append(nuevaFila);
+        // Evento: Buscar cita
+        const btnBuscarCita = document.getElementById('btnBuscarCita');
+        btnBuscarCita.addEventListener('click', function () {
+            console.log('Botón buscar cita clickeado');
+            const idCita = document.getElementById('txtBuscarCita').value;
 
-                // Agregar campos ocultos
-                const camposOcultos = `
-                    <input type="hidden" name="Detalles[${index}].TipoItem" value="${detalle.tipoItem}" />
-                    <input type="hidden" name="Detalles[${index}].IdCitaServicio" value="${detalle.idCitaServicio || ''}" />
-                    <input type="hidden" name="Detalles[${index}].IdProducto" value="${detalle.idProducto || ''}" />
-                    <input type="hidden" name="Detalles[${index}].NombreItem" value="${detalle.nombreItem}" />
-                    <input type="hidden" name="Detalles[${index}].Cantidad" value="${detalle.cantidad}" />
-                    <input type="hidden" name="Detalles[${index}].PrecioUnitario" value="${detalle.precioUnitario}" />
-                    <input type="hidden" name="Detalles[${index}].StockDisponible" value="${detalle.stockDisponible || ''}" />
-                `;
-                $('#contenedorDetalles').append(camposOcultos);
-
-                calcularTotal();
+            if (!idCita) {
+                alert('Ingrese un ID de cita');
+                return;
             }
 
-            // Evento: Eliminar detalle
-            $(document).on('click', '.btnEliminar', function () {
-                const index = $(this).data('index');
+            console.log('Buscando cita ID:', idCita);
+
+            // Mostrar indicador de carga
+            this.disabled = true;
+            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Buscando...';
+
+            fetch('/Ventas/BuscarCitaServicio?idCitaServicio=' + idCita)
+                .then(response => response.json())
+                .then(response => {
+                    console.log('Respuesta del servidor:', response);
+
+                    if (response.success) {
+                        const data = response.data;
+
+                        // Autocompletar cliente
+                        selectCliente.value = data.id_Cliente;
+                        selectCliente.dispatchEvent(new Event('change'));
+
+                        // Mostrar info de la cita
+                        document.getElementById('datosCita').innerHTML = `
+                            <strong>${data.nombre_Cliente}</strong><br>
+                            DNI: ${data.dni} | Tel: ${data.telefono}<br>
+                            <strong>Servicio:</strong> ${data.nombre_Servicio} - S/ ${data.precio_Servicio.toFixed(2)}
+                        `;
+                        document.getElementById('infoCita').classList.remove('d-none');
+
+                        // Agregar servicio automáticamente
+                        agregarDetalle({
+                            tipoItem: 'Servicio',
+                            idCitaServicio: data.id_CitaServicio,
+                            idProducto: null,
+                            nombreItem: data.nombre_Servicio + ' - ' + data.descripcion_Servicio,
+                            cantidad: 1,
+                            precioUnitario: data.precio_Servicio,
+                            stockDisponible: null
+                        });
+
+                        alert('Cita encontrada y servicio agregado');
+                    } else {
+                        alert(response.message || 'No se encontró la cita');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error AJAX:', error);
+                    alert('Error al buscar la cita: ' + error);
+                })
+                .finally(() => {
+                    btnBuscarCita.disabled = false;
+                    btnBuscarCita.innerHTML = '<i class="fas fa-search"></i> Buscar';
+                });
+        });
+
+        // Evento: Agregar producto
+        const btnAgregarProducto = document.getElementById('btnAgregarProducto');
+        btnAgregarProducto.addEventListener('click', function () {
+            console.log('Botón agregar producto clickeado');
+
+            const selectProducto = document.getElementById('selectProducto');
+            const idProducto = selectProducto.value;
+            const cantidad = parseInt(document.getElementById('txtCantidad').value);
+
+            console.log('ID Producto:', idProducto, 'Cantidad:', cantidad);
+
+            if (!idProducto) {
+                alert('Seleccione un producto');
+                return;
+            }
+
+            if (!cantidad || cantidad <= 0) {
+                alert('Ingrese una cantidad válida');
+                return;
+            }
+
+            const option = selectProducto.options[selectProducto.selectedIndex];
+            const nombre = option.getAttribute('data-nombre');
+            const precio = parseFloat(option.getAttribute('data-precio'));
+            const stock = parseInt(option.getAttribute('data-stock'));
+
+            console.log('Datos producto:', { nombre, precio, stock });
+
+            if (cantidad > stock) {
+                alert(`Stock insuficiente. Disponible: ${stock}`);
+                return;
+            }
+
+            agregarDetalle({
+                tipoItem: 'Producto',
+                idCitaServicio: null,
+                idProducto: idProducto,
+                nombreItem: nombre,
+                cantidad: cantidad,
+                precioUnitario: precio,
+                stockDisponible: stock
+            });
+
+            // Limpiar campos
+            selectProducto.value = '';
+            document.getElementById('txtCantidad').value = 1;
+
+            console.log('Producto agregado correctamente');
+        });
+
+        // Función: Agregar detalle
+        function agregarDetalle(detalle) {
+            console.log('Agregando detalle:', detalle);
+
+            const index = contadorDetalles++;
+            detallesVenta.push({ index, ...detalle });
+
+            const subtotal = detalle.cantidad * detalle.precioUnitario;
+
+            // Agregar fila a la tabla
+            const nuevaFila = `
+                <tr data-index="${index}">
+                    <td><span class="badge bg-${detalle.tipoItem === 'Servicio' ? 'info' : 'success'}">${detalle.tipoItem}</span></td>
+                    <td>${detalle.nombreItem}</td>
+                    <td>${detalle.cantidad}</td>
+                    <td>S/ ${detalle.precioUnitario.toFixed(2)}</td>
+                    <td>S/ ${subtotal.toFixed(2)}</td>
+                    <td class="text-center">
+                        <button type="button" class="btn btn-danger btn-sm btnEliminar" data-index="${index}">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            `;
+
+            const rowSinDatos = document.getElementById('rowSinDatos');
+            if (rowSinDatos) rowSinDatos.style.display = 'none';
+
+            document.getElementById('bodyDetalles').insertAdjacentHTML('beforeend', nuevaFila);
+
+            // Agregar campos ocultos
+            const camposOcultos = `
+                <input type="hidden" name="Detalles[${index}].TipoItem" value="${detalle.tipoItem}" />
+                <input type="hidden" name="Detalles[${index}].IdCitaServicio" value="${detalle.idCitaServicio || ''}" />
+                <input type="hidden" name="Detalles[${index}].IdProducto" value="${detalle.idProducto || ''}" />
+                <input type="hidden" name="Detalles[${index}].NombreItem" value="${detalle.nombreItem}" />
+                <input type="hidden" name="Detalles[${index}].Cantidad" value="${detalle.cantidad}" />
+                <input type="hidden" name="Detalles[${index}].PrecioUnitario" value="${detalle.precioUnitario}" />
+                <input type="hidden" name="Detalles[${index}].StockDisponible" value="${detalle.stockDisponible || ''}" />
+            `;
+            document.getElementById('contenedorDetalles').insertAdjacentHTML('beforeend', camposOcultos);
+
+            console.log('Campos ocultos agregados para índice:', index);
+            console.log('Total de detalles:', detallesVenta.length);
+
+            calcularTotal();
+        }
+
+        // Evento: Eliminar detalle (delegación de eventos)
+        document.addEventListener('click', function (e) {
+            if (e.target.classList.contains('btnEliminar') || e.target.closest('.btnEliminar')) {
+                const btn = e.target.classList.contains('btnEliminar') ? e.target : e.target.closest('.btnEliminar');
+                const index = parseInt(btn.getAttribute('data-index'));
 
                 // Eliminar de array
                 detallesVenta = detallesVenta.filter(d => d.index !== index);
 
                 // Eliminar fila
-                $(`tr[data-index="${index}"]`).remove();
+                const fila = document.querySelector(`tr[data-index="${index}"]`);
+                if (fila) fila.remove();
 
                 // Eliminar campos ocultos
-                $(`input[name^="Detalles[${index}]"]`).remove();
+                const inputs = document.querySelectorAll(`input[name^="Detalles[${index}]"]`);
+                inputs.forEach(input => input.remove());
 
                 if (detallesVenta.length === 0) {
-                    $('#rowSinDatos').show();
+                    const rowSinDatos = document.getElementById('rowSinDatos');
+                    if (rowSinDatos) rowSinDatos.style.display = '';
                 }
 
                 calcularTotal();
-            });
-
-            // Función: Calcular total
-            function calcularTotal() {
-                let total = 0;
-                detallesVenta.forEach(d => {
-                    total += d.cantidad * d.precioUnitario;
-                });
-                $('#totalVenta').text('S/ ' + total.toFixed(2));
             }
-
-            // Validación antes de enviar
-            $('#formVenta').on('submit', function (e) {
-                if (detallesVenta.length === 0) {
-                    e.preventDefault();
-                    alert('Debe agregar al menos un producto o servicio');
-                    return false;
-                }
-            });
         });
-    </script>
-}
+
+        // Función: Calcular total
+        function calcularTotal() {
+            let total = 0;
+            detallesVenta.forEach(d => {
+                total += d.cantidad * d.precioUnitario;
+            });
+            document.getElementById('totalVenta').textContent = 'S/ ' + total.toFixed(2);
+        }
+
+        // Validación antes de enviar
+        const formVenta = document.getElementById('formVenta');
+        formVenta.addEventListener('submit', function (e) {
+            if (detallesVenta.length === 0) {
+                e.preventDefault();
+                alert('Debe agregar al menos un producto o servicio');
+                return false;
+            }
+        });
+    });
+</script>
