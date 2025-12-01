@@ -1,256 +1,311 @@
-﻿/* ========================================
-   ESTILOS PARA MÓDULO DE VENTAS
-   ======================================== */
-
-/* --- VARIABLES DE COLOR ROSA-MORADO --- */
+﻿/* ===== PALETA EQUILIBRADA CON BORDE MORADO ===== */
 :root {
-    --rosa-claro: #f8bbd9;
-    --rosa: #e91e63;
-    --rosa-oscuro: #c2185b;
-    --morado-claro: #d1c4e9;
-    --morado: #9c27b0;
-    --morado-oscuro: #7b1fa2;
-    --morado-profundo: #6a1b9a;
-    --gradiente-rosa-morado: linear-gradient(135deg, #e91e63 0%, #9c27b0 100%);
-    --gradiente-suave: linear-gradient(135deg, #f8bbd9 0%, #d1c4e9 100%);
+    /* Colores principales más suaves */
+    --morado-principal: #6B46C1 !important; 
+    --morado-hover: #805AD5 !important; 
+    --morado-border: #6B46C1 !important; 
+
+    --rosa-suave: #FBB6CE !important; 
+    --rosa-medio: #F687B3 !important; 
+    --rosa-focus: #ED64A6 !important; 
+    --rosa-border: #F687B3 !important; 
+
+    --dorado-suave: #F6E05E !important; 
+    --dorado-medio: #ECC94B !important; 
+    --dorado-hover: #D69E2E !important; 
+    --bg-input: #FAF5FF !important; 
+    --text-color: #2D3748 !important; 
+    --text-rosa: #B83280 !important; 
+    --border-color: #E2E8F0 !important; 
+    --background-light: #F7FAFC !important;
+    --border-radius: 8px;
 }
 
-/* --- CONTENEDOR PRINCIPAL --- */
-.container-fluid {
-    padding: 20px;
-    background: linear-gradient(135deg, #faf5ff 0%, #fce4ec 100%);
+/* ===== CONTENEDOR PRINCIPAL ===== */
+.container-fluid.ventas-container {
+    background-color: var(--background-light) !important;
+    min-height: 100vh;
+    padding: 1.5rem !important;
+    max-width: 1100px;
+    margin: 0 auto;
 }
 
-/* --- CARDS --- */
-.card {
-    border-radius: 10px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 6px rgba(156, 39, 176, 0.1);
-    transition: all 0.3s ease;
-    border: 1px solid var(--morado-claro);
+/* ===== CARD PRINCIPAL CON BORDE MORADO ===== */
+.ventas-container .card {
+    border: 2px solid var(--morado-border) !important;
+    border-radius: 12px !important;
+    max-width: 1000px;
+    margin: 0 auto;
+    background: white;
 }
 
-    .card:hover {
-        box-shadow: 0 8px 12px rgba(156, 39, 176, 0.15);
-        transform: translateY(-2px);
-    }
-
-.card-header {
-    border-radius: 10px 10px 0 0 !important;
-    padding: 15px 20px;
+/* ===== HEADERS DE CARDS - SOLO MORADO ===== */
+.ventas-container .card-header {
+    color: white !important;
     font-weight: 600;
-    background: var(--gradiente-rosa-morado) !important;
-    color: white;
+    border-bottom: 2px solid var(--morado-border) !important;
+    padding: 1rem 1.5rem !important;
+    background: var(--morado-principal) !important; /* Asegurar fondo morado */
 }
 
-    .card-header h3,
-    .card-header h5 {
-        margin: 0;
-        display: flex;
-        align-items: center;
-        gap: 10px;
+    .ventas-container .card-header.bg-primary {
+        background: var(--morado-principal) !important;
     }
 
-.card-body {
-    padding: 25px;
-    background-color: #fff;
-}
+    .ventas-container .card-header.bg-info {
+        background: var(--morado-principal) !important;
+        opacity: 0.9;
+    }
 
-/* --- FORMULARIOS --- */
-.form-label {
+    .ventas-container .card-header.bg-secondary {
+        background: var(--morado-principal) !important;
+        opacity: 0.85;
+    }
+
+    .ventas-container .card-header.bg-success {
+        background: var(--morado-principal) !important;
+        opacity: 0.8;
+    }
+
+    .ventas-container .card-header.bg-warning {
+        background: var(--morado-principal) !important;
+        opacity: 0.75;
+    }
+
+    /* ===== CORRECCIÓN ESPECÍFICA PARA EL TÍTULO PRINCIPAL ===== */
+    .ventas-container .card-header h3 {
+        margin: 0 !important;
+        color: white !important; 
+        font-size: 1.5rem !important;
+        font-weight: 600 !important;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important; 
+        display: inline-block !important; 
+    }
+
+    /* ===== BOTÓN VOLVER MEJORADO ===== */
+    .ventas-container .card-header .btn-volver {
+        display: inline-flex !important;
+        align-items: center !important;
+        color: white !important;
+        text-decoration: none !important;
+        font-weight: 500 !important;
+        margin-right: 1.5rem !important;
+        transition: all 0.3s ease !important;
+        padding: 0.5rem 1rem !important;
+        border: 1px solid rgba(255, 255, 255, 0.4) !important;
+        gap: 0.5rem !important;
+        font-size: 0.9rem !important;
+        border-radius: 6px !important;
+        background-color: rgba(255, 255, 255, 0.15) !important;
+        backdrop-filter: blur(10px) !important;
+    }
+
+        .ventas-container .card-header .btn-volver:hover {
+            transform: translateY(-1px) !important;
+            color: var(--text-color) !important;
+            background-color: white !important;
+            text-decoration: none !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+        }
+
+    /* Para que el título y el botón se alineen mejor */
+    .ventas-container .card-header > div {
+        display: flex !important;
+        align-items: center !important;
+        flex-wrap: wrap !important;
+        gap: 1rem !important;
+    }
+
+/* ===== BOTONES - DORADOS SUAVES ===== */
+.ventas-container .btn-primary {
+    background: var(--dorado-suave) !important;
+    border-color: var(--dorado-suave) !important;
+    color: var(--text-color) !important;
     font-weight: 600;
-    color: var(--morado-oscuro);
-    margin-bottom: 8px;
+    border: none;
 }
 
-.form-control,
-.form-select {
-    border-radius: 6px;
-    border: 1px solid var(--morado-claro);
-    padding: 10px 15px;
-    transition: all 0.3s ease;
+    .ventas-container .btn-primary:hover {
+        background: var(--dorado-medio) !important;
+        border-color: var(--dorado-medio) !important;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(246, 224, 94, 0.3);
+    }
+
+.ventas-container .btn-info {
+    background: var(--dorado-suave) !important;
+    border-color: var(--dorado-suave) !important;
+    color: var(--text-color) !important;
+    font-weight: 600;
+    border: none;
 }
 
-    .form-control:focus,
-    .form-select:focus {
-        border-color: var(--morado);
-        box-shadow: 0 0 0 0.25rem rgba(156, 39, 176, 0.15);
+    .ventas-container .btn-info:hover {
+        background: var(--dorado-medio) !important;
+        border-color: var(--dorado-medio) !important;
+        box-shadow: 0 4px 12px rgba(246, 224, 94, 0.3);
     }
 
-    .form-control:disabled,
-    .form-control[readonly] {
-        background-color: var(--rosa-claro);
-        cursor: not-allowed;
+.ventas-container .btn-success {
+    background: var(--dorado-suave) !important;
+    border-color: var(--dorado-suave) !important;
+    color: var(--text-color) !important;
+    font-weight: 600;
+    border: none;
+}
+
+    .ventas-container .btn-success:hover {
+        background: var(--dorado-medio) !important;
+        border-color: var(--dorado-medio) !important;
+        box-shadow: 0 4px 12px rgba(246, 224, 94, 0.3);
     }
 
-/* --- BOTONES --- */
-.btn {
-    border-radius: 6px;
-    padding: 10px 20px;
+.ventas-container .btn-secondary {
+    background: #718096 !important;
+    border-color: #718096 !important;
+    color: white !important;
+    font-weight: 600;
+    border: none;
+}
+
+/* ===== FORMULARIOS - BORDES ROSAS ===== */
+.ventas-container .form-control,
+.ventas-container .form-select {
+    border: 2px solid var(--rosa-border) !important;
+    border-radius: var(--border-radius) !important;
+    background-color: white !important;
+    color: var(--text-color) !important;
     font-weight: 500;
     transition: all 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    border: none;
 }
 
-.btn-primary {
-    background: var(--gradiente-rosa-morado);
-    color: white;
+    .ventas-container .form-control:focus,
+    .ventas-container .form-select:focus {
+        border-color: var(--rosa-focus) !important;
+        box-shadow: 0 0 0 0.2rem rgba(251, 182, 206, 0.25) !important;
+        background-color: var(--bg-input) !important;
+    }
+
+.ventas-container .form-label {
+    color: var(--text-rosa) !important;
+    font-weight: 600 !important;
+    font-size: 0.9rem !important;
+    margin-bottom: 0.5rem;
 }
 
-.btn-success {
-    background: linear-gradient(135deg, var(--morado) 0%, var(--rosa-oscuro) 100%);
-    color: white;
-}
-
-.btn-info {
-    background: linear-gradient(135deg, var(--rosa-claro) 0%, var(--morado-claro) 100%);
-    color: var(--morado-oscuro);
-}
-
-.btn-warning {
-    background: linear-gradient(135deg, #ff80ab 0%, #ea80fc 100%);
-    color: white;
-}
-
-.btn-danger {
-    background: linear-gradient(135deg, var(--rosa) 0%, #ad1457 100%);
-    color: white;
-}
-
-.btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(156, 39, 176, 0.3);
-    filter: brightness(1.1);
-}
-
-.btn-lg {
-    padding: 12px 30px;
-    font-size: 1.1rem;
-}
-
-.btn i {
-    font-size: 1rem;
-}
-
-/* --- TABLA DE DETALLES --- */
-.table-responsive {
-    border-radius: 8px;
+/* ===== TABLAS - TONOS NEUTROS CON ACENTOS ===== */
+.ventas-container .table {
+    color: var(--text-color) !important;
+    font-size: 0.9rem;
+    border: 2px solid var(--rosa-border) !important;
+    border-radius: var(--border-radius);
     overflow: hidden;
-    border: 1px solid var(--morado-claro);
 }
 
-#tablaDetalles {
-    margin-bottom: 0;
+.ventas-container .table-dark {
+    background: var(--morado-principal) !important;
+    color: white !important;
 }
 
-    #tablaDetalles thead {
-        background: var(--gradiente-rosa-morado);
-    }
-
-        #tablaDetalles thead th {
-            color: white;
-            font-weight: 600;
-            text-align: center;
-            padding: 15px 10px;
-            border: none;
-        }
-
-    #tablaDetalles tbody tr {
-        transition: all 0.2s ease;
-    }
-
-        #tablaDetalles tbody tr:hover {
-            background-color: #fce4ec;
-            transform: scale(1.01);
-        }
-
-    #tablaDetalles tbody td {
-        vertical-align: middle;
-        padding: 12px 10px;
-        border-color: var(--rosa-claro);
-    }
-
-    #tablaDetalles tfoot {
-        background: linear-gradient(135deg, #fce4ec 0%, #f3e5f5 100%);
-        font-size: 1.1rem;
-    }
-
-        #tablaDetalles tfoot td {
-            padding: 15px 10px;
-            border-top: 3px solid var(--morado);
-            color: var(--morado-oscuro);
-        }
-
-#totalVenta {
-    color: var(--morado-oscuro);
-    font-size: 1.3rem;
-    font-weight: bold;
-}
-
-/* --- BADGES --- */
-.badge {
-    padding: 6px 12px;
-    font-size: 0.85rem;
+.ventas-container .table-info {
+    background: rgba(246, 224, 94, 0.2) !important;
+    color: var(--text-color) !important;
     font-weight: 600;
-    border-radius: 20px;
 }
 
-    .badge.bg-primary {
-        background: var(--gradiente-rosa-morado) !important;
+.ventas-container .table-hover tbody tr:hover {
+    background-color: rgba(251, 182, 206, 0.1) !important;
+}
+
+/* ===== BADGES - COMBINACIÓN SUAVE ===== */
+.ventas-container .badge.bg-info {
+    background: var(--rosa-medio) !important;
+    color: white !important;
+    font-weight: 600;
+}
+
+.ventas-container .badge.bg-success {
+    background: var(--dorado-medio) !important;
+    color: var(--text-color) !important;
+    font-weight: 600;
+}
+
+/* ===== ALERTAS - TONOS ROSAS ===== */
+.ventas-container .alert-danger {
+    background: rgba(245, 101, 101, 0.1) !important;
+    border: 2px solid var(--rosa-border) !important;
+    color: var(--text-rosa) !important;
+    border-radius: var(--border-radius);
+}
+
+.ventas-container .alert-success {
+    background: rgba(251, 182, 206, 0.2) !important;
+    border: 2px solid var(--rosa-border) !important;
+    color: var(--text-rosa) !important;
+    border-radius: var(--border-radius);
+}
+
+/* ===== MEJORAS VISUALES ===== */
+.ventas-container .card.shadow {
+    box-shadow: 0 4px 20px rgba(107, 70, 193, 0.15) !important;
+}
+
+.ventas-container .card-body {
+    padding: 1.5rem !important;
+}
+
+/* Input group personalizado */
+.ventas-container .input-group .form-control {
+    border-right: none !important;
+}
+
+.ventas-container .input-group .btn {
+    border-left: none !important;
+    border-color: var(--rosa-border) !important;
+}
+
+/* Cards internas con bordes rosas */
+.ventas-container .card .card {
+    border: 1px solid var(--rosa-border) !important;
+}
+
+.ventas-container .card .card-header {
+    border-bottom: 1px solid var(--rosa-border) !important;
+}
+
+/* ===== TEXTO ROSA EN VARIOS ELEMENTOS ===== */
+.ventas-container .text-muted {
+    color: var(--rosa-medio) !important;
+}
+
+.ventas-container small {
+    color: var(--text-rosa) !important;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .ventas-container {
+        padding: 1rem !important;
     }
 
-    .badge.bg-success {
-        background: linear-gradient(135deg, var(--morado) 0%, var(--rosa-oscuro) 100%) !important;
-    }
+        .ventas-container .card-body {
+            padding: 1rem !important;
+        }
 
-    .badge.bg-info {
-        background: linear-gradient(135deg, var(--rosa-claro) 0%, var(--morado-claro) 100%) !important;
-        color: var(--morado-oscuro);
-    }
+        .ventas-container .card-header > div {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            gap: 0.5rem !important;
+        }
 
-/* --- ALERTAS --- */
-.alert {
-    border-radius: 8px;
-    padding: 15px 20px;
-    margin-bottom: 20px;
-    border: none;
+        .ventas-container .card-header .btn-volver {
+            margin-right: 0 !important;
+            margin-bottom: 0.5rem !important;
+        }
 }
 
-.alert-info {
-    background: linear-gradient(135deg, #fce4ec 0%, #f3e5f5 100%);
-    color: var(--morado-oscuro);
-    border-left: 4px solid var(--morado);
-}
-
-.alert-success {
-    background: linear-gradient(135deg, #e8f5e8 0%, #f3e5f5 100%);
-    color: var(--morado-oscuro);
-    border-left: 4px solid var(--rosa);
-}
-
-.alert-warning {
-    background: linear-gradient(135deg, #fff3e0 0%, #fce4ec 100%);
-    color: var(--morado-oscuro);
-    border-left: 4px solid #ff80ab;
-}
-
-.alert i {
-    margin-right: 8px;
-}
-
-/* --- INFO CITA --- */
-#infoCita {
-    animation: slideIn 0.5s ease;
-    background: linear-gradient(135deg, #faf5ff 0%, #fce4ec 100%);
-    border-radius: 8px;
-    padding: 15px;
-    border-left: 4px solid var(--morado);
-}
-
-@keyframes slideIn {
+/* ===== ANIMACIONES ===== */
+@keyframes fadeIn {
     from {
         opacity: 0;
         transform: translateY(-10px);
@@ -262,520 +317,16 @@
     }
 }
 
-#datosCita {
-    margin-top: 10px;
-    line-height: 1.8;
-    color: var(--morado-oscuro);
+.ventas-container .card {
+    animation: fadeIn 0.3s ease-out;
 }
 
-/* --- INFO CLIENTE SELECCIONADO --- */
-.card.bg-light {
-    background: linear-gradient(135deg, #fce4ec 0%, #f3e5f5 100%) !important;
-    border: 1px solid var(--morado-claro);
-    color: var(--morado-oscuro);
+/* ===== CORRECCIÓN ESPECÍFICA PARA EL HEADER PRINCIPAL ===== */
+.ventas-container .card-header.bg-primary.text-white {
+    background: var(--morado-principal) !important;
 }
 
-#infoClienteSeleccionado {
-    line-height: 1.6;
-}
-
-/* --- INPUT GROUP --- */
-.input-group {
-    border-radius: 6px;
-    overflow: hidden;
-}
-
-    .input-group .form-control {
-        border-right: none;
-        border-color: var(--morado-claro);
-    }
-
-    .input-group .btn {
-        border-left: none;
-        border-radius: 0 6px 6px 0 !important;
-        background: var(--gradiente-rosa-morado);
-        color: white;
-    }
-
-/* --- VALIDACIONES --- */
-.text-danger {
-    font-size: 0.875rem;
-    margin-top: 5px;
-    display: block;
-    color: var(--rosa) !important;
-}
-
-span.text-danger {
-    font-weight: 500;
-}
-
-/* --- FILA SIN DATOS --- */
-#rowSinDatos {
-    background: linear-gradient(135deg, #fce4ec 0%, #f3e5f5 100%);
-}
-
-    #rowSinDatos td {
-        padding: 30px;
-        font-size: 1.1rem;
-        color: var(--morado-oscuro);
-        text-align: center;
-    }
-
-/* --- BOTÓN ELIMINAR --- */
-.btnEliminar {
-    padding: 5px 10px;
-    font-size: 0.875rem;
-    background: linear-gradient(135deg, var(--rosa) 0%, #ad1457 100%);
-    color: white;
-}
-
-    .btnEliminar:hover {
-        transform: scale(1.1);
-        background: linear-gradient(135deg, #ad1457 0%, #880e4f 100%);
-    }
-
-/* --- SECCIÓN DE BÚSQUEDA --- */
-.card-header.bg-info {
-    background: linear-gradient(135deg, var(--rosa-claro) 0%, var(--morado-claro) 100%) !important;
-    color: var(--morado-oscuro) !important;
-}
-
-.card-header.bg-primary {
-    background: var(--gradiente-rosa-morado) !important;
-    color: white !important;
-}
-
-.card-header.bg-secondary {
-    background: linear-gradient(135deg, #ba68c8 0%, #8e24aa 100%) !important;
-    color: white !important;
-}
-
-.card-header.bg-success {
-    background: linear-gradient(135deg, var(--morado) 0%, var(--rosa-oscuro) 100%) !important;
-    color: white !important;
-}
-
-.card-header.bg-warning {
-    background: linear-gradient(135deg, #ff80ab 0%, #ea80fc 100%) !important;
-    color: white !important;
-}
-
-/* --- RESPONSIVE --- */
-@media (max-width: 768px) {
-    .card-body {
-        padding: 15px;
-    }
-
-    .btn-lg {
-        padding: 10px 20px;
-        font-size: 1rem;
-    }
-
-    #tablaDetalles {
-        font-size: 0.875rem;
-    }
-
-        #tablaDetalles thead th,
-        #tablaDetalles tbody td {
-            padding: 8px 5px;
-        }
-
-    .container-fluid {
-        padding: 10px;
-    }
-}
-
-@media (max-width: 576px) {
-    .card-header h3 {
-        font-size: 1.25rem;
-    }
-
-    .card-header h5 {
-        font-size: 1rem;
-    }
-
-    .btn {
-        padding: 8px 15px;
-        font-size: 0.875rem;
-    }
-
-    #totalVenta {
-        font-size: 1.1rem;
-    }
-}
-
-/* --- ANIMACIONES --- */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
-.card {
-    animation: fadeIn 0.5s ease;
-}
-
-/* --- SCROLLBAR PERSONALIZADO --- */
-.table-responsive::-webkit-scrollbar {
-    height: 8px;
-}
-
-.table-responsive::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 10px;
-}
-
-.table-responsive::-webkit-scrollbar-thumb {
-    background: var(--morado);
-    border-radius: 10px;
-}
-
-    .table-responsive::-webkit-scrollbar-thumb:hover {
-        background: var(--morado-oscuro);
-    }
-
-/* --- ESTADO DISABLED EN SELECT --- */
-select.form-select:disabled {
-    background-color: var(--rosa-claro);
-    cursor: not-allowed;
-}
-
-/* --- ESPACIADO GENERAL --- */
-.mb-3 {
-    margin-bottom: 1rem !important;
-}
-
-.mt-4 {
-    margin-top: 1.5rem !important;
-}
-
-/* --- EFECTOS HOVER EN FILAS --- */
-tbody tr {
-    cursor: pointer;
-}
-
-    tbody tr:active {
-        transform: scale(0.99);
-    }
-
-/* --- TEXTO REQUERIDO --- */
-.text-danger.required {
-    color: var(--rosa) !important;
-    font-weight: bold;
-}
-
-/* --- BOTONES DE ACCIÓN CENTRADOS --- */
-.text-center button,
-.text-center a {
-    margin: 0 10px; /* ========================================
-   ESTILOS PARA MÓDULO DE VENTAS - ROSA/MORADO
-   ======================================== */
-    /* --- VARIABLES DE COLOR ROSA-MORADO --- */
-    : root
-
-{
-    --rosa-claro: #f8bbd9;
-    --rosa: #e91e63;
-    --rosa-oscuro: #c2185b;
-    --morado-claro: #d1c4e9;
-    --morado: #9c27b0;
-    --morado-oscuro: #7b1fa2;
-    --morado-profundo: #6a1b9a;
-    --gradiente-rosa-morado: linear-gradient(135deg, #e91e63 0%, #9c27b0 100%);
-    --gradiente-suave: linear-gradient(135deg, #f8bbd9 0%, #d1c4e9 100%);
-}
-
-/* --- CONTENEDOR PRINCIPAL --- */
-.container-fluid {
-    padding: 20px;
-    background: linear-gradient(135deg, #faf5ff 0%, #fce4ec 100%) !important;
-}
-
-/* --- CARDS --- */
-.card {
-    border-radius: 10px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 6px rgba(156, 39, 176, 0.1) !important;
-    transition: all 0.3s ease;
-    border: 1px solid var(--morado-claro) !important;
-}
-
-    .card:hover {
-        box-shadow: 0 8px 12px rgba(156, 39, 176, 0.15) !important;
-        transform: translateY(-2px);
-    }
-
-/* --- CARD HEADERS ESPECÍFICOS --- */
-.card-header.bg-primary {
-    background: var(--gradiente-rosa-morado) !important;
-    color: white !important;
-    border-bottom: 1px solid var(--morado-oscuro) !important;
-}
-
-.card-header.bg-info {
-    background: linear-gradient(135deg, var(--rosa-claro) 0%, var(--morado-claro) 100%) !important;
-    color: var(--morado-oscuro) !important;
-    border-bottom: 1px solid var(--morado-claro) !important;
-}
-
-.card-header.bg-secondary {
-    background: linear-gradient(135deg, #ba68c8 0%, #8e24aa 100%) !important;
-    color: white !important;
-    border-bottom: 1px solid var(--morado-oscuro) !important;
-}
-
-.card-header.bg-success {
-    background: linear-gradient(135deg, var(--morado) 0%, var(--rosa-oscuro) 100%) !important;
-    color: white !important;
-    border-bottom: 1px solid var(--rosa-oscuro) !important;
-}
-
-.card-header.bg-warning {
-    background: linear-gradient(135deg, #ff80ab 0%, #ea80fc 100%) !important;
-    color: white !important;
-    border-bottom: 1px solid #ec407a !important;
-}
-
-.card-body {
-    padding: 25px;
-    background-color: #fff !important;
-}
-
-/* --- FORMULARIOS --- */
-.form-label {
-    font-weight: 600;
-    color: var(--morado-oscuro) !important;
-    margin-bottom: 8px;
-}
-
-.form-control,
-.form-select {
-    border-radius: 6px;
-    border: 1px solid var(--morado-claro) !important;
-    padding: 10px 15px;
-    transition: all 0.3s ease;
-}
-
-    .form-control:focus,
-    .form-select:focus {
-        border-color: var(--morado) !important;
-        box-shadow: 0 0 0 0.25rem rgba(156, 39, 176, 0.15) !important;
-    }
-
-    .form-control:disabled,
-    .form-control[readonly] {
-        background-color: var(--rosa-claro) !important;
-        cursor: not-allowed;
-    }
-
-/* --- BOTONES PERSONALIZADOS --- */
-.btn-primary {
-    background: var(--gradiente-rosa-morado) !important;
-    border: none !important;
-    color: white !important;
-}
-
-.btn-success {
-    background: linear-gradient(135deg, var(--morado) 0%, var(--rosa-oscuro) 100%) !important;
-    border: none !important;
-    color: white !important;
-}
-
-.btn-info {
-    background: linear-gradient(135deg, var(--rosa-claro) 0%, var(--morado-claro) 100%) !important;
-    border: none !important;
-    color: var(--morado-oscuro) !important;
-}
-
-.btn-warning {
-    background: linear-gradient(135deg, #ff80ab 0%, #ea80fc 100%) !important;
-    border: none !important;
-    color: white !important;
-}
-
-.btn-danger {
-    background: linear-gradient(135deg, var(--rosa) 0%, #ad1457 100%) !important;
-    border: none !important;
-    color: white !important;
-}
-
-.btn-secondary {
-    background: linear-gradient(135deg, #ba68c8 0%, #8e24aa 100%) !important;
-    border: none !important;
-    color: white !important;
-}
-
-.btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(156, 39, 176, 0.3) !important;
-    filter: brightness(1.1);
-}
-
-/* --- TABLA DE DETALLES --- */
-.table-responsive {
-    border-radius: 8px;
-    overflow: hidden;
-    border: 1px solid var(--morado-claro) !important;
-}
-
-#tablaDetalles thead.table-dark {
-    background: var(--gradiente-rosa-morado) !important;
-}
-
-    #tablaDetalles thead.table-dark th {
+    .ventas-container .card-header.bg-primary.text-white h3 {
         color: white !important;
-        font-weight: 600;
-        text-align: center;
-        padding: 15px 10px;
-        border: none !important;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
     }
-
-#tablaDetalles tbody tr {
-    transition: all 0.2s ease;
-}
-
-    #tablaDetalles tbody tr:hover {
-        background-color: #fce4ec !important;
-        transform: scale(1.01);
-    }
-
-#tablaDetalles tbody td {
-    vertical-align: middle;
-    padding: 12px 10px;
-    border-color: var(--rosa-claro) !important;
-}
-
-#tablaDetalles tfoot tr.table-info {
-    background: linear-gradient(135deg, #fce4ec 0%, #f3e5f5 100%) !important;
-}
-
-    #tablaDetalles tfoot tr.table-info td {
-        padding: 15px 10px;
-        border-top: 3px solid var(--morado) !important;
-        color: var(--morado-oscuro) !important;
-    }
-
-#totalVenta {
-    color: var(--morado-oscuro) !important;
-    font-size: 1.3rem;
-    font-weight: bold;
-}
-
-/* --- BADGES --- */
-.badge.bg-info {
-    background: linear-gradient(135deg, var(--rosa-claro) 0%, var(--morado-claro) 100%) !important;
-    color: var(--morado-oscuro) !important;
-}
-
-.badge.bg-success {
-    background: linear-gradient(135deg, var(--morado) 0%, var(--rosa-oscuro) 100%) !important;
-    color: white !important;
-}
-
-/* --- ALERTAS --- */
-.alert.alert-success {
-    background: linear-gradient(135deg, #e8f5e8 0%, #f3e5f5 100%) !important;
-    color: var(--morado-oscuro) !important;
-    border-left: 4px solid var(--rosa) !important;
-    border: none !important;
-}
-
-.alert.alert-danger {
-    background: linear-gradient(135deg, #ffebee 0%, #fce4ec 100%) !important;
-    color: var(--rosa) !important;
-    border-left: 4px solid var(--rosa) !important;
-    border: none !important;
-}
-
-.alert.alert-info {
-    background: linear-gradient(135deg, #fce4ec 0%, #f3e5f5 100%) !important;
-    color: var(--morado-oscuro) !important;
-    border-left: 4px solid var(--morado) !important;
-    border: none !important;
-}
-
-/* --- INFO CLIENTE --- */
-.card.bg-light {
-    background: linear-gradient(135deg, #fce4ec 0%, #f3e5f5 100%) !important;
-    border: 1px solid var(--morado-claro) !important;
-    color: var(--morado-oscuro) !important;
-}
-
-/* --- INPUT GROUP --- */
-.input-group {
-    border-radius: 6px;
-    overflow: hidden;
-}
-
-    .input-group .form-control {
-        border-right: none !important;
-        border-color: var(--morado-claro) !important;
-    }
-
-    .input-group .btn {
-        border-left: none !important;
-        border-radius: 0 6px 6px 0 !important;
-    }
-
-/* --- BOTÓN ELIMINAR --- */
-.btnEliminar {
-    padding: 5px 10px;
-    font-size: 0.875rem;
-    background: linear-gradient(135deg, var(--rosa) 0%, #ad1457 100%) !important;
-    color: white !important;
-    border: none !important;
-}
-
-    .btnEliminar:hover {
-        transform: scale(1.1);
-        background: linear-gradient(135deg, #ad1457 0%, #880e4f 100%) !important;
-    }
-
-/* --- FILA SIN DATOS --- */
-#rowSinDatos {
-    background: linear-gradient(135deg, #fce4ec 0%, #f3e5f5 100%) !important;
-}
-
-    #rowSinDatos td {
-        padding: 30px;
-        font-size: 1.1rem;
-        color: var(--morado-oscuro) !important;
-        text-align: center;
-    }
-
-/* --- SCROLLBAR PERSONALIZADO --- */
-.table-responsive::-webkit-scrollbar {
-    height: 8px;
-}
-
-.table-responsive::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 10px;
-}
-
-.table-responsive::-webkit-scrollbar-thumb {
-    background: var(--morado) !important;
-    border-radius: 10px;
-}
-
-    .table-responsive::-webkit-scrollbar-thumb:hover {
-        background: var(--morado-oscuro) !important;
-    }
-
-}
-
-/* --- SOMBRA PARA INPUTS FOCUS --- */
-.form-control:focus,
-.form-select:focus {
-    box-shadow: 0 0 0 0.25rem rgba(156, 39, 176, 0.25);
-}
-
-/* --- FOOTER DE TABLA DESTACADO --- */
-tfoot tr {
-    font-weight: bold;
-    background: linear-gradient(135deg, #fce4ec 0%, #f3e5f5 100%);
-}

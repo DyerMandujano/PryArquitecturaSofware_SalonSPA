@@ -1,0 +1,99 @@
+﻿@model Pry_Solu_SalonSPA.ViewModels.VentaDetalleCompletoVM
+
+@{
+    Layout = "~/Views/Main.cshtml";
+    ViewData["Title"] = "Detalle de Venta";
+}
+
+
+<link href="~/css/VVentas/_DetalleVentas.css" rel="stylesheet" />
+<div class="container-fluid mt-4">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0"><i class="fas fa-receipt"></i> Detalle de Venta #@Model.Id_Venta</h3>
+        </div>
+        <div class="card-body">
+            <!-- Cabecera de la venta -->
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <h5>Información de la Venta</h5>
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>Fecha:</th>
+                            <td>@Model.Fecha_Venta.ToString("dd/MM/yyyy HH:mm")</td>
+                        </tr>
+                        <tr>
+                            <th>Cliente:</th>
+                            <td>@Model.Nombre_Cliente</td>
+                        </tr>
+                        <tr>
+                            <th>Empleado:</th>
+                            <td>@Model.Nombre_Empleado</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-md-6">
+                    <h5>&nbsp;</h5>
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>Método de Pago:</th>
+                            <td>@Model.Metodo_Pago</td>
+                        </tr>
+                        <tr>
+                            <th>Tipo Comprobante:</th>
+                            <td>@Model.Tipo_Comprobante</td>
+                        </tr>
+                        <tr class="table-success">
+                            <th><strong>Total:</strong></th>
+                            <td><strong>S/ @Model.Monto_Total.ToString("N2")</strong></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Detalles de la venta -->
+            <h5>Items de la Venta</h5>
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Tipo</th>
+                            <th>Descripción</th>
+                            <th>Cantidad</th>
+                            <th>Precio Unit.</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var detalle in Model.Detalles)
+                        {
+                            <tr>
+                                <td>
+                                    <span class="badge bg-@(detalle.Tipo_Item == "Producto" ? "success" : "info")">
+                                        @detalle.Tipo_Item
+                                    </span>
+                                </td>
+                                <td>@detalle.Nombre_Item</td>
+                                <td>@detalle.Cantidad</td>
+                                <td>S/ @detalle.Precio_Unitario.ToString("N2")</td>
+                                <td>S/ @detalle.SubTotal.ToString("N2")</td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot class="table-info">
+                        <tr>
+                            <td colspan="4" class="text-end"><strong>TOTAL:</strong></td>
+                            <td><strong>S/ @Model.Monto_Total.ToString("N2")</strong></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <div class="text-center mt-4">
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Volver al Listado
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

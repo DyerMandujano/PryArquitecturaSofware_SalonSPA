@@ -1,4 +1,4 @@
-﻿/* ===== PALETA DE COLORES DETALLE COMPRA - EXACTAMENTE IGUAL ===== */
+﻿/* ===== PALETA DE COLORES DETALLE VENTA ===== */
 :root {
     --morado-principal: #6B46C1;
     --morado-hover: #805AD5;
@@ -18,12 +18,12 @@
     --border-radius: 8px;
 }
 
-/* ===== CONTENEDOR PRINCIPAL ===== */
+/* ===== CONTENEDOR PRINCIPAL CON ANCHO LIMITADO ===== */
 .container-fluid.mt-4 {
     background-color: var(--background-light) !important;
     min-height: 100vh;
     padding: 1.5rem !important;
-    max-width: 1200px !important;
+    max-width: 1200px !important; /* ← MÁXIMO ANCHO COMO VENTAS/COMPRAS */
     margin: 0 auto !important;
     width: 100% !important;
 }
@@ -34,11 +34,11 @@
     border-radius: 12px !important;
     overflow: hidden;
     box-shadow: 0 4px 20px rgba(107, 70, 193, 0.15) !important;
-    max-width: 1100px !important;
+    max-width: 1100px !important; /* ← ANCHO MÁXIMO */
     margin: 0 auto !important;
 }
 
-/* ===== HEADER MORADO CON GRADIENTE - EXACTO ===== */
+/* ===== HEADER MORADO ===== */
 .container-fluid .card-header.bg-primary {
     background: linear-gradient(135deg, var(--morado-principal), var(--morado-hover)) !important;
     color: white !important;
@@ -48,7 +48,6 @@
 
 .container-fluid .card-header h3 {
     margin: 0 !important;
-    color: white !important;
     font-size: 1.5rem !important;
     font-weight: 700 !important;
     display: flex;
@@ -57,30 +56,29 @@
 }
 
     .container-fluid .card-header h3 i {
-        color: white !important;
         font-size: 1.3rem;
     }
 
-/* ===== CARD BODY ===== */
+/* ===== BODY DE LA CARD ===== */
 .container-fluid .card-body {
     padding: 1.5rem !important;
     background-color: white;
 }
 
-    /* ===== TÍTULOS INTERNOS ===== */
+    /* ===== INFORMACIÓN DE LA VENTA ===== */
     .container-fluid .card-body h5 {
-        color: var(--text-rosa) !important; /* ← ROSA OSCURO (#B83280) */
+        color: var(--morado-principal) !important;
         font-weight: 600;
         font-size: 1.1rem;
         margin-bottom: 1rem !important;
         padding-bottom: 0.5rem;
-        border-bottom: 2px solid var(--rosa-border); /* ← ROSA (#F687B3) */
+        border-bottom: 2px solid var(--rosa-border);
         display: inline-block;
     }
 
 /* ===== TABLAS DE INFORMACIÓN ===== */
 .container-fluid .table {
-    border: 1.5px solid var(--rosa-border) !important; /* ← ROSA (#F687B3) */
+    border: 1.5px solid var(--rosa-border) !important;
     border-radius: var(--border-radius) !important;
     overflow: hidden;
     margin-bottom: 1.5rem !important;
@@ -89,45 +87,45 @@
 
 .container-fluid .table-bordered th,
 .container-fluid .table-bordered td {
-    border: 1px solid var(--rosa-border) !important; /* ← ROSA (#F687B3) */
+    border: 1px solid var(--rosa-border) !important;
     padding: 0.8rem !important;
 }
 
 .container-fluid .table-bordered th {
-    background-color: rgba(246, 135, 179, 0.1) !important; /* ← ROSA TRANSLÚCIDO */
-    color: var(--morado-principal) !important; /* ← MORADO (#6B46C1) */
+    background-color: rgba(246, 135, 179, 0.1) !important;
+    color: var(--morado-principal) !important;
     font-weight: 600;
     width: 35%;
 }
 
 .container-fluid .table-bordered td {
     background-color: white !important;
-    color: var(--text-color) !important; /* ← GRIS OSCURO (#2D3748) */
+    color: var(--text-color) !important;
 }
 
 .container-fluid .table.table-success {
-    background-color: rgba(246, 224, 94, 0.1) !important; /* ← DORADO TRANSLÚCIDO */
-    border: 1.5px solid var(--dorado-medio) !important; /* ← DORADO (#ECC94B) */
+    background-color: rgba(246, 224, 94, 0.1) !important;
+    border: 1.5px solid var(--dorado-medio) !important;
 }
 
 .container-fluid .table-success th,
 .container-fluid .table-success td {
-    border-color: var(--dorado-medio) !important; /* ← DORADO (#ECC94B) */
+    border-color: var(--dorado-medio) !important;
     font-weight: 700 !important;
 }
 
 /* ===== TABLA DE DETALLES ===== */
 .container-fluid .table-responsive {
-    border: 1.5px solid var(--rosa-border) !important; /* ← ROSA (#F687B3) */
+    border: 1.5px solid var(--rosa-border) !important;
     border-radius: var(--border-radius) !important;
     overflow: hidden;
     margin: 1.5rem 0 !important;
 }
 
-    /* ENCABEZADOS DE TABLA - BLANCOS SOBRE MORADO GRADIENTE */
+    /* ===== SOLUCIÓN DIRECTA PARA LOS ENCABEZADOS DE "Items de la Venta" ===== */
     .container-fluid .table-responsive .table-dark th {
         color: white !important;
-        background: linear-gradient(135deg, var(--morado-principal), var(--morado-hover)) !important;
+        background:  var(--morado-principal), var(--morado-hover)) !important;
         border: none !important;
         text-align: center;
         font-weight: 600;
@@ -136,8 +134,12 @@
         border-bottom: 2px solid rgba(255, 255, 255, 0.3) !important;
     }
 
+/* ===== ASEGURAR QUE SOLO LOS TH DE ESA TABLA SEAN BLANCOS ===== */
+.container-fluid h5:contains("Items de la Venta") + .table-responsive .table-dark th {
+    color: white !important;
+}
 .container-fluid .table-striped tbody tr:nth-of-type(odd) {
-    background-color: rgba(251, 182, 206, 0.05) !important; /* ← ROSA MUY SUAVE */
+    background-color: rgba(251, 182, 206, 0.05) !important;
 }
 
 .container-fluid .table-dark {
@@ -154,32 +156,50 @@
     }
 
 .container-fluid .table-striped.table-bordered td {
-    border: 1px solid var(--rosa-border) !important; /* ← ROSA (#F687B3) */
+    border: 1px solid var(--rosa-border) !important;
     padding: 0.9rem !important;
     vertical-align: middle;
 }
 
 .container-fluid .table-info {
-    background: rgba(246, 224, 94, 0.2) !important; /* ← DORADO TRANSLÚCIDO */
-    color: var(--text-color) !important; /* ← GRIS OSCURO (#2D3748) */
-    border-top: 2px solid var(--dorado-medio) !important; /* ← DORADO (#ECC94B) */
+    background: rgba(246, 224, 94, 0.2) !important;
+    color: var(--text-color) !important;
+    border-top: 2px solid var(--dorado-medio) !important;
 }
 
     .container-fluid .table-info td {
-        border-color: var(--dorado-medio) !important; /* ← DORADO (#ECC94B) */
+        border-color: var(--dorado-medio) !important;
         font-weight: 700;
         font-size: 1.1rem;
     }
 
     .container-fluid .table-info .text-end {
-        color: var(--morado-principal) !important; /* ← MORADO (#6B46C1) */
+        color: var(--morado-principal) !important;
     }
 
-/* ===== BOTONES - EXACTAMENTE IGUAL ===== */
+/* ===== BADGES ===== */
+.container-fluid .badge {
+    padding: 0.4rem 0.8rem !important;
+    border-radius: 20px !important;
+    font-weight: 600;
+    font-size: 0.8rem;
+}
+
+    .container-fluid .badge.bg-success {
+        background-color: var(--dorado-medio) !important;
+        color: var(--text-color) !important;
+    }
+
+    .container-fluid .badge.bg-info {
+        background-color: var(--rosa-medio) !important;
+        color: white !important;
+    }
+
+/* ===== BOTONES ===== */
 .container-fluid .btn-secondary {
-    background: linear-gradient(135deg, var(--dorado-suave), var(--dorado-medio)) !important; /* ← AMARILLO/GRADIENTE */
+    background: linear-gradient(135deg, var(--dorado-suave), var(--dorado-medio)) !important;
     border: none !important;
-    color: var(--text-color) !important; /* ← GRIS OSCURO (#2D3748) */
+    color: var(--text-color) !important;
     font-weight: 600;
     padding: 0.7rem 1.5rem !important;
     border-radius: var(--border-radius) !important;
@@ -189,15 +209,13 @@
     gap: 0.5rem !important;
     max-width: 200px !important;
     margin: 0 auto !important;
-    text-decoration: none !important;
 }
 
     .container-fluid .btn-secondary:hover {
-        background: linear-gradient(135deg, var(--dorado-medio), var(--dorado-hover)) !important; /* ← AMARILLO MÁS OSCURO */
+        background: linear-gradient(135deg, var(--dorado-medio), var(--dorado-hover)) !important;
         transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(246, 224, 94, 0.4) !important; /* ← SOMBRA AMARILLA */
-        color: var(--text-color) !important; /* ← GRIS OSCURO (#2D3748) */
-        text-decoration: none !important;
+        box-shadow: 0 4px 12px rgba(246, 224, 94, 0.4);
+        color: var(--text-color) !important;
     }
 
 /* ===== DISEÑO DE LAS SECCIONES ===== */
@@ -205,30 +223,48 @@
     background: white;
     padding: 1.5rem;
     border-radius: var(--border-radius);
-    border: 1.5px solid var(--rosa-border) !important; /* ← ROSA (#F687B3) */
+    border: 1.5px solid var(--rosa-border);
     margin-bottom: 2rem !important;
     display: grid !important;
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 1.5rem !important;
 }
 
+.container-fluid .col-md-6 {
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+}
+
 .container-fluid .text-center.mt-4 {
     margin-top: 2rem !important;
     padding-top: 1.5rem;
-    border-top: 2px solid var(--rosa-border) !important; /* ← ROSA (#F687B3) */
+    border-top: 2px solid var(--rosa-border);
 }
 
 /* ===== EFECTOS VISUALES ===== */
 .container-fluid .table-hover tbody tr:hover {
-    background-color: rgba(251, 182, 206, 0.1) !important; /* ← ROSA SUAVE */
+    background-color: rgba(251, 182, 206, 0.1) !important;
     transform: translateY(-1px);
     transition: all 0.2s ease;
 }
 
 /* ===== RESPONSIVE ===== */
+@media (max-width: 992px) {
+    .container-fluid.mt-4 {
+        max-width: 95% !important;
+        padding: 1rem !important;
+    }
+
+    .container-fluid .card {
+        max-width: 100% !important;
+    }
+}
+
 @media (max-width: 768px) {
     .container-fluid.mt-4 {
-        padding: 1rem !important;
+        padding: 0.5rem !important;
+        max-width: 100% !important;
     }
 
     .container-fluid .card-body {
@@ -238,6 +274,30 @@
     .container-fluid .row.mb-4 {
         grid-template-columns: 1fr !important;
         gap: 1rem !important;
+    }
+
+    .container-fluid .table-responsive {
+        font-size: 0.85rem;
+    }
+
+    .container-fluid .table-dark th,
+    .container-fluid .table-striped.table-bordered td {
+        padding: 0.6rem !important;
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .container-fluid .card-header h3 {
+        font-size: 1.2rem !important;
+    }
+
+    .container-fluid .card-body h5 {
+        font-size: 1rem !important;
+    }
+
+    .container-fluid .table-responsive {
+        font-size: 0.8rem;
     }
 }
 
@@ -258,16 +318,31 @@
     animation: fadeIn 0.4s ease-out;
 }
 
-/* ===== COLORES ESPECÍFICOS ===== */
-/* Iconos en el header: BLANCOS */
-.container-fluid .card-header .fas,
-.container-fluid .card-header .fa-solid,
-.container-fluid .card-header i {
-    color: white !important;
+
+.container-fluid .table-bordered tr:last-child th,
+.container-fluid .table-bordered tr:last-child td {
+    border-bottom: none !important;
 }
 
-/* Iconos en el botón: GRIS OSCURO */
-.container-fluid .btn-secondary .fas,
-.container-fluid .btn-secondary i {
-    color: var(--text-color) !important; /* ← GRIS OSCURO (#2D3748) */
+.container-fluid .table-striped tbody tr:last-child td {
+    border-bottom: 1px solid var(--rosa-border) !important;
+}
+
+
+.container-fluid .fas {
+    color: var(--morado-principal);
+}
+
+.container-fluid .card-header .fas {
+    color: white;
+}
+
+.container-fluid .btn-secondary .fas {
+    color: var(--text-color);
+}
+
+/* ===== LIMITAR ANCHO DE CONTENIDO INTERNO ===== */
+.container-fluid .card-body > div {
+    max-width: 1000px !important;
+    margin: 0 auto !important;
 }

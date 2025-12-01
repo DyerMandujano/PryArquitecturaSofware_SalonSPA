@@ -9,7 +9,7 @@
     --radius: 8px;
 }
 
-.busqueda-filtros-container {
+.busqueda-servicios {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
@@ -18,30 +18,46 @@
     font-family: 'Arial', sans-serif;
 }
 
-.contenedor-buscador {
+.busqueda-form {
     display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
+    align-items: center;
+    gap: 0.8rem;
+    flex-wrap: nowrap;
     min-width: 0;
     flex: 1;
 }
 
-    .contenedor-buscador p {
-        margin: 0;
-        font-size: 0.92rem;
-        color: var(--rs-text);
-        padding-left: 6px;
-        font-weight: 600;
-    }
-
-.form-buscador-derecha {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    flex-wrap: nowrap;
+.select-busqueda {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding: 0.48rem 2.5rem 0.48rem 0.9rem;
+    border: 2px solid var(--rs-primary);
+    border-radius: var(--radius);
+    background-color: var(--rs-bg-input);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%235A2D82' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.7rem center;
+    color: var(--rs-primary);
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: 0.2s;
+    min-width: 160px;
 }
 
-.input-buscador {
+    .select-busqueda:hover {
+        border-color: var(--rs-hover);
+        box-shadow: 0 2px 8px rgba(127, 74, 168, 0.15);
+    }
+
+    .select-busqueda:focus {
+        outline: none;
+        border-color: var(--rs-focus);
+        box-shadow: 0 0 0 3px rgba(255, 187, 204, 0.12);
+    }
+
+.input-busqueda {
     flex: none;
     width: 300px;
     max-width: 100%;
@@ -56,21 +72,21 @@
     font-weight: 500;
 }
 
-    .input-buscador:focus {
+    .input-busqueda:focus {
         border-color: var(--rs-focus);
         box-shadow: 0 0 0 3px rgba(255, 187, 204, 0.12);
     }
 
-    .input-buscador::placeholder {
+    .input-busqueda::placeholder {
         color: var(--rs-primary);
         opacity: 0.9;
     }
 
-    .input-buscador:hover {
+    .input-busqueda:hover {
         border-color: var(--rs-hover);
     }
 
-.btn-search-separated {
+.btn-buscar {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -89,29 +105,55 @@
     border: 2px solid var(--rs-primary);
 }
 
-    .btn-search-separated:hover {
+    .btn-buscar:hover {
         background-color: var(--rs-primary);
         border-color: var(--rs-primary);
         color: white;
         box-shadow: 0 2px 8px rgba(127, 74, 168, 0.25);
     }
 
-        .btn-search-separated:hover i {
+        .btn-buscar:hover i {
             color: white;
         }
 
-    .btn-search-separated:active {
+    .btn-buscar:active {
         transform: scale(0.98);
     }
 
-    .btn-search-separated:focus {
+    .btn-buscar:focus {
         outline: none;
         box-shadow: 0 0 0 3px rgba(255, 187, 204, 0.12);
     }
 
-    .btn-search-separated i {
+    .btn-buscar i {
         font-size: 1.05rem;
         color: var(--rs-primary);
+    }
+
+.btn-limpiar {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.48rem 1rem;
+    border: 2px solid var(--rs-accent);
+    border-radius: 12px;
+    background-color: #fff;
+    color: var(--rs-text);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: 0.18s;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+    .btn-limpiar:hover {
+        background-color: #ffe6f0;
+        border-color: var(--rs-active);
+    }
+
+    .btn-limpiar i {
+        font-size: 1rem;
     }
 
 .filtros-derecha {
@@ -177,7 +219,7 @@
     }
 
 @media (max-width: 1024px) {
-    .busqueda-filtros-container {
+    .busqueda-servicios {
         gap: 1.5rem;
     }
 
@@ -187,28 +229,26 @@
 }
 
 @media (max-width: 768px) {
-    .busqueda-filtros-container {
+    .busqueda-servicios {
         flex-direction: column;
         align-items: stretch;
         gap: 1rem;
         margin: 1rem;
     }
 
-    .contenedor-buscador {
-        width: 100%;
-    }
-
-    .form-buscador-derecha {
+    .busqueda-form {
         flex-wrap: wrap;
         gap: 0.5rem;
     }
 
-    .input-buscador {
+    .select-busqueda,
+    .input-busqueda {
         flex: 1 1 100%;
         min-width: 100%;
     }
 
-    .btn-search-separated {
+    .btn-buscar,
+    .btn-limpiar {
         width: 100%;
     }
 
@@ -238,6 +278,6 @@
     }
 }
 
-.busqueda-filtros-container {
+.busqueda-servicios {
     animation: fadeInDown 0.3s ease-out;
 }
