@@ -1,150 +1,404 @@
-﻿/* Contenedor principal */
+﻿/* ===== PALETA DE COLORES - IGUAL QUE VENTAS ===== */
+:root {
+    --morado-principal: #6B46C1;
+    --morado-hover: #805AD5;
+    --morado-border: #6B46C1;
+    --rosa-suave: #FBB6CE;
+    --rosa-medio: #F687B3;
+    --rosa-focus: #ED64A6;
+    --rosa-border: #F687B3;
+    --dorado-suave: #F6E05E;
+    --dorado-medio: #ECC94B;
+    --dorado-hover: #D69E2E;
+    --bg-input: #FAF5FF;
+    --text-color: #2D3748;
+    --text-rosa: #B83280;
+    --border-color: #E2E8F0;
+    --background-light: #F7FAFC;
+    --border-radius: 8px;
+}
+
+/* ===== CONTENEDOR PRINCIPAL - IGUAL QUE VENTAS ===== */
 .registrar-compra-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    min-height: 80vh;
-    padding: 2rem;
-    background-color: #f8f9fa;
+    background-color: var(--background-light) !important;
+    min-height: 100vh;
+    padding: 1.5rem !important;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-/* Caja del formulario */
-.registrar-compra-box {
+/* ===== CARD PRINCIPAL - COPIA EXACTA DE VENTAS ===== */
+.registrar-compra-wrapper .card {
+    border: 2px solid var(--morado-border) !important;
+    border-radius: 12px !important;
+    max-width: 1100px;
+    margin: 0 auto;
     background: white;
-    border-radius: 15px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-    padding: 2rem;
-    width: 100%;
-    max-width: 1000px;
+    box-shadow: 0 4px 20px rgba(107, 70, 193, 0.15) !important;
 }
 
-/* Botón volver */
-.btn-back {
-    display: inline-flex;
+/* ===== HEADER MORADO CON RECTÁNGULO - IGUAL QUE VENTAS ===== */
+.registrar-compra-wrapper .card-header.bg-primary {
+    background: var(--morado-principal) !important;
+    color: white !important;
+    border-bottom: 2px solid var(--morado-border) !important;
+    padding: 1.2rem 1.5rem !important;
+}
+
+/* TÍTULO CON ICONO - BLANCO */
+.registrar-compra-wrapper .card-header h3 {
+    margin: 0 !important;
+    color: white !important;
+    font-size: 1.5rem !important;
+    font-weight: 700 !important;
+    display: flex;
     align-items: center;
-    color: #2B2766;
-    text-decoration: none;
+    gap: 0.5rem;
+}
+
+.registrar-compra-wrapper .card-header h3 i {
+    color: white !important;
+}
+
+/* BOTÓN VOLVER EN HEADER - BLANCO CON BORDE */
+.registrar-compra-wrapper .card-header .btn-volver {
+    display: inline-flex !important;
+    align-items: center !important;
+    color: white !important;
+    text-decoration: none !important;
+    font-weight: 500 !important;
+    margin-right: 1.5rem !important;
+    transition: all 0.3s ease !important;
+    padding: 0.5rem 1rem !important;
+    border: 1px solid rgba(255, 255, 255, 0.4) !important;
+    gap: 0.5rem !important;
+    font-size: 0.9rem !important;
+    border-radius: 6px !important;
+    background-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+.registrar-compra-wrapper .card-header .btn-volver:hover {
+    transform: translateY(-1px);
+    background-color: white !important;
+    color: var(--morado-principal) !important;
+    text-decoration: none !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* CONTENEDOR HEADER */
+.registrar-compra-wrapper .card-header > div {
+    display: flex !important;
+    align-items: center !important;
+    flex-wrap: wrap !important;
+    gap: 1rem !important;
+}
+
+/* ===== CARD BODY ===== */
+.registrar-compra-wrapper .card-body {
+    padding: 1.5rem !important;
+}
+
+/* ===== FORMULARIOS - IGUAL QUE VENTAS ===== */
+.registrar-compra-wrapper .form-label {
+    color: var(--text-rosa) !important;
+    font-weight: 600 !important;
+    font-size: 0.9rem !important;
+    margin-bottom: 0.5rem !important;
+}
+
+.registrar-compra-wrapper .form-control,
+.registrar-compra-wrapper .form-select {
+    border: 2px solid var(--rosa-border) !important;
+    border-radius: var(--border-radius) !important;
+    background-color: white !important;
+    color: var(--text-color) !important;
     font-weight: 500;
-    margin-bottom: 1.5rem;
-    transition: color 0.3s;
+    transition: all 0.3s ease;
+    padding: 0.75rem !important;
 }
 
-    .btn-back:hover {
-        color: #EB2885;
+.registrar-compra-wrapper .form-control:focus,
+.registrar-compra-wrapper .form-select:focus {
+    border-color: var(--rosa-focus) !important;
+    box-shadow: 0 0 0 0.2rem rgba(251, 182, 206, 0.25) !important;
+    background-color: var(--bg-input) !important;
+}
+
+/* ===== TABLA DETALLES ===== */
+.registrar-compra-wrapper .table {
+    border: 2px solid var(--rosa-border) !important;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    margin: 1rem 0 !important;
+}
+
+    .registrar-compra-wrapper .table-dark {
+        background: var(--morado-principal) !important;
+        color: white !important;
+        border: var(--rosa-border) !important;
     }
 
-/* Encabezado */
-h2 {
-    text-align: center;
-    color: #2B2766;
-    margin-bottom: 2rem;
+.registrar-compra-wrapper .table-dark th {
+    color: white !important;
+    font-weight: 600 !important;
+    padding: 1rem !important;
+    text-align: center !important;
+    border: none !important;
+    font-size: 0.9rem !important;
 }
 
-/* Labels y formularios */
-.form-label {
-    color: #2B2766;
+.registrar-compra-wrapper .table-bordered th,
+.registrar-compra-wrapper .table-bordered td {
+    border: 1px solid var(--rosa-border) !important;
+    padding: 0.8rem 0.5rem !important;
+    vertical-align: middle !important;
+}
+
+.registrar-compra-wrapper .table tbody tr:hover {
+    background-color: rgba(251, 182, 206, 0.1) !important;
+}
+
+
+/* BOTÓN AGREGAR FILA (DORADO) */
+.registrar-compra-wrapper .btn.btn-primary {
+    background: var(--dorado-suave) !important;
+    border-color: var(--dorado-suave) !important;
+    color: var(--text-color) !important;
     font-weight: 600;
-    font-size: 0.9rem;
-}
-
-.form-control {
-    border: 2px solid #EBC5E5;
-    border-radius: 8px;
-    padding: 0.75rem;
-    font-size: 0.9rem;
-    transition: border-color 0.3s;
-    background-color: #fff;
-}
-
-    .form-control:focus {
-        outline: none;
-        border-color: #EB2885;
-        box-shadow: 0 0 0 3px rgba(235, 40, 133, 0.1);
-    }
-
-/* Tabla de detalles */
-.table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 1rem;
-}
-
-    .table th, .table td {
-        text-align: center;
-        vertical-align: middle;
-        padding: 0.75rem;
-        border: 1px solid #EBC5E5;
-        font-size: 0.9rem;
-    }
-
-    .table th {
-        background-color: #2B2766;
-        color: #fff;
-    }
-
-    .table tbody tr:nth-child(even) td {
-        background-color: #f8f9fa;
-    }
-
-/* Botones */
-.btn-primary {
-    background-color: #EB2885;
     border: none;
-    color: white;
-    font-weight: 600;
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+    padding: 0.7rem 1.5rem !important;
+    border-radius: var(--border-radius) !important;
+    transition: all 0.3s ease;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
 }
 
-    .btn-primary:hover {
-        background-color: #EB3B8F;
-    }
-
-.btn-success {
-    background-color: #2B2766;
-    border: none;
-    color: white;
-    font-weight: 600;
-    padding: 0.75rem 1.5rem;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+.registrar-compra-wrapper .btn.btn-primary:hover {
+    background: var(--dorado-medio) !important;
+    border-color: var(--dorado-medio) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(246, 224, 94, 0.3);
+    color: var(--text-color) !important;
 }
 
-    .btn-success:hover {
-        background-color: #3B337F;
+
+
+    /* ===== CONTENEDOR DE BOTONES CENTRADOS ===== */
+    .registrar-compra-wrapper .text-center.mt-4 {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        gap: 1rem !important;
+        margin-top: 2rem !important;
+        flex-wrap: wrap !important;
     }
 
-/* Botón eliminar fila */
-.btn-danger {
-    background-color: #EB2885;
-    border: none;
-    color: white;
-    font-weight: 600;
-    padding: 0.25rem 0.5rem;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+    /* ===== BOTÓN REGISTRAR COMPRA (AMARILLO) ===== */
+    .registrar-compra-wrapper .btn.btn-success {
+        background: var(--dorado-suave) !important;
+        border-color: var(--dorado-suave) !important;
+        color: var(--text-color) !important;
+        border: none !important;
+        padding: 0.8rem 2rem !important;
+        border-radius: var(--border-radius) !important;
+        font-weight: 600 !important;
+        font-size: 1rem !important;
+        transition: all 0.3s ease !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 0.5rem !important;
+        min-width: 180px !important;
+    }
+
+        .registrar-compra-wrapper .btn.btn-success:hover {
+            background: var(--dorado-medio) !important;
+            border-color: var(--dorado-medio) !important;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(246, 224, 94, 0.4);
+            color: var(--text-color) !important;
+        }
+
+    /* ===== BOTÓN CANCELAR (GRIS) ===== */
+    .registrar-compra-wrapper .btn-cancelar {
+        background: #718096 !important;
+        border-color: #718096 !important;
+        color: white !important;
+        border: none !important;
+        padding: 0.8rem 2rem !important;
+        border-radius: var(--border-radius) !important;
+        font-weight: 600 !important;
+        font-size: 1rem !important;
+        transition: all 0.3s ease !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 0.5rem !important;
+        text-decoration: none !important;
+    }
+
+        .registrar-compra-wrapper .btn-cancelar:hover {
+            background: #4A5568 !important;
+            border-color: #4A5568 !important;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(74, 85, 104, 0.4);
+            color: white !important;
+            text-decoration: none !important;
+        }
+
+/* ===== RESPONSIVE PARA BOTONES ===== */
+@media (max-width: 576px) {
+    .registrar-compra-wrapper .text-center.mt-4 {
+        flex-direction: column !important;
+        gap: 0.8rem !important;
+    }
+
+    .registrar-compra-wrapper .btn.btn-success,
+    .registrar-compra-wrapper .btn-cancelar {
+        width: 100% !important;
+        max-width: 280px !important;
+    }
+}
+.registrar-compra-wrapper .btn.btn-success:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(107, 70, 193, 0.4);
+    color: white !important;
 }
 
-    .btn-danger:hover {
-        background-color: #EB3B8F;
-    }
+/* BOTÓN ELIMINAR (ROSA) */
+.registrar-compra-wrapper .btn-danger {
+    background: var(--rosa-medio) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 4px !important;
+    width: 32px !important;
+    height: 32px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: all 0.3s ease !important;
+    font-weight: bold !important;
+    padding: 0 !important;
+    font-size: 0.8rem !important;
+}
 
-/* Responsive */
+.registrar-compra-wrapper .btn-danger:hover {
+    background: var(--rosa-focus) !important;
+    transform: scale(1.05);
+}
+
+/* ===== MONTO TOTAL ===== */
+.registrar-compra-wrapper .ms-auto {
+    background: rgba(246, 224, 94, 0.1) !important;
+    padding: 1.5rem !important;
+    border-radius: var(--border-radius) !important;
+    border: 2px solid var(--dorado-medio) !important;
+    margin: 1.5rem 0 !important;
+}
+
+.registrar-compra-wrapper .ms-auto .form-label {
+    color: var(--morado-principal) !important;
+    font-weight: 700 !important;
+    font-size: 1.1rem !important;
+    margin-bottom: 0.5rem !important;
+}
+
+.registrar-compra-wrapper .ms-auto .form-control {
+    background: white !important;
+    border: 2px solid var(--dorado-medio) !important;
+    color: var(--text-color) !important;
+    font-weight: 700 !important;
+    font-size: 1.2rem !important;
+    text-align: center !important;
+    padding: 0.8rem !important;
+}
+
+
+
+/* ===== LÍNEAS SEPARADORAS ===== */
+.registrar-compra-wrapper hr {
+    height: 2px !important;
+    background:   var(--rosa-border)  !important;
+    margin: 1.5rem 0 !important;
+    border: none !important;
+    opacity: 1 !important;
+}
+
+/* ===== INPUTS ESPECÍFICOS ===== */
+.registrar-compra-wrapper .productoSelect {
+    border: 1.5px solid var(--rosa-border) !important;
+    border-radius: 6px !important;
+    padding: 0.6rem !important;
+    width: 100% !important;
+    font-size: 0.85rem !important;
+}
+
+.registrar-compra-wrapper .productoSelect:focus {
+    border-color: var(--rosa-focus) !important;
+    box-shadow: 0 0 0 0.2rem rgba(251, 182, 206, 0.25) !important;
+}
+
+.registrar-compra-wrapper .cantidad,
+.registrar-compra-wrapper .precio {
+    border: 1.5px solid var(--rosa-border) !important;
+    border-radius: 6px !important;
+    padding: 0.6rem !important;
+    text-align: center !important;
+    width: 100% !important;
+    font-size: 0.85rem !important;
+}
+
+.registrar-compra-wrapper .cantidad:focus,
+.registrar-compra-wrapper .precio:focus {
+    border-color: var(--rosa-focus) !important;
+    box-shadow: 0 0 0 0.2rem rgba(251, 182, 206, 0.25) !important;
+}
+
+.registrar-compra-wrapper .subtotal {
+    background: var(--bg-input) !important;
+    border: 1.5px solid var(--dorado-medio) !important;
+    border-radius: 6px !important;
+    padding: 0.6rem !important;
+    font-weight: 600 !important;
+    color: var(--text-color) !important;
+    text-align: center !important;
+    width: 100% !important;
+    font-size: 0.85rem !important;
+}
+
+/* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
     .registrar-compra-wrapper {
-        padding: 1rem;
+        padding: 1rem !important;
     }
+    
+    .registrar-compra-wrapper .card-body {
+        padding: 1rem !important;
+    }
+    
+    .registrar-compra-wrapper .table {
+        font-size: 0.85rem !important;
+    }
+    
+    .registrar-compra-wrapper .table-bordered th,
+    .registrar-compra-wrapper .table-bordered td {
+        padding: 0.6rem 0.4rem !important;
+    }
+}
 
-    .registrar-compra-box {
-        padding: 1.5rem;
+/* ===== ANIMACIONES ===== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
     }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
-    .table th, .table td {
-        font-size: 0.85rem;
-        padding: 0.5rem;
-    }
+.registrar-compra-wrapper .card {
+    animation: fadeIn 0.3s ease-out;
 }

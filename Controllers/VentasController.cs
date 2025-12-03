@@ -4,7 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Pry_Solu_SalonSPA.Db;
 using Pry_Solu_SalonSPA.Models;
 using Pry_Solu_SalonSPA.ViewModels;
+using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
 namespace Pry_Solu_SalonSPA.Controllers
 {
@@ -79,7 +81,6 @@ namespace Pry_Solu_SalonSPA.Controllers
                     .Where(tc => tc.Estado == 1)
                     .ToList(),
                 Productos = _context.Productos
-                    .Include(p => p.IdCategoriaNavigation)
                     .Include(p => p.IdMarcaNavigation)
                     .Where(p => p.Estado == 1 && p.Stock > 0)
                     .ToList(),
@@ -89,7 +90,7 @@ namespace Pry_Solu_SalonSPA.Controllers
                 Detalles = new List<VentaDetalleVM>()
             };
 
-            return View(vm);
+            return View("_RegistrarVentas",vm);
         }
 
         // POST: Registrar Venta
@@ -97,138 +98,186 @@ namespace Pry_Solu_SalonSPA.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Registrar(VentaRegistrarVM vm)
         {
-            // Validación personalizada: Debe tener al menos un detalle
-            if (vm.Detalles == null || !vm.Detalles.Any())
+            Console.WriteLine("🎯 =========== INICIANDO REGISTRO VENTA ===========");
+
+            // DEBUG 1: Verificar datos recibidos
+            Console.WriteLine($"📥 DATOS RECIBIDOS:");
+            Console.WriteLine($"   IdEmpleado: {vm.IdEmpleado}");
+            Console.WriteLine($"   IdCliente: {vm.IdCliente}");
+            Console.WriteLine($"   IdTipoPago: {vm.IdTipoPago}");
+            Console.WriteLine($"   IdTipoComprobante: {vm.IdTipoComprobante}");
+            Console.WriteLine($"   FechaVenta: {vm.FechaVenta}");
+            Console.WriteLine($"   Detalles count: {vm.Detalles?.Count ?? 0}");
+
+            if (vm.Detalles != null)
             {
-                ModelState.AddModelError("", "Debe agregar al menos un producto o servicio a la venta.");
+                foreach (var d in vm.Detalles)
+                {
+                    Console.WriteLine($"   📦 Detalle -> Tipo: {d.TipoItem}, Producto: {d.IdProducto}, Servicio: {d.IdCitaServicio}, Cant: {d.Cantidad}, Precio: {d.PrecioUnitario}");
+                }
             }
 
-            // Validación: Debe tener cliente seleccionado
-            if (!vm.IdCliente.HasValue || vm.IdCliente.Value == 0)
-            {
-                ModelState.AddModelError("IdCliente", "Debe seleccionar un cliente.");
-            }
-
+            // Validaciones
             if (!ModelState.IsValid)
             {
-                // Recargar listas para la vista
-                vm.Empleados = _context.Empleados
-                    .Include(e => e.IdPersonaNavigation)
-                    .Where(e => e.FechaRetiro == null)
-                    .ToList();
-                vm.TiposPago = _context.TipoPagos
-                    .Where(tp => tp.Estado == 1)
-                    .ToList();
-                vm.TiposComprobante = _context.TipoComprobantes
-                    .Where(tc => tc.Estado == 1)
-                    .ToList();
-                vm.Productos = _context.Productos
-                    .Include(p => p.IdCategoriaNavigation)
-                    .Include(p => p.IdMarcaNavigation)
-                    .Where(p => p.Estado == 1 && p.Stock > 0)
-                    .ToList();
-                vm.Clientes = _context.Clientes
-                    .Include(c => c.IdPersonaNavigation)
-                    .ToList();
-
-                return View(vm);
+                Console.WriteLine("❌ MODELSTATE INVALIDO");
+                foreach (var error in ModelState)
+                {
+                    foreach (var err in error.Value.Errors)
+                    {
+                        Console.WriteLine($"   🚫 {error.Key}: {err.ErrorMessage}");
+                    }
+                }
+                RecargarDatos(vm);
+                return View("_RegistrarVentas", vm);
             }
 
-            using (var transaction = _context.Database.BeginTransaction())
+            if (vm.Detalles == null || !vm.Detalles.Any())
+            {
+                Console.WriteLine("❌ NO HAY DETALLES");
+                RecargarDatos(vm);
+                return View("_RegistrarVentas", vm);
+            }
+
+            // DEBUG 2: Verificar conexión
+            var connectionString = _context.Database.GetConnectionString();
+            Console.WriteLine($"🔗 Connection String: {connectionString}");
+
+            using (var cn = new SqlConnection(connectionString))
             {
                 try
                 {
-                    // Parámetro OUT para capturar el IdVenta
-                    var idVentaParam = new SqlParameter
-                    {
-                        ParameterName = "@Id_Venta",
-                        SqlDbType = SqlDbType.Int,
-                        Direction = ParameterDirection.Output
-                    };
-
-                    // Insertar cabecera de venta
-                    _context.Database.ExecuteSqlRaw(
-                        "EXEC SP_InsertarVenta @Id_empleado, @Id_cliente, @Id_Tipo_Pago, @Id_TipoCompro, @Fecha_registro, @Id_Venta OUT",
-                        new SqlParameter("@Id_empleado", vm.IdEmpleado),
-                        new SqlParameter("@Id_cliente", vm.IdCliente.Value),
-                        new SqlParameter("@Id_Tipo_Pago", vm.IdTipoPago),
-                        new SqlParameter("@Id_TipoCompro", vm.IdTipoComprobante),
-                        new SqlParameter("@Fecha_registro", vm.FechaVenta),
-                        idVentaParam
-                    );
-
-                    int idVenta = (int)idVentaParam.Value;
-
-                    // Validar que se haya generado el ID
-                    if (idVenta == 0)
-                    {
-                        throw new Exception("No se pudo generar el ID de la venta");
-                    }
-
-                    // Insertar detalles
-                    foreach (var detalle in vm.Detalles)
-                    {
-                        // Validar stock para productos
-                        if (detalle.TipoItem == "Producto" && detalle.IdProducto.HasValue)
-                        {
-                            var producto = _context.Productos.Find(detalle.IdProducto.Value);
-                            if (producto == null)
-                            {
-                                throw new Exception($"El producto con ID {detalle.IdProducto} no existe");
-                            }
-                            if (producto.Stock < detalle.Cantidad)
-                            {
-                                throw new Exception($"Stock insuficiente para el producto {producto.NomProd}. Stock disponible: {producto.Stock}");
-                            }
-                        }
-
-                        _context.Database.ExecuteSqlRaw(
-                            "EXEC SP_InsertarDetalleVenta @Id_Venta, @Id_TipoCompro, @Id_Producto, @Id_CitaServicio, @Cantidad, @Precio_Venta",
-                            new SqlParameter("@Id_Venta", idVenta),
-                            new SqlParameter("@Id_TipoCompro", vm.IdTipoComprobante),
-                            new SqlParameter("@Id_Producto", detalle.TipoItem == "Producto" && detalle.IdProducto.HasValue ? detalle.IdProducto.Value : DBNull.Value),
-                            new SqlParameter("@Id_CitaServicio", detalle.TipoItem == "Servicio" && detalle.IdCitaServicio.HasValue ? detalle.IdCitaServicio.Value : DBNull.Value),
-                            new SqlParameter("@Cantidad", detalle.Cantidad),
-                            new SqlParameter("@Precio_Venta", detalle.PrecioUnitario)
-                        );
-                    }
-
-                    // Si todo salió bien, confirmar transacción
-                    transaction.Commit();
-
-                    TempData["Mensaje"] = "Venta registrada correctamente";
-                    return RedirectToAction("Index");
+                    cn.Open();
+                    Console.WriteLine("✅ CONEXIÓN A BD ABIERTA");
                 }
                 catch (Exception ex)
                 {
-                    // Si hay error, revertir transacción
-                    transaction.Rollback();
-                    TempData["Error"] = $"Ocurrió un error: {ex.Message}";
+                    Console.WriteLine($"❌ ERROR CONEXIÓN BD: {ex.Message}");
+                    TempData["Error"] = "Error de conexión a la base de datos";
+                    RecargarDatos(vm);
+                    return View("_RegistrarVentas", vm);
+                }
 
-                    // Recargar listas
-                    vm.Empleados = _context.Empleados
-                        .Include(e => e.IdPersonaNavigation)
-                        .Where(e => e.FechaRetiro == null)
-                        .ToList();
-                    vm.TiposPago = _context.TipoPagos
-                        .Where(tp => tp.Estado == 1)
-                        .ToList();
-                    vm.TiposComprobante = _context.TipoComprobantes
-                        .Where(tc => tc.Estado == 1)
-                        .ToList();
-                    vm.Productos = _context.Productos
-                        .Include(p => p.IdCategoriaNavigation)
-                        .Include(p => p.IdMarcaNavigation)
-                        .Where(p => p.Estado == 1 && p.Stock > 0)
-                        .ToList();
-                    vm.Clientes = _context.Clientes
-                        .Include(c => c.IdPersonaNavigation)
-                        .ToList();
+                using (var tx = cn.BeginTransaction())
+                {
+                    try
+                    {
+                        int idVenta = 0;
 
-                    return View(vm);
+                        // DEBUG 3: Ejecutar SP_InsertarVenta
+                        Console.WriteLine("🔄 EJECUTANDO SP_InsertarVenta...");
+
+                        using (var cmd = new SqlCommand("SP_InsertarVenta", cn, tx))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+
+                            // Parámetros
+                            cmd.Parameters.AddWithValue("@Id_empleado", vm.IdEmpleado);
+                            cmd.Parameters.AddWithValue("@Id_cliente", vm.IdCliente ?? (object)DBNull.Value);
+                            cmd.Parameters.AddWithValue("@Id_Tipo_Pago", vm.IdTipoPago);
+                            cmd.Parameters.AddWithValue("@Id_TipoCompro", vm.IdTipoComprobante);
+                            cmd.Parameters.AddWithValue("@Fecha_registro", vm.FechaVenta);
+
+                            // Parámetro OUTPUT
+                            var outId = new SqlParameter("@Id_Venta", SqlDbType.Int)
+                            {
+                                Direction = ParameterDirection.Output
+                            };
+                            cmd.Parameters.Add(outId);
+
+                            // Ejecutar
+                            int filasAfectadas = cmd.ExecuteNonQuery();
+                            Console.WriteLine($"   📊 Filas afectadas: {filasAfectadas}");
+
+                            // Obtener resultado
+                            if (outId.Value != DBNull.Value)
+                            {
+                                idVenta = (int)outId.Value;
+                                Console.WriteLine($"   🆔 ID VENTA GENERADO: {idVenta}");
+                            }
+                            else
+                            {
+                                Console.WriteLine("   ❌ SP NO DEVOLVIÓ ID (DBNull.Value)");
+                            }
+                        }
+
+                        // Verificar si se obtuvo ID
+                        if (idVenta <= 0)
+                        {
+                            Console.WriteLine("❌ NO SE PUDO OBTENER ID VENTA VÁLIDO");
+                            throw new Exception("No se pudo obtener el ID de la venta generado por el SP");
+                        }
+
+                        // DEBUG 4: Insertar detalles
+                        Console.WriteLine($"🔄 INSERTANDO {vm.Detalles.Count} DETALLES...");
+                        int contadorDetalles = 0;
+
+                        foreach (var detalle in vm.Detalles)
+                        {
+                            contadorDetalles++;
+                            Console.WriteLine($"   📝 Detalle {contadorDetalles}: Tipo={detalle.TipoItem}, Producto={detalle.IdProducto}, Servicio={detalle.IdCitaServicio}");
+
+                            using (var cmd = new SqlCommand("SP_InsertarDetalleVenta", cn, tx))
+                            {
+                                cmd.CommandType = CommandType.StoredProcedure;
+                                cmd.Parameters.AddWithValue("@Id_Venta", idVenta);
+                                cmd.Parameters.AddWithValue("@Id_TipoCompro", vm.IdTipoComprobante);
+                                cmd.Parameters.AddWithValue("@Id_Producto", detalle.IdProducto ?? (object)DBNull.Value);
+                                cmd.Parameters.AddWithValue("@Id_CitaServicio", detalle.IdCitaServicio ?? (object)DBNull.Value);
+                                cmd.Parameters.AddWithValue("@Cantidad", detalle.Cantidad);
+                                cmd.Parameters.AddWithValue("@Precio_Venta", detalle.PrecioUnitario);
+
+                                int filasDetalle = cmd.ExecuteNonQuery();
+                                Console.WriteLine($"      ✅ Detalle {contadorDetalles} insertado. Filas: {filasDetalle}");
+                            }
+                        }
+
+                        // DEBUG 5: Commit
+                        tx.Commit();
+                        Console.WriteLine("✅ TRANSACCIÓN COMPLETADA - COMMIT REALIZADO");
+                        Console.WriteLine($"🎉 VENTA {idVenta} REGISTRADA EXITOSAMENTE CON {contadorDetalles} DETALLES");
+
+                        TempData["Mensaje"] = "Venta registrada correctamente";
+                        return RedirectToAction("Index");
+                    }
+                    catch (Exception ex)
+                    {
+                        // DEBUG 6: Error
+                        Console.WriteLine($"❌ ERROR DURANTE TRANSACCIÓN: {ex}");
+                        Console.WriteLine($"   Tipo: {ex.GetType().Name}");
+                        Console.WriteLine($"   Mensaje: {ex.Message}");
+                        if (ex.InnerException != null)
+                        {
+                            Console.WriteLine($"   Inner Exception: {ex.InnerException.Message}");
+                        }
+
+                        tx.Rollback();
+                        Console.WriteLine("🔄 TRANSACCIÓN CANCELADA - ROLLBACK REALIZADO");
+
+                        TempData["Error"] = $"Error al registrar venta: {ex.Message}";
+                        RecargarDatos(vm);
+                        return View("_RegistrarVentas", vm);
+                    }
                 }
             }
         }
+
+        private void RecargarDatos(VentaRegistrarVM vm)
+        {
+            vm.Empleados = _context.Empleados
+                .Include(e => e.IdPersonaNavigation)
+                .Where(e => e.FechaRetiro == null)
+                .ToList();
+            vm.TiposPago = _context.TipoPagos.Where(tp => tp.Estado == 1).ToList();
+            vm.TiposComprobante = _context.TipoComprobantes.Where(tc => tc.Estado == 1).ToList();
+            vm.Productos = _context.Productos
+                .Include(p => p.IdMarcaNavigation)
+                .Where(p => p.Estado == 1 && p.Stock > 0)
+                .ToList();
+            vm.Clientes = _context.Clientes.Include(c => c.IdPersonaNavigation).ToList();
+            vm.Detalles ??= new List<VentaDetalleVM>();
+        }
+
 
         // GET: Buscar CitaServicio por ID (AJAX)
         [HttpGet]
@@ -298,7 +347,6 @@ namespace Pry_Solu_SalonSPA.Controllers
                         p.NomProd,
                         p.Precio,
                         p.Stock,
-                        Categoria = p.IdCategoriaNavigation.NomCate,
                         Marca = p.IdMarcaNavigation.NomMarca
                     })
                     .FirstOrDefault();
@@ -313,6 +361,74 @@ namespace Pry_Solu_SalonSPA.Controllers
             catch (Exception ex)
             {
                 return Json(new { success = false, message = $"Error: {ex.Message}" });
+            }
+        }
+
+
+        // GET: Ver detalle de venta
+        public IActionResult VerDetalle(int id)
+        {
+            var detalleVenta = new VentaDetalleCompletoVM();
+
+            try
+            {
+                var connectionString = _context.Database.GetConnectionString();
+
+                using (var cn = new SqlConnection(connectionString))
+                {
+                    cn.Open();
+
+                    using (var cmd = new SqlCommand("SP_ObtenerDetalleVenta", cn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@Id_Venta", id);
+
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            // 1️⃣ Leer cabecera de la venta
+                            if (reader.Read())
+                            {
+                                detalleVenta.Id_Venta = reader.GetInt32("Id_Venta");
+                                detalleVenta.Fecha_Venta = reader.GetDateTime("Fecha_Venta");
+                                detalleVenta.Nombre_Cliente = reader.GetString("Nombre_Cliente");
+                                detalleVenta.Nombre_Empleado = reader.GetString("Nombre_Empleado");
+                                detalleVenta.Metodo_Pago = reader.GetString("Metodo_Pago");
+                                detalleVenta.Tipo_Comprobante = reader.GetString("Tipo_Comprobante");
+                                detalleVenta.Monto_Total = reader.GetDecimal("Monto_Total");
+                            }
+
+                            // 2️⃣ Leer detalles de la venta
+                            if (reader.NextResult())
+                            {
+                                while (reader.Read())
+                                {
+                                    var detalle = new VentaDetalleItemVM
+                                    {
+                                        Tipo_Item = reader.GetString("Tipo_Item"),
+                                        Nombre_Item = reader.GetString("Nombre_Item"),
+                                        Cantidad = reader.GetInt32("Cantidad"),
+                                        Precio_Unitario = reader.GetDecimal("Precio_Unitario"),
+                                        SubTotal = reader.GetDecimal("SubTotal")
+                                    };
+                                    detalleVenta.Detalles.Add(detalle);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if (detalleVenta.Id_Venta == 0)
+                {
+                    TempData["Error"] = "No se encontró la venta especificada";
+                    return RedirectToAction("Index");
+                }
+
+                return View("_DetalleVenta", detalleVenta);
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = $"Error al cargar el detalle: {ex.Message}";
+                return RedirectToAction("Index");
             }
         }
     }

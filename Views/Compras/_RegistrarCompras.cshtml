@@ -4,20 +4,29 @@
     Layout = "~/Views/Main.cshtml";
     ViewData["Title"] = "Registrar Compra";
 }
-
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link href="~/css/VCompras/_RegistrarCompras.css" rel="stylesheet" />
 
 <div class="registrar-compra-wrapper">
-    <div class="registrar-compra-box">
-        <div class="container mt-4">
+    <!-- CARD PRINCIPAL - IGUAL QUE VENTAS -->
+    <div class="card shadow">
+        <!-- HEADER MORADO CON TEXTO BLANCO -->
+        <div class="card-header bg-primary text-white">
+            <div>
+                <!-- BOTÓN VOLVER BLANCO -->
+                <a asp-action="Index" class="btn-volver">
+                    <i class="fas fa-arrow-left"></i> Volver
+                </a>
+                <!-- TÍTULO CON ICONO BLANCO -->
+                <h3 class="mb-0"><i class="fas fa-shopping-cart"></i> Registrar Nueva Compra</h3>
+            </div>
+        </div>
 
-            <a asp-action="Index" class="btn btn-secondary mb-3">← Volver</a>
-
-            <h2 class="mb-3">Registrar Compra</h2>
-
+        <div class="card-body">
+            <!-- EL RESTO DE TU CÓDIGO PERMANECE IGUAL -->
             <form asp-action="Registrar" method="post">
                 <div class="row mb-3">
-
                     <!-- Fecha -->
                     <div class="col-md-4">
                         <label class="form-label">Fecha de Compra</label>
@@ -67,7 +76,9 @@
                     </tbody>
                 </table>
 
-                <button type="button" class="btn btn-primary" id="btnAgregarFila">+ Agregar fila</button>
+                <button type="button" class="btn btn-primary" id="btnAgregarFila">
+                    <i class="fas fa-plus"></i> Agregar fila
+                </button>
 
                 <hr />
 
@@ -79,17 +90,24 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-success mt-4">Registrar Compra</button>
+                <!-- Botones de acción -->
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-save"></i> Registrar Compra
+                    </button>
+                    <a asp-action="Index" class="btn btn-cancelar ms-3">
+                        <i class="fas fa-times"></i> Cancelar
+                    </a>
+                </div>
             </form>
         </div>
     </div>
 </div>
 
-<!-- ============================= -->
-<!--          JAVASCRIPT           -->
-<!-- ============================= -->
+<!-- JavaScript igual... -->
+
 <script>
-    let filaIndex = 0; // índice dinámico para Detalles[x]
+    let filaIndex = 0;
 
     document.getElementById("btnAgregarFila").addEventListener("click", function () {
         agregarFila();

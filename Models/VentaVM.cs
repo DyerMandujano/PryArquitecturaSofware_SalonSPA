@@ -25,17 +25,12 @@ namespace Pry_Solu_SalonSPA.ViewModels
 
         // Cabecera de venta
         public DateTime FechaVenta { get; set; } = DateTime.Now;
+        [ValidateNever]
         public int? IdCliente { get; set; } // Puede venir de la cita
         public int IdEmpleado { get; set; }
         public int IdTipoPago { get; set; }
         public int IdTipoComprobante { get; set; }
 
-        // Datos del Cliente (para mostrar)
-        public string NombreCliente { get; set; }
-        public string TelefonoCliente { get; set; }
-        public string DniCliente { get; set; }
-
-        public int IdPersona { get; set; }
 
         // Listas para dropdowns (se inicializan para evitar nulls)
         [ValidateNever]
@@ -48,9 +43,7 @@ namespace Pry_Solu_SalonSPA.ViewModels
         public List<Producto> Productos { get; set; } = new List<Producto>();
         [ValidateNever]
         public List<Cliente> Clientes { get; set; } = new List<Cliente>(); // NUEVO
-
-        public virtual Persona IdPersonaNavigation { get; set; } = null!;
-        // Detalles (pueden ser servicios de cita y/o productos)
+        [ValidateNever]
         public List<VentaDetalleVM> Detalles { get; set; } = new List<VentaDetalleVM>();
     }
 
@@ -80,6 +73,30 @@ namespace Pry_Solu_SalonSPA.ViewModels
         public string Nombre_Servicio { get; set; }
         public string Descripcion_Servicio { get; set; }
         public decimal Precio_Servicio { get; set; }
+    }
+
+    public class VentaDetalleCompletoVM
+    {
+        // Cabecera de la venta
+        public int Id_Venta { get; set; }
+        public DateTime Fecha_Venta { get; set; }
+        public string Nombre_Cliente { get; set; }
+        public string Nombre_Empleado { get; set; }
+        public string Metodo_Pago { get; set; }
+        public string Tipo_Comprobante { get; set; }
+        public decimal Monto_Total { get; set; }
+
+        // Detalles de la venta
+        public List<VentaDetalleItemVM> Detalles { get; set; } = new List<VentaDetalleItemVM>();
+    }
+
+    public class VentaDetalleItemVM
+    {
+        public string Tipo_Item { get; set; } // "Producto" o "Servicio"
+        public string Nombre_Item { get; set; }
+        public int Cantidad { get; set; }
+        public decimal Precio_Unitario { get; set; }
+        public decimal SubTotal { get; set; }
     }
 
 

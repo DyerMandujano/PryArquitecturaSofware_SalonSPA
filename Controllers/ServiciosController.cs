@@ -20,26 +20,18 @@ namespace Pry_Solu_SalonSPA.Controllers
         }
 
         // GET: Servicios/Index
-        public IActionResult Index(string filtro)
+        public IActionResult Index(string tipoBusqueda = "TODOS", string valorBusqueda = "")
         {
             List<Servicio> servicios;
 
-            if (string.IsNullOrEmpty(filtro))
-            {
-                servicios = _context.Servicios
-                    .FromSqlRaw("EXEC SP_Listar_Servicios")
-                    .AsEnumerable()
-                    .ToList();
-            }
-            else
-            {
-                var parametro = new SqlParameter("@Criterio", filtro);
-                servicios = _context.Servicios
-                    .FromSqlRaw("EXEC SP_Buscar_Servicios_PorId @Criterio", parametro)
-                    .AsEnumerable()
-                    .ToList();
-            }
+            servicios = _context.Servicios
+                .FromSqlRaw("EXEC SP_BuscarServicios @TipoBusqueda, @ValorBusqueda",
+                    new SqlParameter("@TipoBusqueda", tipoBusqueda),
+                    new SqlParameter("@ValorBusqueda", string.IsNullOrEmpty(valorBusqueda) ? (object)DBNull.Value : valorBusqueda))
+                .AsEnumerable()
+                .ToList();
 
+            // Cargar navegación
             foreach (var servicio in servicios)
             {
                 servicio.IdTipoServicioNavigation = _context.TipoServicios
