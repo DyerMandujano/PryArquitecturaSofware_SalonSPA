@@ -64,6 +64,7 @@ namespace Pry_Solu_SalonSPA.Controllers
         [HttpGet]
         public IActionResult Registrar()
         {
+
             var vm = new VentaRegistrarVM
             {
                 FechaVenta = DateTime.Now,

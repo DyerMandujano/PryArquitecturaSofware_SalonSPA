@@ -25,6 +25,12 @@ namespace Pry_Solu_SalonSPA.Controllers
                                                int? estadoCita, int? estadoServicio,
                                                int pageNumber = 1, int pageSize = 10)
         {
+            if (!fechaInicio.HasValue)
+                fechaInicio = DateTime.Today.AddDays(-7);
+
+            if (!fechaFin.HasValue)
+                fechaFin = DateTime.Today.AddDays(7);
+
             var listaCitas = new List<Cita>();
 
             try
@@ -38,8 +44,8 @@ namespace Pry_Solu_SalonSPA.Controllers
                 };
 
                 command.Parameters.AddWithValue("@DNI", string.IsNullOrWhiteSpace(dni) ? (object)DBNull.Value : dni);
-                command.Parameters.AddWithValue("@FechaInicio", fechaInicio ?? (object)DBNull.Value);
-                command.Parameters.AddWithValue("@FechaFin", fechaFin ?? (object)DBNull.Value);
+                command.Parameters.AddWithValue("@FechaInicio", fechaInicio);
+                command.Parameters.AddWithValue("@FechaFin", fechaFin);
                 command.Parameters.AddWithValue("@EstadoCita", estadoCita ?? (object)DBNull.Value);
                 command.Parameters.AddWithValue("@EstadoServicio", estadoServicio ?? (object)DBNull.Value);
                 command.Parameters.AddWithValue("@PageNumber", pageNumber);
@@ -118,8 +124,8 @@ namespace Pry_Solu_SalonSPA.Controllers
             }
 
             ViewBag.DniActual = dni;
-            ViewBag.FechaInicio = fechaInicio?.ToString("yyyy-MM-dd");
-            ViewBag.FechaFin = fechaFin?.ToString("yyyy-MM-dd");
+            ViewBag.FechaInicio = fechaInicio.Value.ToString("yyyy-MM-dd");
+            ViewBag.FechaFin = fechaFin.Value.ToString("yyyy-MM-dd");
             ViewBag.EstadoCitaSeleccionado = estadoCita;
             ViewBag.EstadoServicioSeleccionado = estadoServicio;
             ViewBag.PageNumber = pageNumber;
@@ -127,6 +133,7 @@ namespace Pry_Solu_SalonSPA.Controllers
 
             return View(listaCitas);
         }
+
 
         [HttpGet]
         public IActionResult Crear()

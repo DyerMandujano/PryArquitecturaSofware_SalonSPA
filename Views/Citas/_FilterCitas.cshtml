@@ -1,9 +1,11 @@
 ﻿@{
-    string dniActual = Context.Request.Query["dni"];
-    string fechaInicio = Context.Request.Query["fechaInicio"];
-    string fechaFin = Context.Request.Query["fechaFin"];
-    string estadoCita = Context.Request.Query["estadoCita"];
-    string estadoServicio = Context.Request.Query["estadoServicio"];
+
+    string dniActual = ViewBag.DniActual ?? "";
+    string fechaInicio = ViewBag.FechaInicio ?? "";
+    string fechaFin = ViewBag.FechaFin ?? "";
+    string estadoCita = ViewBag.EstadoCitaSeleccionado?.ToString() ?? "";
+
+    string estadoServicio = ViewBag.EstadoServicioSeleccionado?.ToString() ?? "";
 }
 
 <link href="~/css/VCitas/_FilterCitas.css" rel="stylesheet" />

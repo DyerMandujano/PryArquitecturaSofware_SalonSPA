@@ -186,8 +186,11 @@
                             @Html.AntiForgeryToken()
                             <input type="hidden" name="id" value="@cita.IdCita" />
                             <input type="hidden" name="dni" value="@ViewBag.DniActual" />
-                            <input type="hidden" name="fechaInicio" value="@ViewBag.FechaInicio" />
-                            <input type="hidden" name="fechaFin" value="@ViewBag.FechaFin" />
+
+                            <input type="date" name="fechaInicio" value="@ViewBag.FechaInicio" />
+                            <input type="date" name="fechaFin" value="@ViewBag.FechaFin" />
+
+
                             <input type="hidden" name="estadoCita" value="@ViewBag.EstadoCitaSeleccionado" />
                             <input type="hidden" name="estadoServicio" value="@ViewBag.EstadoServicioSeleccionado" />
                             <input type="hidden" name="pageNumber" value="@ViewBag.PageNumber" />
